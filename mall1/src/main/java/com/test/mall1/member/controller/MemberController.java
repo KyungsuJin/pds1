@@ -1,9 +1,12 @@
 package com.test.mall1.member.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -27,4 +30,21 @@ public class MemberController {
 		memberService.addMember(member);
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value="/getMember", method=RequestMethod.GET)
+	public String getMember(Model model, HttpSession session) {
+		/*
+		service 호출 -> repository 호출 
+		service 리턴 <- repository 리턴
+		return : "jjdev"
+		request.setAttribute("name", "jjdev");
+		view(jsp) : ${name}
+		*/
+		//String name = memberService.getMember();
+		//model.addAttribute("name", name);
+		
+		return "getMember";
+	}
+	
+	
 }

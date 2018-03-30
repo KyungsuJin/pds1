@@ -21,6 +21,7 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+	<!-- 자동으로 설정파일 만들어주게하는거 애노태이션을읽으면서 -->
 	<context:component-scan base-package="com.test.mall1" />
 	
 	

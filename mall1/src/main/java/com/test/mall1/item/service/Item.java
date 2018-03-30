@@ -5,7 +5,6 @@ public class Item {
 	private int categoryNo;
 	private String itemName;
 	private int itemPrice;
-	
 	public int getItemNo() {
 		return itemNo;
 	}

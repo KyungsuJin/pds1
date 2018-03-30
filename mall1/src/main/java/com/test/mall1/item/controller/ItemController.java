@@ -21,7 +21,6 @@ public class ItemController {
 		logger.info("ddddddddddd");
 		return "addItem";
 	}
-	
 	@RequestMapping(value="/addItem", method = RequestMethod.POST)
 	public String addItem(Item item) {
 		itemService.addItem(item);

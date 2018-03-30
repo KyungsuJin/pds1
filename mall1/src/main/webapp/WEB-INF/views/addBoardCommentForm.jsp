@@ -7,7 +7,7 @@
 </head>
 <body>
 	<h1>addBoardComment.jsp test</h1>
-	<form action="${pageContext.request.contextPath }/addBoardComment" method="Post">
+	<form action="${pageContext.request.contextPath }/addBoardCommentpro" method="Post">
 		<div> comment : <input type="text" name="commentContent"></div>
 		<button type="submit">댓글 추가</button>
 	</form>

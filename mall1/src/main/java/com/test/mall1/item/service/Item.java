@@ -30,6 +30,12 @@ public class Item {
 		this.itemPrice = itemPrice;
 	}
 	
+	@Override
+	public String toString() {
+		return "Item [itemNo=" + itemNo + ", categoryNo=" + categoryNo + ", itemName=" + itemName + ", itemPrice="
+				+ itemPrice + "]";
+	}
+	
 	
 
 }

@@ -8,8 +8,8 @@
 </head>
 <body>
 	<form action="${pageContext.request.contextPath}/addItem" method="post">
-		<div><input type="text" id="itemName"></div>
-		<div><input type="text" id="itemPrice"></div>
+		<div><input type="text" name="itemName"></div>
+		<div><input type="text" name="itemPrice"></div>
 		<div><input type="submit" value="확인"></div>
 	</form>
 

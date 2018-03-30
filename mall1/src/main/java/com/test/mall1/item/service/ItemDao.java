@@ -10,6 +10,8 @@ public class ItemDao {
 	
 	public void insertItem(Item item) {
 		logger.info("ItemDao 클래스의 insertItem 메서드실행");
-		System.out.println(item.getCategoryNo());
+		System.out.println(item.getItemName());
+		System.out.println(item.getItemPrice());
+		System.out.println(item.toString());
 	}
 }

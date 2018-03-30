@@ -20,9 +20,8 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@RequestMapping(value="getBoardList")
-	public ModelAndView selectBoard() {
+	public ModelAndView selectBoard(ModelAndView mav) {
 		ArrayList<Board> list = boardService.selectBoard();
-		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getBoardList");
 		mav.addObject("list", list);
 		

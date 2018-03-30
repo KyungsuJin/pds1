@@ -10,9 +10,7 @@ tmp/
 *.swp
 *~.nib
 local.properties
-# mall1
-pom.properties
-MANIFEST.MF
+
 .settings/
 .loadpath
 .recommenders
@@ -84,6 +82,10 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+
+# mall1
+pom.properties
+*.MF
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties

@@ -1,5 +1,7 @@
 package com.test.mall1.boardcomment.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +19,24 @@ public class BoardCommentController {
 	private BoardCommentService boardCommentService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardCommentController.class);
 	
-	@RequestMapping(value = "/addBoardComment", method = RequestMethod.GET)
-	public String addBoardComment() {
-		logger.info("BoardCommentCotroller 클래스의 addBoardComment forward메서드 실행");
-		return "addBoardCommentForm";
+	@RequestMapping(value = "/BoardCommentResult", method = RequestMethod.GET)
+	public String addBoardCommentResult(Model model) {
+		logger.info("BoardCommentCotroller 클래스의 BoardCommentResult forward메서드 실행");
+		List<BoardComment> result = boardCommentService.resultBoardComment();
+		model.addAttribute("result",result);
+		return "BoardCommentResult";
 	}
-	@RequestMapping(value = "/addBoardCommentpro", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/addBoardCommentForm", method = RequestMethod.POST)
 	public String addBoardComment(BoardComment boardComment) {
 		logger.info("BoardCommentCotroller클래스의 addBoardComment redirect메서드 실행");
 		boardCommentService.addBoardComment(boardComment);
-		return "redirect:/addBoardCommentResult";
+		return "redirect:/BoardCommentResult";
 	}
 	
-	@RequestMapping(value = "/addBoardCommentResult", method = RequestMethod.GET)
-	public String addBoardCommentResult() {
-		logger.info("BoardCommentCotroller 클래스의 addBoardCommentResult forward메서드 실행");
-		boardCommentService.resultBoardComment();
-		return "addBoardCommentResult";
+	@RequestMapping(value = "/addBoardCommentForm", method = RequestMethod.GET)
+	public String addBoardComment() {
+		logger.info("BoardCommentCotroller 클래스의 addBoardComment forward메서드 실행");
+		return "addBoardCommentForm";
 	}
 }

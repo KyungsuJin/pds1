@@ -1,6 +1,6 @@
 package com.test.mall1.board.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +19,9 @@ public class BoardController {
 	private BoardService boardService;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
-	@RequestMapping(value="getBoardList")
+	@RequestMapping(value="getBoardList", method = RequestMethod.GET)
 	public ModelAndView selectBoard(ModelAndView mav) {
-		ArrayList<Board> list = boardService.selectBoard();
+		List<Board> list = boardService.selectBoard();
 		mav.setViewName("getBoardList");
 		mav.addObject("list", list);
 		

@@ -1,28 +1,23 @@
 package com.test.mall1.board.service;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class BoardDao {
 	private static final Logger logger = LoggerFactory.getLogger(BoardDao.class);
-
-	public ArrayList<Board> selectBoardList() {
+	final String NS = "com.test.mall1.board.service.BoardMapper.";
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	public List<Board> selectBoardList() {
 		logger.info("BoardDao 클래스의 selectBoardList");
-		ArrayList<Board> list = new ArrayList<Board>();
-		
-		int i=0;
-		while(i<5) {
-			Board board = new Board();
-			board.setBoardNo(i+1);
-			board.setBoardTitle("제목"+i);
-			board.setMemberId("아이디"+i);
-			list.add(board);
-			i++;
-		}
-		
+		List<Board> list = sqlSession.selectList("com.test.mall1.board.service.BoardMapper.selectBoardList");
+		logger.info("BoardDao 클래스의 selectBoardList2");
 		return list;
 	}
 }

@@ -17,12 +17,12 @@
 			</tr>			
 		</thead>
 		<tbody>
-			<c:forEach var="board" items="${list}">			
+			<c:forEach var="board" items="${list}">
 				<tr>
-					<td>${board.boardNo}</td>
+					<td>${board.boardNo} </td>
 					<td>${board.boardTitle}</td>
 					<td>${board.memberId}</td>
-				</tr>				
+				</tr>
 			</c:forEach>
 		</tbody>
 	</table>

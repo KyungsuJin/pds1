@@ -1,6 +1,6 @@
 package com.test.mall1.board.service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +14,9 @@ public class BoardService {
 	private BoardDao boardDao;
 	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 	
-	public ArrayList<Board> selectBoard() {
+	public List<Board> selectBoard() {
 		logger.info("boardService 의 selectBoard 메서드 호출");
-		ArrayList<Board> list = boardDao.selectBoardList();
+		List<Board> list = boardDao.selectBoardList();
 		
 		return list;
 	}

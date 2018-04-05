@@ -1,5 +1,7 @@
 package com.test.mall1.member.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +21,9 @@ public class MemberService {
 		return row;
 	}
 	
+	public List<Member> selectMemberList() {
+		logger.info("MemberService 의 selectMemberList 메서드 실행");
+		return memberDao.selectMemberList();
+	}
 	
 }

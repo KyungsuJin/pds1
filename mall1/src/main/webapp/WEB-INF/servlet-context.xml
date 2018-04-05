@@ -40,6 +40,10 @@
         <property name="mapperLocations">
             <list>
                 <value>classpath:com/test/mall1/member/service/MemberMapper.xml</value>
+                <value>classpath:com/test/mall1/boardcomment/service/BoardCommentMapper.xml</value>
+                <value>classpath:com/test/mall1/board/service/BoardMapper.xml</value>
+                <value>classpath:com/test/mall1/category/service/CategoryMapper.xml</value>
+                <value>classpath:com/test/mall1/item/service/ItemMapper.xml</value>
             </list>
         </property>
     </bean>
@@ -47,5 +51,6 @@
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSessionFactory" />
     </bean>
+	
 	
 </beans>

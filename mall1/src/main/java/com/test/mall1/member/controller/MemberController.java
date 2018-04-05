@@ -1,5 +1,7 @@
 package com.test.mall1.member.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -32,6 +34,16 @@ public class MemberController {
 		memberService.addMember(member);
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value = "/getMemberList", method = RequestMethod.GET)
+	public String getMemberList(Model model) {
+		logger.info("MemberController 의 getMemberList GET 메서드 실행");
+		List<Member> list = memberService.selectMemberList();
+		model.addAttribute("list", list);
+		return "getMemberList";
+	}
+	
+	
 	
 	@RequestMapping(value="/getMember", method=RequestMethod.GET)
 	public String getMember(Model model, HttpSession session) {

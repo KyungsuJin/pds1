@@ -1,5 +1,7 @@
 package com.test.mall1.member.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,4 +24,11 @@ public class MemberDao {
 		int row = sqlSession.insert(NS+"insertMember",member);
 		return row;
 	}
+	
+	public List<Member> selectMemberList() {
+		logger.info("MemberDao 클래스의 selectMemberList메서드 실행");
+		List<Member> list = sqlSession.selectList(NS+"selectMemberList");
+		return list;
+	}
+	
 }

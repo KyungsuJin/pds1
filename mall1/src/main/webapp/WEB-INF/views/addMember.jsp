@@ -6,10 +6,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form method="post" action="${pageContext.request.contextPath}/addMember">
+	<form method="POST" action="${pageContext.request.contextPath}/addMember">
 		memberId : <input type="text" name="memberId"> </br>
 		memberPw : <input type="text" name="memberPw">
-		<button type="submit"></button>
+		<button type="submit">전송</button>
 	</form>
 </body>
 </html>

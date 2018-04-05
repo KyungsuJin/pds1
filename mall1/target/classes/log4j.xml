@@ -15,6 +15,10 @@
 		<level value="info" />
 	</logger>
 	
+	<logger name="com.test.mall1.member.service">
+		<level value="debug"></level>
+	</logger>
+	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />

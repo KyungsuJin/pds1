@@ -22,11 +22,13 @@ public class MemberController {
 	
 	@RequestMapping(value = "/addMember", method = RequestMethod.GET)
 	public String addMember() {
+		logger.info("MemberController 의 addMember GET 메서드 실행");
 		return "addMember";
 	}
 	
 	@RequestMapping(value = "/addMember", method = RequestMethod.POST)
 	public String addMember(Member member) {
+		logger.info("MemberController 의 addMember POST 메서드 실행");
 		memberService.addMember(member);
 		return "redirect:/";
 	}

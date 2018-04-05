@@ -13,8 +13,11 @@ public class MemberService {
 	private MemberDao memberDao;
 	private static final Logger logger = LoggerFactory.getLogger(MemberService.class);
 	
-	public void addMember(Member member) {
+	public int addMember(Member member) {
 		logger.info("MemberService 의 addMember 메서드 실행");
-		memberDao.insertMember(member);
+		int row = memberDao.insertMember(member);
+		return row;
 	}
+	
+	
 }

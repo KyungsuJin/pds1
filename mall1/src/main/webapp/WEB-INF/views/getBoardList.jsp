@@ -26,5 +26,25 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	<c:choose>
+		<c:when test="${currentPage eq 1}">
+		
+		</c:when>
+		<c:otherwise>
+			<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${1}">처음으로</a>
+			<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${currentPage-1}">이전</a>
+		</c:otherwise>
+	</c:choose>
+	
+	
+	<c:choose>
+		<c:when test="${currentPage eq lastPage}">
+		</c:when>
+		<c:otherwise>
+			<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${currentPage+1}">다음</a>
+			<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${lastPage}">마지막으로</a>
+		</c:otherwise>
+	</c:choose>
+
 </body>
 </html>

@@ -4,7 +4,15 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.test.mall1.board.service.BoardMapper">
-	<select id="selectBoardList" resultType="com.test.mall1.board.service.Board">
+	<select id="totalCountBoard"
+			resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM board
+	</select>
+	<select id="selectBoardList" 
+			parameterType="java.util.Map"
+			resultType="com.test.mall1.board.service.Board">
 		SELECT 
 			board_no as boardNo
 			,member_id as memberId
@@ -12,5 +20,7 @@
 			,board_content as boardContent
 			,board_date as boardDate
 		FROM board
+		ORDER BY board_no DESC
+		LIMIT #{beginRow}, #{pagePerRow}
 	</select>
 </mapper>

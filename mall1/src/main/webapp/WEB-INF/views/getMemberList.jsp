@@ -26,7 +26,7 @@
 					<tr>
 						<td>${member.memberNo}</td>
 						<td>${member.memberId}</td>
-						<td>****</td>
+						<td>${member.memberPw}</td>
 						<td><a href="${pageContext.request.contextPath}/modifyMember?memberNo=${member.memberNo}">수정</a></td>
 						<td><a class="changeLink" href="${pageContext.request.contextPath}/removeMember?memberNo=${member.memberNo}">삭제</a></td>
 						<td><a href="${pageContext.request.contextPath}/getMemberAddrList?guestNo=${member.memberNo}">주소추가</a></td>
@@ -36,28 +36,27 @@
 		</table>
 		<nav>
 			<ul class="pagination">
-			<!-- 현재 페이지의 가장 첫번째  -->
-			<fmt:formatNumber value="${startPage}" type="number" var="intStartPage"/>
-			<!-- 마지막페이지랑 비교해서 오른쪽화살표 안보여주려고! -->
-			<fmt:formatNumber value="${lastPage}" type="number" var="intLastPage"/>
-			<!-- 현제페이지를 알아야 범위를지정해서 아래 숫자를 호출 할 수 있음 -->
-			<fmt:formatNumber value="${currentPage}" type="number" var="intCurrentPage"/>
-			<!-- 이전페이지를 구하기위한 계산식인데, 소수점부분이 존재하면 변환해도 남아있기때문에 아예 .0이 된상태로 변환해야함 그래서 이렇게 길어짐. -->
-			<fmt:formatNumber value="${(((intCurrentPage-1)/10)-((intCurrentPage-1)/10%1))*10}" type="number" var="previousPage"/>
-			<!-- 다음페이지를 구하기위한 계산식인데, 소수점부분이 존재하면 변환해도 남아있기때문에 아예 .0이 된상태로 변환해야함 그래서 이렇게 길어짐. --> 
-			<fmt:formatNumber value="${(((intCurrentPage-1)/10 - ((intCurrentPage-1)/10%1))+1)*10+1}" type="number" var="nextPage"/>
 				<c:choose>
-					<c:when test="${previousPage eq 0}">
+					<c:when test="${beforePage eq 0}">
 					</c:when>
 					<c:otherwise>
-						<li><a href="${pageContext.request.contextPath}/getMemberList?currentPage=${previousPage}" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+						<li><a href="${pageContext.request.contextPath}/getMemberList?currentPage=1" aria-label="First"> <span aria-hidden="true">&laquo;</span></a></li>
+						<li><a href="${pageContext.request.contextPath}/getMemberList?currentPage=${beforePage}" aria-label="Previous"> <span aria-hidden="true">&lt;</span></a></li>
 					</c:otherwise>
 				</c:choose>
-				<c:set var="doneLoop" value="false"/> 
-				<c:forEach var="i" begin="${intStartPage}" end="${intStartPage+9}" step="1">
+				<c:set var="doneLoop" value="false"/>
+				<!-- beforePage는 이전으로가는것이고, nextPage는 다음페이지로 가는것이니까 서로 +1 -1만 해주면 범위가 정해진다. -->
+				<c:forEach var="i" begin="${beforePage+1}" end="${nextPage-1}" step="1">
 					<!-- 이건 딱 존재하는 페이지만큼만 아래 숫자를 출력해주기 위해서 break문을 써야하기때문에, 써줌 --> 
 					<c:if test="${not doneLoop}"> 
 						<c:choose>
+							<c:when test="${i eq currentPage && i eq lastPage}">
+								<li class="active"><a href="${pageContext.request.contextPath}/getMemberList?currentPage=${i}">${i}</a></li>
+								<c:set var="doneLoop" value="true"/>
+							</c:when>
+							<c:when test="${i eq currentPage}">
+								<li class="active"><a href="${pageContext.request.contextPath}/getMemberList?currentPage=${i}">${i}</a></li>
+							</c:when>
 							<c:when test="${i eq lastPage}">
 								<li><a href="${pageContext.request.contextPath}/getMemberList?currentPage=${i}">${i}</a></li>
 								<!-- 이건 break대용잉! --> 
@@ -71,10 +70,11 @@
 				</c:forEach>
 				
 				<c:choose>
-					<c:when test="${intLastPage < nextPage}">
+					<c:when test="${lastPage < nextPage}">
 					</c:when>
 					<c:otherwise>
-						<li><a href="${pageContext.request.contextPath}/getMemberList?currentPage=${nextPage}" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
+						<li><a href="${pageContext.request.contextPath}/getMemberList?currentPage=${nextPage}" aria-label="Next"> <span aria-hidden="true">&gt;</span></a></li>
+						<li><a href="${pageContext.request.contextPath}/getMemberList?currentPage=${lastPage}" aria-label="Last"> <span aria-hidden="true">&raquo;</span></a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>

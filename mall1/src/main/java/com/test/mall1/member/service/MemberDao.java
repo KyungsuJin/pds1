@@ -1,6 +1,7 @@
 package com.test.mall1.member.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -8,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.test.mall1.IndexController;
 
 @Repository
 public class MemberDao {
@@ -25,10 +25,19 @@ public class MemberDao {
 		return row;
 	}
 	
-	public List<Member> selectMemberList() {
+	public List<Member> selectMemberList(Map<String, Integer> map) {
 		logger.info("MemberDao 클래스의 selectMemberList메서드 실행");
-		List<Member> list = sqlSession.selectList(NS+"selectMemberList");
+		List<Member> list = sqlSession.selectList(NS+"selectMemberList", map);
 		return list;
 	}
 	
+	public Member selectMemberById(Member member) {
+		logger.info("MemberDao 클래스의 selectMemberById메서드 실행");
+		return sqlSession.selectOne(NS+"selectMemberById", member);
+	}
+	
+	public int totalCountMember() {
+		logger.info("MemberDao 클래스의 selectMemberById메서드 실행");
+		return sqlSession.selectOne(NS+"totalCountMember");
+	}
 }

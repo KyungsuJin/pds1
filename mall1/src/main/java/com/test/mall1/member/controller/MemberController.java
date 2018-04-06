@@ -1,6 +1,6 @@
 package com.test.mall1.member.controller;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.test.mall1.IndexController;
 import com.test.mall1.member.service.Member;
 import com.test.mall1.member.service.MemberService;
 
@@ -36,29 +36,28 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/getMemberList", method = RequestMethod.GET)
-	public String getMemberList(Model model) {
+	public String getMemberList(Model model
+								, @RequestParam(value="currentPage", defaultValue="1") int currentPage
+								, @RequestParam(value="pagePerRow", defaultValue="10") int pagePerRow) {
 		logger.info("MemberController 의 getMemberList GET 메서드 실행");
-		List<Member> list = memberService.selectMemberList();
-		model.addAttribute("list", list);
+		Map<String, Object> map = memberService.selectMemberList(currentPage, pagePerRow);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("beforePage", map.get("beforePage"));
+		model.addAttribute("nextPage", map.get("nextPage"));
 		return "getMemberList";
 	}
 	
-	
-	
-	@RequestMapping(value="/getMember", method=RequestMethod.GET)
-	public String getMember(Model model, HttpSession session) {
-		/*
-		service 호출 -> repository 호출 
-		service 리턴 <- repository 리턴
-		return : "jjdev"
-		request.setAttribute("name", "jjdev");
-		view(jsp) : ${name}
-		*/
-		//String name = memberService.getMember();
-		//model.addAttribute("name", name);
-		
-		return "getMember";
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login(Model model, Member member, HttpSession session) {
+		Member returnMember = memberService.getMemberById(member);
+		if(returnMember == null) {
+			model.addAttribute("requestMember", member);
+			return "login";
+		}
+		session.setAttribute("loginMember", returnMember);
+		return "redirect:/";
 	}
-	
 	
 }

@@ -82,33 +82,3 @@
 	</div>
 </body>
 </html>
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<!DOCTYPE html">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	getMemberList.jsp
-	<table border="1">
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th>아이디</th>
-				<th>비번</th>
-			</tr>			
-		</thead>
-		<tbody>
-			<c:forEach var="member" items="${list}">			
-				<tr>
-					<td>${member.memberNo}</td>
-					<td>${member.memberId}</td>
-					<td>${member.memberPw}</td>
-				</tr>				
-			</c:forEach>
-		</tbody>
-	</table>
-</body>
-</html> --%>

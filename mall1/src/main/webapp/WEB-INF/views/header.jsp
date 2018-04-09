@@ -28,6 +28,13 @@ IE를  이전 버전의 브라우저에서 보는 것처럼 내용을 표시하�
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
+	$("#loginBtn").click(function(e){
+		console.log("t1");
+		$("#loginForm").submit();
+		console.log("t2");
+	});
+	
+	
 	$(".member-id span").hide();
 	$(".member-pw span").hide();
 	$(".member-pw-check span").hide();
@@ -93,7 +100,7 @@ $(document).ready(function(){
 	
 	//ajax로 키를 누를때만다 해당 함수를 비동기호출하여, 리턴값을통해 아이디가 존재하는지 하지않는지를 추출하려고함.
 	$("#memberId").keyup(function(){
-		$.post("memberIdCheck.jk",
+		$.post("memberIdCheck",
 			{
 				memberId: $("#memberId").val(),
 			},
@@ -115,20 +122,6 @@ $(document).ready(function(){
 			}
 		);
 	});
-	
-// 이걸 지운 이유는 keyup이벤트와 blur이벤트가 중복으로 사용되었을때, blur이 나중에 일어나기때문에 keyup에서 중복에대한 데이터처리를
-/* 	$("#memberId").blur(function(){
-		$(".member-id span").show();
-		if($("#memberId").val().length < 4){
-			memberFail($(".member-id"));
-			percentId = 0;
-		} else {
-			memberSuccess($(".member-id"));
-			percentId = 33;
-		}
-		//이거는 blur마다 있는데, 이부분 함수호출로 변경 해줘야할것같다.
-		percentMerge();
-	}); */
 	
 	$("#memberPw").blur(function(){
 		$(".member-pw span").show();

@@ -49,14 +49,21 @@ public class MemberController {
 		return "getMemberList";
 	}
 	
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Model model, Member member, HttpSession session) {
 		Member returnMember = memberService.getMemberById(member);
 		if(returnMember == null) {
 			model.addAttribute("requestMember", member);
-			return "login";
+			return "index";
 		}
-		session.setAttribute("loginMember", returnMember);
+		session.setAttribute("sessionMemberId", returnMember.getMemberId());
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String login(HttpSession session) {
+		session.invalidate();
 		return "redirect:/";
 	}
 	

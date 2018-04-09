@@ -37,12 +37,12 @@
 			</form>
 			<ul class="nav navbar-nav navbar-right">
 					<c:choose>
-						<c:when test="${empty memberId}">
+						<c:when test="${empty sessionMemberId}">
 							<li><a href="${pageContext.request.contextPath}/addMember">회원가입</a></li>
 							<li><a href="#" data-toggle="modal" data-target="#login-modal">로그인</a></li>
 						</c:when>
 						
-						<c:when test="${memberId ne 'admin'}">
+						<c:when test="${sessionMemberId ne 'admin'}">
 							<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
 						</c:when>
 						
@@ -70,7 +70,7 @@
 							<form id="loginForm" action="${pageContext.request.contextPath}/login" method="post">
 								<input type="text" name="memberId" placeholder="Id"> 
 								<input type="password" name="memberPw" placeholder="Password">
-								<input type="button" id="loginBtn" name="loginBtn" class="login loginmodal-submit" value="로그인">
+								<input type="button" id="loginBtn" class="login loginmodal-submit" value="로그인">
 							</form>
 						</div>
 					</div>

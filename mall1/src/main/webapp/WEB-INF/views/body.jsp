@@ -20,8 +20,8 @@
 			<ul class="nav navbar-nav">
 				<li><a href="${pageContext.request.contextPath}/getMemberList.jk" data-toggle="tooltip" data-placement="bottom"
 					title="memberList">memberList</a></li>
-				<li><a href="${pageContext.request.contextPath}/addCategory" data-toggle="tooltip" data-placement="bottom"
-					title="addCategory">addCategory</a></li>
+				<li><a href="${pageContext.request.contextPath}/orderList?memberNo=${sessionMemberNo}" data-toggle="tooltip" data-placement="bottom"
+					title="orderList">orderList</a></li>
 				<li><a href="${pageContext.request.contextPath}/getCategoryList" data-toggle="tooltip" data-placement="bottom"
 					title="getCategoryList">getCategoryList</a></li>
 				<li><a href="${pageContext.request.contextPath}/getItemList" data-toggle="tooltip" data-placement="bottom"

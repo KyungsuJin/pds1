@@ -1,5 +1,7 @@
 package com.test.mall1.order.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,7 @@ public class OrderController {
 						,@RequestParam(value="itemName")String itemName
 						,@RequestParam(value="itemPrice")int itemPrice
 						) {
-		logger.info("addOrder GET 방식 실행");
+		logger.info("addOrder GET 諛⑹떇 �떎�뻾");
 		model.addAttribute("itemNo",itemNo);
 		model.addAttribute("itemName",itemName);
 		model.addAttribute("itemPrice",itemPrice);
@@ -39,6 +41,14 @@ public class OrderController {
 		logger.info(order.getOrderNo()+"getOrderNo");
 		orderService.addOrder(order);
 		return "redirect:/";
+	}
+	@RequestMapping(value="/orderList",method = RequestMethod.GET)
+	public String orderList(Model model
+						,@RequestParam(value="memberNo")int memberNo) {
+		logger.info(memberNo+"asdad");
+		List<Order> list =orderService.orderList(memberNo);
+		model.addAttribute("list",list);
+		return "orderList";
 	}
 	
 }

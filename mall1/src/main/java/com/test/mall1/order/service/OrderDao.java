@@ -1,5 +1,7 @@
 package com.test.mall1.order.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,5 +18,8 @@ public class OrderDao {
 		logger.info("orderDao");
 		sqlSession.insert(NS+"addOrder",order);
 		
+	}
+	public List<Order> orderList(int memberNo){
+		return sqlSession.selectList(NS+"orderList",memberNo);
 	}
 }

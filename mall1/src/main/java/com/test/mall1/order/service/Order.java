@@ -4,6 +4,28 @@ public class Order {
 	private int orderNo;
 	private int memberNo;
 	private int itemNo;
+	private String itemName;
+	private int itemPrice;
+	private String ordersDate;
+	
+	public String getOrdersDate() {
+		return ordersDate;
+	}
+	public void setOrdersDate(String ordersDate) {
+		this.ordersDate = ordersDate;
+	}
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+	public int getItemPrice() {
+		return itemPrice;
+	}
+	public void setItemPrice(int itemPrice) {
+		this.itemPrice = itemPrice;
+	}
 	private String orderDate;
 	
 	public int getOrderNo() {

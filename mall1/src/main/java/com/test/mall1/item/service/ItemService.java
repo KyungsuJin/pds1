@@ -31,7 +31,7 @@ public class ItemService {
 		
 		List<Item> list =itemDao.selectItemList(map);
 		//게시글의 총 갯수를 구하는..total 에 41개가 들어왔따고 가정
-		int total = itemDao.totalCountMember();
+		int total = itemDao.totalCountItem();
 		//total,pagePerRow ->lastPage 알고리즘
 		int lastPage=0;
 		//만약 totla=41 과 pagePerRow =10 를 나눠 나머지가 0이라면 그치만 1이다 그러므로 else

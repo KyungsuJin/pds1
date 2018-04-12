@@ -17,12 +17,9 @@ public class ItemDao {
 	
 	final String NS="com.test.mall1.item.service.ItemMapper.";
 	
-/*	public Member selectMemberById(Member member) {
-		return sqlSession.selectOne(NS+"selectMemberById",member);
-	}*/
 	
-	public int totalCountMember() {
-		return sqlSession.selectOne(NS+"totalCountMember");
+	public int totalCountItem() {
+		return sqlSession.selectOne(NS+"totalCountItem");
 	}
 	
 	

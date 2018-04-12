@@ -13,7 +13,7 @@
 			<div class="form-group">
 				<label>카테고리번호</label>
 				<div class="input-group">
-				<input type="text" class="form-control" value=${categoryNo} id="categoryNo" name="categoryNo" readonly></div>
+				<input type="text" class="form-control" value="${categoryNo}" id="categoryNo" name="categoryNo" readonly></div>
 			</div>
 			<div class="form-group">
 				<label>상품명</label>

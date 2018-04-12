@@ -22,7 +22,7 @@
 					<tr>
 						<td>${category.categoryNo}</td>
 						<td>${category.categoryName}</td>
-						<td><a href="addItem?categoryNo=${category.categoryNo}">등록</a></td>
+						<td><a href="<c:url value="addItem?categoryNo=${category.categoryNo}"/>">등록</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -35,6 +35,7 @@
 			<a href="getCategoryList?currentPage=${currentPage+1}">다음</a>
 			<a href="getCategoryList?currentPage=${lastPage}">마지막으로</a>
 		</c:if>
+			<div class="col-sm-12"><button type="button" onclick="location.href='addCategory'" class="btn btn-info">카테고리 등록</button></div>
 		</div>
 </body>
 </html>

@@ -31,17 +31,7 @@ public class ItemController {
 		return "login";
 		
 	}
-	/*@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String login(Model model,Member member,HttpSession session) {
-		Member returnMember = memberService.getMemberById(member);
-		if(returnMember ==null) {//로그인 실패하면
-			model.addAttribute("requestMember",member);//틀린값나옴
-			return "login";
-		}
-		session.setAttribute("loginMember", returnMember);
-		return "redirect:/";//로그인성공하면
-	}*/
-	
+
 	@RequestMapping(value="/getItemList", method = RequestMethod.GET)
 	public String getItemList(Model model//defaultValue 만약에 넘어온값이 null이면 1  required=true 무조건값이 넘어와야함
 								,@RequestParam(value="currentPage",defaultValue="1")int currentPage

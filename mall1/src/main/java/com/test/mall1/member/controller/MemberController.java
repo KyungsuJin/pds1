@@ -58,6 +58,7 @@ public class MemberController {
 			return "index";
 		}
 		session.setAttribute("sessionMemberId", returnMember.getMemberId());
+		session.setAttribute("sessionMemberNo", returnMember.getMemberNo());
 		return "redirect:/";
 	}
 	

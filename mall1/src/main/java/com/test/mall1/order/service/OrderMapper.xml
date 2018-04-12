@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mall1.order.service.OrderMapper">
+	<insert id="addOrder" parameterType="com.test.mall1.order.service.Order">
+		INSERT INTO order(
+			member_no
+			,item_no
+		)VALUES(
+			#{memberNo}
+			,#{itemNo}
+		)
+	</insert>
+
+
+</mapper>

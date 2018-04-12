@@ -57,7 +57,7 @@ public class BoardController {
 	@RequestMapping(value="getBoardList", method = RequestMethod.GET)
 	public ModelAndView selectBoard(ModelAndView mav
 										,@RequestParam(value="currentPage", defaultValue="1") int currentPage
-										,@RequestParam(value="pagePerRow", defaultValue="2") int pagePerRow) {
+										,@RequestParam(value="pagePerRow", defaultValue="10") int pagePerRow) {
 		logger.info(currentPage+"<--currentPage111111");
 		Map<String, Object> returnMap = boardService.selectBoard(currentPage, pagePerRow);
 		mav.setViewName("getBoardList");

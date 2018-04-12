@@ -3,8 +3,6 @@
 <!DOCTYPE html">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 	<jsp:include page="header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function() {
@@ -17,9 +15,9 @@
 </head>
 <body>
 	<jsp:include page="body.jsp"></jsp:include>
-	getBoardList.jsp
-	<br>
-	<table width="80%" border="1">
+	<div align="center">
+		<h1>boardList</h1>
+		<table border="1" class="table">
 		<thead>
 			<tr>
 				<th>번호</th>
@@ -61,6 +59,10 @@
 	<br>
 	<br>
 	<button type="button" class="btnAddBoard">글쓰기</button>
+	</div>
+	
+
 
 </body>
 </html>
+

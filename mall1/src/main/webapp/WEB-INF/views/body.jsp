@@ -26,8 +26,8 @@
 					title="getCategoryList">getCategoryList</a></li>
 				<li><a href="${pageContext.request.contextPath}/getItemList" data-toggle="tooltip" data-placement="bottom"
 					title="getItemList">getItemList</a></li>
-				<li><a href="#" data-toggle="tooltip" data-placement="bottom"
-					title="흠">메뉴5</a></li>
+				<li><a href="${pageContext.request.contextPath}/getBoardList" data-toggle="tooltip" data-placement="bottom"
+					title="boardList">boardList</a></li>
 			</ul>
 			<form class="navbar-form navbar-left" role="search">
 				<div class="form-group">

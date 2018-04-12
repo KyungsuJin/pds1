@@ -20,8 +20,10 @@
 			parameterType="java.util.Map"
 			resultType="com.test.mall1.item.service.Item">
 		SELECT
-			item_name as itemName
+			item_no as itemNo
+			,item_name as itemName
 			,item_price as itemPrice
+			,category_no as categoryNo
 		FROM item
 		ORDER BY itemPrice
 		LIMIT #{beginRow},#{pagePerRow}
@@ -37,9 +39,11 @@
 		INSERT INTO item(
 			item_name
 			,item_price
+			,category_no
 		)VALUES(
 			#{itemName}
 			,#{itemPrice}
+			,#{categoryNo}
 		)
 	</insert>
 </mapper>

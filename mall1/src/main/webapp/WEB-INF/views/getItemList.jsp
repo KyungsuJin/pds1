@@ -3,19 +3,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<jsp:include page="header.jsp"></jsp:include>
 </head>
 <body>
-	<c:forEach items="${list}" var="Item">
-		<table border=1>
-			<tr>
-				<td>${Item.itemName}</td>
-				<td>${Item.itemPrice}</td>
-			</tr>
+	<jsp:include page="body.jsp"></jsp:include>
+	<div align="center">
+		<h1>getItemList</h1>
+		<table border="1" class="table">
+			<thead>
+				<tr>
+					<th>상품번호</th>
+					<th>카테고리번호</th>
+					<th>상품명</th>
+					<th>상품가격</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${list}" var="Item">
+						<tr>
+							<td>${Item.itemNo}</td>
+							<td>${Item.categoryNo}</td>
+							<td>${Item.itemName}</td>
+							<td>${Item.itemPrice}</td>
+						</tr>
+				</c:forEach>
+			</tbody>
 		</table>
-	</c:forEach>
-	<c:if test="${currentPage>1}"><a href="getItemList?currentPage=${currentPage-1}">이전</a></c:if>
-	<c:if test="${currentPage<total}"><a href="getItemList?currentPage=${currentPage+1}">다음</a></c:if>
+		<c:if test="${currentPage>1}"><a href="getItemList?currentPage=${currentPage-1}">이전</a></c:if>
+		<c:if test="${currentPage<total}"><a href="getItemList?currentPage=${currentPage+1}">다음</a></c:if>
+	</div>
 </body>
 </html>

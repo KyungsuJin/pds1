@@ -1,6 +1,7 @@
 package com.test.mall1.category.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -17,8 +18,11 @@ public class CategoryDao {
 	
 	final String FS = "com.test.mall1.category.service.CategoryMapper.";
 	
-	public List<Category> selecstCategoryList(){
-		return sqlSession.selectList(FS+"selectCategoryList");
+	public List<Category> selecstCategoryList(Map<String,Integer> map){
+		return sqlSession.selectList(FS+"selectCategoryList",map);
+	}
+	public int totalCountCategory() {
+		return sqlSession.selectOne(FS+"totalCountCategory");
 	}
 
 	public int insertCategry(Category category) {

@@ -20,12 +20,12 @@
 			<ul class="nav navbar-nav">
 				<li><a href="${pageContext.request.contextPath}/getMemberList.jk" data-toggle="tooltip" data-placement="bottom"
 					title="memberList">memberList</a></li>
-				<li><a href="#" data-toggle="tooltip" data-placement="bottom"
-					title="기능을">메뉴2</a></li>
-				<li><a href="#" data-toggle="tooltip" data-placement="bottom"
-					title="넣으면">메뉴3</a></li>
-				<li><a href="#" data-toggle="tooltip" data-placement="bottom"
-					title="좋을까?">메뉴4</a></li>
+				<li><a href="${pageContext.request.contextPath}/addCategory" data-toggle="tooltip" data-placement="bottom"
+					title="addCategory">addCategory</a></li>
+				<li><a href="${pageContext.request.contextPath}/getCategoryList" data-toggle="tooltip" data-placement="bottom"
+					title="getCategoryList">getCategoryList</a></li>
+				<li><a href="${pageContext.request.contextPath}/getItemList" data-toggle="tooltip" data-placement="bottom"
+					title="getItemList">getItemList</a></li>
 				<li><a href="#" data-toggle="tooltip" data-placement="bottom"
 					title="흠">메뉴5</a></li>
 			</ul>

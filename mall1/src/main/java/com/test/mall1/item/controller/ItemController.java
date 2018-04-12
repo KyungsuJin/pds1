@@ -57,8 +57,10 @@ public class ItemController {
 	}
 	
 	@RequestMapping(value="/addItem", method = RequestMethod.GET)
-	public String addItem() {
+	public String addItem(Model model
+						,@RequestParam(value="categoryNo")int categoryNo) {
 		logger.info("ddddddddddd");
+		model.addAttribute("categoryNo", categoryNo);
 		return "addItem";
 	}
 	@RequestMapping(value="/addItem", method = RequestMethod.POST)

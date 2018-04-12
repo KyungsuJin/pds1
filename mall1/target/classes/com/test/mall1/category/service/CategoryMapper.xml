@@ -5,14 +5,20 @@
  
 <mapper namespace="com.test.mall1.category.service.CategoryMapper">
 	<select id="selectCategoryList"
+			parameterType="java.util.Map"
 			resultType="com.test.mall1.category.service.Category">
 			SELECT 
 				category_no as categoryNo
 				,category_name as categoryName
 			FROM category
-	
+			ORDER BY category_no
+			LIMIT #{beginRow},#{pagePerRow}
 	
 	</select> 
+	<select id="totalCountCategory"
+			resultType="Integer">
+		SELECT COUNT(*) FROM category		
+	</select>
 
 	<insert id="insertCategory" parameterType="com.test.mall1.category.service.Category">
 	INSERT INTO category (

@@ -4,13 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.test.mall1.boardcomment.service.BoardCommentMapper">
-	<select id="selestBoardComment" resultType="com.test.mall1.boardcomment.service.BoardComment">
+	<select id="totalCountBoardComment" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM board_comment
+	</select>	
+	<select id="selectBoardCommentResult" parameterType="java.util.Map" resultType="com.test.mall1.boardcomment.service.BoardComment">
 			SELECT 
 				comment_no as commentNo
 				,board_no as boardNo
 				,comment_content as commentContent
 				,member_id as memberId
-			FROM board_comment	
+			FROM board_comment
+			ORDER BY comment_no ASC
+			LIMIT #{beginRow},#{pagePerRow}
 	</select>
 	<insert id="insertBoardComment" parameterType="com.test.mall1.boardcomment.service.BoardComment">
 		INSERT INTO board_comment(

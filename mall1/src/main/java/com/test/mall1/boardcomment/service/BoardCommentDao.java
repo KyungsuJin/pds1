@@ -1,6 +1,7 @@
 package com.test.mall1.boardcomment.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -16,9 +17,19 @@ public class BoardCommentDao {
 	
 	final String NS ="com.test.mall1.boardcomment.service.BoardCommentMapper.";
 	
-	public List<BoardComment> selectBoardComment(){
-		logger.info("BoardCommentDao 클래스의 allBoardComment메서드 실행");
-		return sqlSession.selectList(NS+"selestBoardComment");
+	public int totalCountBoardComment() {
+		logger.info("MemberDao 클래스의 totalCountBoardComment메서드 실행");
+		return sqlSession.selectOne(NS+"totalCountBoardComment");
+	}
+	
+/*	public BoardComment selectBoardComment(BoardComment boardComment) {
+		logger.info("BoardCommentDao 클래스의 selectBoardCommentResult메서드 실행");
+		return sqlSession.selectOne(NS+"selectBoardComment");
+	}*/
+	
+	public List<BoardComment> selectBoardCommentResult(Map<String,Integer> map){
+		logger.info("BoardCommentDao 클래스의 selectBoardComment메서드 실행");
+		return sqlSession.selectList(NS+"selectBoardCommentResult",map);
 	}
 	
 	public int insertBoardComment(BoardComment boardComment) {

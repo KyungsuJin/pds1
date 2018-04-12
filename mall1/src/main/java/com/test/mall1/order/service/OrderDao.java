@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class OrderDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	final String NS="com.test.mall.order.service.OrderMapper.";
+	final String NS="com.test.mall1.order.service.OrderMapper.";
 	private static final Logger logger = LoggerFactory.getLogger(OrderDao.class);
 	public void addOrder(Order order) {
 		logger.info("orderDao");

@@ -5,10 +5,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+	<jsp:include page="header.jsp"></jsp:include>
+	<script>
+		$(document).ready(function() {
+			$(".btnAddBoard").click(function() {
+				console.log("버튼눌럿다.");
+				location.href="${pageContext.request.contextPath}/addBoard";
+			})
+		})
+	</script>
 </head>
 <body>
+	<jsp:include page="body.jsp"></jsp:include>
 	getBoardList.jsp
-	<table border="1">
+	<br>
+	<table width="80%" border="1">
 		<thead>
 			<tr>
 				<th>번호</th>
@@ -20,7 +31,7 @@
 			<c:forEach var="board" items="${list}">
 				<tr>
 					<td>${board.boardNo} </td>
-					<td>${board.boardTitle}</td>
+					<td><a href="${pageContext.request.contextPath}/boardDetailView?boardNo=${board.boardNo}">${board.boardTitle}</a></td>
 					<td>${board.memberId}</td>
 				</tr>
 			</c:forEach>
@@ -45,6 +56,11 @@
 			<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${lastPage}">마지막으로</a>
 		</c:otherwise>
 	</c:choose>
+	<br>
+	<br>
+	<br>
+	<br>
+	<button type="button" class="btnAddBoard">글쓰기</button>
 
 </body>
 </html>

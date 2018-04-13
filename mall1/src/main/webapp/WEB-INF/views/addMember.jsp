@@ -9,7 +9,7 @@
 <jsp:include page="body.jsp"></jsp:include>
 	<div class="col-md-6 col-md-offset-3">
 		<h1>Member 추가</h1>
-		<form id="memberForm" action="${pageContext.request.contextPath}/addMember.jk" method="post">
+		<form id="memberForm" action="${pageContext.request.contextPath}/addMember" method="post">
 			<div class="form-group member-id">
 				<label>이름</label>
 				<div class="input-group">

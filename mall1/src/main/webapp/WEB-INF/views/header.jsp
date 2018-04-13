@@ -100,27 +100,35 @@ $(document).ready(function(){
 	
 	//ajax로 키를 누를때만다 해당 함수를 비동기호출하여, 리턴값을통해 아이디가 존재하는지 하지않는지를 추출하려고함.
 	$("#memberId").keyup(function(){
-		$.post("memberIdCheck",
-			{
-				memberId: $("#memberId").val(),
-			},
-			function(data, status){
-				$(".member-id span").show();
-				if($("#memberId").val().length < 4){
-					$(".member-id").find("p").text("아이디를 4자 이상 입력 해 주세요.");
-					memberFail($(".member-id"));
-					percentId = 0;
-				} else if(data == 1){
-					$(".member-id").find("p").text("이미 존재하는 이름 입니다.");
-					memberFail($(".member-id"));
-					percentId = 0;
-				} else{
-					memberSuccess($(".member-id"));
-					percentId = 33;
-				}
-				percentMerge();
+		var memberCheckId = $("#memberId").val();
+		var request = $.ajax({
+			method : "POST"
+			,url : "memberCheck"
+			,dataType : "JSON"
+			,data : { memberId : memberCheckId }
+		});
+		
+		/* 일단 ajax로 보내고 리턴 받앗을때 처리해주는부분 */
+		request.done( function(msg){
+			$(".member-id span").show();
+			if($("#memberId").val().length < 4){
+				$(".member-id").find("p").text("아이디를 4자 이상 입력 해 주세요.");
+				memberFail($(".member-id"));
+				percentId = 0;
+			} else if(msg.data == 1){
+				$(".member-id").find("p").text("이미 존재하는 이름 입니다.");
+				memberFail($(".member-id"));
+				percentId = 0;
+			} else{
+				memberSuccess($(".member-id"));
+				percentId = 33;
 			}
-		);
+			percentMerge();
+		});
+		
+		/* 이건 실패했을때 */
+		request.fail( function(){
+		});
 	});
 	
 	$("#memberPw").blur(function(){

@@ -37,5 +37,6 @@
 		</c:if>
 			<div class="col-sm-12"><button type="button" onclick="location.href='addCategory'" class="btn btn-info">카테고리 등록</button></div>
 		</div>
+		
 </body>
 </html>

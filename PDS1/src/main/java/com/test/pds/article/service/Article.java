@@ -7,7 +7,6 @@ public class Article {
 	private int articleId; // article_id
 	private String articleTitle; // article_title
 	private String articleContent; // article_content
-	private ArticleFile articleFile;
 	
 	public int getArticleId() {
 		return articleId;
@@ -27,16 +26,10 @@ public class Article {
 	public void setArticleContent(String articleContent) {
 		this.articleContent = articleContent;
 	}
-	public ArticleFile getArticleFile() {
-		return articleFile;
-	}
-	public void setArticleFile(ArticleFile articleFile) {
-		this.articleFile = articleFile;
-	}
 	@Override
 	public String toString() {
 		return "Article [articleId=" + articleId + ", articleTitle=" + articleTitle + ", articleContent="
-				+ articleContent + ", articleFile=" + articleFile + "]";
+				+ articleContent + "]";
 	}
 	
 }

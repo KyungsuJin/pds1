@@ -3,7 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="header.jsp"></jsp:include>
+	<sciprt>
+	
+		$("#filenames").append("");
+	</sciprt>
 </head>
 <body>
 	<jsp:include page="body.jsp"></jsp:include>
@@ -11,6 +15,7 @@
 		<div>articleTitle : <input type="text" name="articleTitle"></div>
 		<div>articleContent : <input type="text" name="articleContent"></div>
 		<div>articleTitle : <input multiple="multiple" type="file" name="multipartFile"></div>
+		<div><textarea id="fileNames"></textarea></div>
 		<div><button type="submit">보내기</button></div>
 	</form>
 </body>

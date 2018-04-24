@@ -14,9 +14,9 @@ public class BoardDao {
 	final String NS ="com.test.pds.board.service.BoardMapper.";
 	
 	public void addBoard(Board board) {
-		logger.info("BoardDao addBoard");
+		logger.debug("BoardDao.addBoard");
 		sqlSession.insert(NS+"insertBoard",board);
-		logger.info("boardId : "+board.getBoardId());
+		logger.debug("boardId : "+board.getBoardId());
 		board.getBoardFile().setBoardId(board.getBoardId());
 		
 	}

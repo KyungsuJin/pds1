@@ -3,6 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	 	var i = ${flag};
+		if(i==1){
+			alert('실행파일은 올릴수 없습니다.');
+		}
+	})
+	</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>

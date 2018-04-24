@@ -1,11 +1,13 @@
-package com.test.pds.service;
+package com.test.pds.article.service;
+
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
 public class ArticleRequest {
 	private String articleTitle; // article_title
 	private String articleContent; // article_content
-	private MultipartFile multipartFile;
+	private List<MultipartFile> multipartFile;
 	public String getArticleTitle() {
 		return articleTitle;
 	}
@@ -18,10 +20,10 @@ public class ArticleRequest {
 	public void setArticleContent(String articleContent) {
 		this.articleContent = articleContent;
 	}
-	public MultipartFile getMultipartFile() {
+	public List<MultipartFile> getMultipartFile() {
 		return multipartFile;
 	}
-	public void setMultipartFile(MultipartFile multipartFile) {
+	public void setMultipartFile(List<MultipartFile> multipartFile) {
 		this.multipartFile = multipartFile;
 	}
 	@Override
@@ -29,6 +31,7 @@ public class ArticleRequest {
 		return "ArticleRequest [articleTitle=" + articleTitle + ", articleContent=" + articleContent
 				+ ", multipartFile=" + multipartFile + "]";
 	}
+
 	
 	
 }

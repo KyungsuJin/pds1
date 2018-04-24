@@ -10,7 +10,7 @@
 	<form action="${pageContext.request.contextPath}/addArticle" method="post" enctype="multipart/form-data">
 		<div>articleTitle : <input type="text" name="articleTitle"></div>
 		<div>articleContent : <input type="text" name="articleContent"></div>
-		<div>articleTitle : <input type="file" name="multipartFile"></div>
+		<div>articleTitle : <input multiple="multiple" type="file" name="multipartFile"></div>
 		<div><button type="submit">보내기</button></div>
 	</form>
 </body>

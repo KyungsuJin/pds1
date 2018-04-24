@@ -1,4 +1,4 @@
-package com.test.pds.service;
+package com.test.pds.article.service;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,9 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ArticleDao {
-	@Autowired
-	private SqlSessionTemplate sqlSession;
-	final String NS = "com.test.pds.service.ArticleMapper.";
+	@Autowired private SqlSessionTemplate sqlSession;
+	final String NS = "com.test.pds.article.service.ArticleMapper.";
 	public void addArticle(Article article) {
 		System.out.println("dag호출" + article.toString());
 		sqlSession.insert(NS + "insertArticle", article);

@@ -1,6 +1,4 @@
-package com.test.pds.service;
-
-import java.util.List;
+package com.test.pds.article.service;
 
 /*
  * article table
@@ -39,6 +37,6 @@ public class Article {
 	public String toString() {
 		return "Article [articleId=" + articleId + ", articleTitle=" + articleTitle + ", articleContent="
 				+ articleContent + ", articleFile=" + articleFile + "]";
-	} 
+	}
 	
 }

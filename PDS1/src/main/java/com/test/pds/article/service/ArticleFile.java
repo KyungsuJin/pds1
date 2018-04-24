@@ -1,8 +1,9 @@
-package com.test.pds.service;
+package com.test.pds.article.service;
 
 public class ArticleFile {
 	private int articleFileId;
 	private String articleFileName;
+	private String articleFileRealName;
 	private int articleId;
 	private String articleFileExt;
 	private String articleFileType;
@@ -18,6 +19,12 @@ public class ArticleFile {
 	}
 	public void setArticleFileName(String articleFileName) {
 		this.articleFileName = articleFileName;
+	}
+	public String getArticleFileRealName() {
+		return articleFileRealName;
+	}
+	public void setArticleFileRealName(String articleFileRealName) {
+		this.articleFileRealName = articleFileRealName;
 	}
 	public int getArticleId() {
 		return articleId;
@@ -45,9 +52,10 @@ public class ArticleFile {
 	}
 	@Override
 	public String toString() {
-		return "ArticleFile [articleFileId=" + articleFileId + ", articleFileName=" + articleFileName + ", articleId="
-				+ articleId + ", articleFileExt=" + articleFileExt + ", articleFileType=" + articleFileType
-				+ ", articleFileSize=" + articleFileSize + "]";
+		return "ArticleFile [articleFileId=" + articleFileId + ", articleFileName=" + articleFileName
+				+ ", articleFileRealName=" + articleFileRealName + ", articleId=" + articleId + ", articleFileExt="
+				+ articleFileExt + ", articleFileType=" + articleFileType + ", articleFileSize=" + articleFileSize
+				+ "]";
 	}
 	
 	

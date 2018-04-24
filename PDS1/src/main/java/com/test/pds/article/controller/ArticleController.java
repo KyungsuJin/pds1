@@ -27,22 +27,39 @@ public class ArticleController {
 	@Autowired ArticleService articleService;
 	
 	
+	////////////////////// 게시글 작성 후 파일 업로드 //////////////////////
 	@RequestMapping(value="/addArticle", method=RequestMethod.GET)
 	public String addArticle() {
+		logger.debug("ArticleController.addArticle GET 방식 호출");
 		return "addArticle";
 	}
 	
 	@RequestMapping(value="/addArticle", method=RequestMethod.POST)
 	public String addArticle(ArticleRequest articleRequest, HttpSession session) {
-		System.out.println(articleRequest.toString());
+		logger.debug("ArticleController.addArticle POST 방식 호출");
 		String path = session.getServletContext().getRealPath("/upload");
-		System.out.println(path);
+		logger.debug("ArticleController.addArticle.path : " + path);
 		articleService.addArticle(articleRequest, path);
-		//서비스에서 articleReuquest를 바꿔줘야함
-		// 파일 폴더지정해서 저장해야함
-		//insert해야함
 		
 		return "redirect:/";
+	}
+	
+	////////////////////// 게시물 리스트 출력 //////////////////////	
+	
+	@RequestMapping(value="/getArticleList", method=RequestMethod.GET)
+	public String getArticleList(Model model) {
+		logger.debug("ArticleController.getArticleList GET 방식 호출");
+		model.addAttribute("list",articleService.getArticleList());
+		return "getArticleList";
+	}
+	
+	////////////////////// 게시물 내용 출력 //////////////////////
+	
+	@RequestMapping(value="/getArticleContent", method=RequestMethod.GET)
+	public String getArticleContent(Model model) {
+		logger.debug("ArticleController.getArticleContent GET 방식 호출");
+		model.addAttribute("list",articleService.getArticleList());
+		return "getArticleList";
 	}
 	
 }

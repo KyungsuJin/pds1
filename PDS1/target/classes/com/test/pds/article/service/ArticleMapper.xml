@@ -21,25 +21,13 @@
         )      
    
 	</insert>  
-	
-	<insert id="insertArticleFile" parameterType="com.test.pds.article.service.ArticleFile">
-       
-        INSERT INTO article_file(
-        	article_id
-        	,article_file_name
-        	,article_file_real_name
-            ,article_file_ext
-            ,article_file_type
-            ,article_file_size
-        )
-        VALUES(
-            #{articleId}
-            ,#{articleFileName}
-            ,#{articleFileRealName}
-            ,#{articleFileExt}
-            ,#{articleFileType}
-            ,#{articleFileSize}
-        )      
-   
-	</insert>  
+
+	<select id="selectArticleList" resultType="com.test.pds.article.service.Article">
+		SELECT 
+			article_id AS articleId
+			,article_title AS articleTitle
+			,article_content AS articleContent
+		FROM article
+		ORDER BY article_id DESC
+	</select>	
 </mapper>

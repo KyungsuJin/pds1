@@ -7,7 +7,7 @@
 <title>addResume.jsp</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/addResume" method="POST">
+<form action="${pageContext.request.contextPath}/addResume" method="POST" enctype="multipart/form-data">
 	<div>
 		resumeTitle : <input type="text" name="resumeTitle">
 	</div>

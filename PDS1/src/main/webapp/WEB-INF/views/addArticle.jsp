@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<jsp:include page="header.jsp"></jsp:include>
 </head>
 <body>
+	<jsp:include page="body.jsp"></jsp:include>
 	<form action="${pageContext.request.contextPath}/addArticle" method="post" enctype="multipart/form-data">
 		<div>articleTitle : <input type="text" name="articleTitle"></div>
 		<div>articleContent : <input type="text" name="articleContent"></div>

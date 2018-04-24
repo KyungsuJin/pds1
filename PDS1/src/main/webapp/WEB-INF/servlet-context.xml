@@ -47,6 +47,10 @@
         <property name="mapperLocations">
             <list>
                 <value>classpath:com/test/pds/article/service/ArticleMapper.xml</value>
+                <!-- <value>classpath:com/test/pds/resume/service/ResumeMapper.xml</value> -->
+                <value>classpath:com/test/pds/board/service/BoardMapper.xml</value>
+                <!-- <value>classpath:com/test/pds/notice/service/NoticeMapper.xml</value> -->
+                <!-- <value>classpath:com/test/pds/gallery/service/GalleryMapper.xml</value> -->
             </list>
         </property>
     </bean>

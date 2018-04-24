@@ -19,19 +19,22 @@ public class ResumeController {
 	ResumeService resumeService;
 	private static final Logger logger = LoggerFactory.getLogger(ResumeController.class);
 	
+	@RequestMapping(value="/getResumeList", method=RequestMethod.GET)
+	public String getResumeList() {
+		return "getResumeList";
+	}
+	
 	@RequestMapping(value="/addResume", method=RequestMethod.POST)
-	public String boardAdd(ResumeRequest resumeRequest, HttpSession request) {
-
-	String Path = request.getServletContext().getRealPath("/resources/upload");
-	logger.info("realPath: "+Path);
-	resumeService.addResume(resumeRequest, Path);
-	return "redirect:/";
+	public String addResume(ResumeRequest resumeRequest, HttpSession session) {
+		logger.debug("ResumeController - addResume 리다이렉트 실행");
+		String path = session.getServletContext().getRealPath("/upload");
+		resumeService.addResume(resumeRequest, path);
+		return "redirect:/getResumeList";
 	}
 
 	@RequestMapping(value="/addResume", method=RequestMethod.GET)
 	public String addResume() {
-		logger.info("ResumeController - addResume 포워드 실행");
-		return "/addResume";
+		logger.debug("ResumeController - addResume 포워드 실행");
+		return "addResume";
 	}
-	
 }

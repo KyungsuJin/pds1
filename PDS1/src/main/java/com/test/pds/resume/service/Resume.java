@@ -1,7 +1,5 @@
 package com.test.pds.resume.service;
 
-import java.util.List;
-
 public class Resume {
 	private int resumeId;
 	private String resumeTitle;

@@ -4,7 +4,7 @@ public class ResumeFile {
 	private int resumeFileId;
 	private String resumeFileName;
 	private String resumeFileType;
-	private int resumeFileSize;
+	private long resumeFileSize;
 	private String resumeFileExt;
 	private int resumeId;
 	public int getResumeFileId() {
@@ -25,10 +25,10 @@ public class ResumeFile {
 	public void setResumeFileType(String resumeFileType) {
 		this.resumeFileType = resumeFileType;
 	}
-	public int getResumeFileSize() {
+	public long getResumeFileSize() {
 		return resumeFileSize;
 	}
-	public void setResumeFileSize(int resumeFileSize) {
+	public void setResumeFileSize(long resumeFileSize) {
 		this.resumeFileSize = resumeFileSize;
 	}
 	public String getResumeFileExt() {

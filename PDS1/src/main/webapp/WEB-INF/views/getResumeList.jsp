@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html PUBLIC>
 <html>
 <head>
@@ -6,6 +7,25 @@
 <title>getResumeList.jsp</title>
 </head>
 <body>
-	<h1>getResumeList.jsp</h1>
+	<h1>이력서 리스트</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>ResumeId</th>
+				<th>ResumeTitle</th>
+				<th>ResumeContent</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="resume" items="${list}">
+				<tr>
+					<th>${resume.resumeId }</th>
+					<th><a href="${pageContext.request.contextPath}/getResumeFile?resumeId=${resume.resumeId}">${resume.resumeTitle}</a></th>
+					<th>${resume.resumeContent }</th>
+				</tr>
+			</c:forEach>
+		</tbody>	
+		
+	</table>
 </body>
 </html>

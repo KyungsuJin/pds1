@@ -1,13 +1,11 @@
 package com.test.pds.resume.service;
 
-import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
 
 public class ResumeRequest {
 	private String resumeTitle;
 	private String resumeContent;
-	private List<MultipartFile> multipartFile;
+	private MultipartFile multipartFile;
 	public String getResumeTitle() {
 		return resumeTitle;
 	}
@@ -20,10 +18,10 @@ public class ResumeRequest {
 	public void setResumeContent(String resumeContent) {
 		this.resumeContent = resumeContent;
 	}
-	public List<MultipartFile> getMultipartFile() {
+	public MultipartFile getMultipartFile() {
 		return multipartFile;
 	}
-	public void setMultipartFile(List<MultipartFile> multipartFile) {
+	public void setMultipartFile(MultipartFile multipartFile) {
 		this.multipartFile = multipartFile;
 	}
 	@Override
@@ -31,4 +29,5 @@ public class ResumeRequest {
 		return "ResumeRequest [resumeTitle=" + resumeTitle + ", resumeContent=" + resumeContent + ", multipartFile="
 				+ multipartFile + "]";
 	}
+	
 }

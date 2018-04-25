@@ -4,14 +4,7 @@ public class Resume {
 	private int resumeId;
 	private String resumeTitle;
 	private String resumeContent;
-	private ResumeFile resumeFile;
 	
-	public ResumeFile getResumeFile() {
-		return resumeFile;
-	}
-	public void setResumeFile(ResumeFile resumeFile) {
-		this.resumeFile = resumeFile;
-	}
 	public int getResumeId() {
 		return resumeId;
 	}
@@ -35,5 +28,4 @@ public class Resume {
 		return "Resume [resumeId=" + resumeId + ", resumeTitle=" + resumeTitle + ", resumeContent=" + resumeContent
 				+ "]";
 	}
-
 }

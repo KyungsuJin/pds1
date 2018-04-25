@@ -6,9 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.test.pds.resume.service.ResumeFile;
 import com.test.pds.resume.service.ResumeRequest;
 import com.test.pds.resume.service.ResumeService;
 
@@ -16,11 +19,20 @@ import com.test.pds.resume.service.ResumeService;
 public class ResumeController {
 	
 	@Autowired
-	ResumeService resumeService;
+	private ResumeService resumeService;
 	private static final Logger logger = LoggerFactory.getLogger(ResumeController.class);
 	
+	@RequestMapping(value="/getResumeFile", method=RequestMethod.GET)
+	public String getResumeFile(Model model
+							, @RequestParam(value="resumeId") int resumeId) {
+		logger.debug("ResumeController - getResumeFile 포워드 실행");		
+		return "/getResumeFile";
+	}
+	
 	@RequestMapping(value="/getResumeList", method=RequestMethod.GET)
-	public String getResumeList() {
+	public String getResumeList(Model model) {
+		logger.debug("ResumeController - getResumeList 포워드 실행");
+		model.addAttribute("list", resumeService.selectResumeList());
 		return "getResumeList";
 	}
 	

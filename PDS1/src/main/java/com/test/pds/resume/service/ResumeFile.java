@@ -3,6 +3,7 @@ package com.test.pds.resume.service;
 public class ResumeFile {
 	private int resumeFileId;
 	private String resumeFileName;
+	private String resumeFileRealName;
 	private String resumeFileType;
 	private long resumeFileSize;
 	private String resumeFileExt;
@@ -43,11 +44,19 @@ public class ResumeFile {
 	public void setResumeId(int resumeId) {
 		this.resumeId = resumeId;
 	}
+	
+	public String getResumeFileRealName() {
+		return resumeFileRealName;
+	}
+	public void setResumeFileRealName(String resumeFileRealName) {
+		this.resumeFileRealName = resumeFileRealName;
+	}
 	@Override
 	public String toString() {
-		return "ResumeFile [resumeFileId=" + resumeFileId + ", resumeFileName=" + resumeFileName + ", resumeFileType="
-				+ resumeFileType + ", resumeFileSize=" + resumeFileSize + ", resumeFileExt=" + resumeFileExt
-				+ ", resumeId=" + resumeId + "]";
+		return "ResumeFile [resumeFileId=" + resumeFileId + ", resumeFileName=" + resumeFileName
+				+ ", resumeFileRealName=" + resumeFileRealName + ", resumeFileType=" + resumeFileType
+				+ ", resumeFileSize=" + resumeFileSize + ", resumeFileExt=" + resumeFileExt + ", resumeId=" + resumeId
+				+ "]";
 	}
 	
 }

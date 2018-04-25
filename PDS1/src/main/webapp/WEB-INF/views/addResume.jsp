@@ -7,17 +7,18 @@
 <title>addResume.jsp</title>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/addResume" method="POST" enctype="multipart/form-data">
-	<div>
-		resumeTitle : <input type="text" name="resumeTitle">
-	</div>
-	<div>
-		resumeContent : <textarea name="resumeContent" rows="5" cols="50"></textarea>
-	</div>
-	<div>
-		multiPartFile : <input type="file" name="multiPartFile">
-	</div>
-	<button type="submit">등록</button>
+	<h4>addResume</h4>
+	<form action="${pageContext.request.contextPath}/addResume" method="post" enctype="multipart/form-data">
+		<div>
+			resumeTitle : <input type="text" name="resumeTitle" id="resumeTitle">
+		</div>
+		<div>
+			resumeContent : <input type="text" name="resumeContent" id="resumeContent">
+		</div>
+		<div>
+			multipartFile : <input type="file" name="multipartFile" id="multipartFile" accept="image/jpeg">
+		</div>
+			<button name="submit" type="submit">등록</button>
 	</form>
 </body>
 </html>

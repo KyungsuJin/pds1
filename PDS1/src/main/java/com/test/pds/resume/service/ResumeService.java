@@ -9,9 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds.SystemPath;
+
 @Service
+@Transactional
 public class ResumeService {
 	
 	@Autowired
@@ -21,48 +26,71 @@ public class ResumeService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ResumeService.class);
 	
+	public String selectResumeFileOne() {
+		logger.debug("ResumeService - selectResumeFileOne 실행");
+		return null;
+	}
+	
+	public List<Resume> selectResumeList() {
+		logger.debug("ResumeService - selectResume 실행");
+		List<Resume> list = resumeDao.selectResume();
+		return list;
+	}
+	
 	public void addResume(ResumeRequest resumeRequest, String path) {
-		
-	List<MultipartFile> multipartFileList = resumeRequest.getMultipartFile();
-		
-		Resume resume = new Resume();
-		resume.setResumeTitle(resumeRequest.getResumeTitle());
-		resume.setResumeContent(resumeRequest.getResumeContent());
-		
-		resumeDao.addResume(resume);
-		
-		//multipartFile -> articleFile
-		for(MultipartFile multipartFile : multipartFileList) {
+			MultipartFile multipartFile = resumeRequest.getMultipartFile();
+			logger.debug("ResumeService - addResume 실행");
+			Resume resume = new Resume();
+			
+			String resumeTitle = resumeRequest.getResumeTitle();
+			String resumeContent = resumeRequest.getResumeContent(); 
+			resume.setResumeTitle(resumeTitle);
+			resume.setResumeContent(resumeContent);
+			logger.debug("resumeTitle: "+resumeTitle);
+			logger.debug("resumeContent: "+resumeContent);
+			int resumeId = resumeDao.addResume(resume);		
+			
+			//multipartFile -> resumeFile
 			ResumeFile resumeFile = new ResumeFile();
 			UUID uuid = UUID.randomUUID();
-			String filename = uuid.toString();
-			filename = filename.replace("-", " ");
+			String filename = uuid.toString().replaceAll("-", " ");
+			logger.debug("filename:"+filename);
 			resumeFile.setResumeFileName(filename);
+			String fileRealName = multipartFile.getOriginalFilename();
+			logger.debug("fileRealName:"+fileRealName);
+			resumeFile.setResumeFileRealName(fileRealName);
 			//2. 파일확장자
 			int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
 			String fileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
-			System.out.println("fileExt:"+fileExt);
+			logger.debug("fileExt:"+fileExt);
 			resumeFile.setResumeFileExt(fileExt);
 			
 			//3. 파일 컨텐츠 타입
 			String fileType = multipartFile.getContentType();
-			System.out.println("fileType:" + fileType);
+			logger.debug("fileType:" + fileType);
 			resumeFile.setResumeFileType(fileType);
 			
 			//4. 파일사이즈
 			long fileSize = multipartFile.getSize();
-			System.out.println("fileSize: "+fileSize);
+			logger.debug("fileSize: "+fileSize);
 			resumeFile.setResumeFileSize(fileSize);
 			
-			File file = new File("d:\\upload\\"+filename+"."+fileExt);
+			resumeFile.setResumeId(resumeId);
+			
+			File file = new File(SystemPath.DOWNLOAD_PATH+filename+"."+fileExt);
+			
 			try {
+				
 				 multipartFile.transferTo(file);
 			} catch(IllegalStateException e) {
 				e.printStackTrace();
 			} catch(IOException e) {
 				e.printStackTrace();
+			}catch(NullPointerException e) {
+				e.printStackTrace();
 			}
+			
 			resumeFileDao.addResumeFile(resumeFile);
-		}
+			logger.debug("ResumeService - addResume - resumeFileDao 실행");
 	}
 }

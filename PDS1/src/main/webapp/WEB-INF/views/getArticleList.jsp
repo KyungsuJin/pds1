@@ -15,14 +15,13 @@
 				<tr>
 					<th>ArticleId</th>
 					<th>ArticleTitle</th>
-					<th>ArticleContent</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var = "article" items = "${list}">
 					<tr>
 						<td>${article.articleId}</td>
-						<td><a href="${pageContext.request.contextPath}/">${article.articleTitle}</td>
+						<td><a href="${pageContext.request.contextPath}/getArticleContent?articleId=${article.articleId}">${article.articleTitle}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

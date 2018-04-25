@@ -26,8 +26,37 @@
 		SELECT 
 			article_id AS articleId
 			,article_title AS articleTitle
-			,article_content AS articleContent
 		FROM article
 		ORDER BY article_id DESC
-	</select>	
+	</select>
+
+	<resultMap id="articleContentResult" type="com.test.pds.article.service.Article">
+		<result property="articleId" column="articleId" />
+		<result property="articleTitle" column="articleTitle" />
+		<result property="articleContent" column="articleContent" />
+		<collection property="articleFile" column="articleId"
+			javaType="java.util.ArrayList" ofType="com.test.pds.article.service.ArticleFile"
+			select="selectArticleContentFile" />
+	</resultMap>
+
+	<select id="selectArticleContent" parameterType="com.test.pds.article.service.Article" resultMap="articleContentResult">
+		SELECT 
+			article_id AS articleId
+			,article_title AS articleTitle
+			,article_content AS articleContent
+		FROM article
+		WHERE article_id = #{articleId}
+	</select>
+	
+	<select id="selectArticleContentFile" resultType="com.test.pds.article.service.ArticleFile">
+		SELECT 
+			article_file_id AS articleFileId
+			,article_file_name AS articleFileName
+			,article_file_real_name AS articleFileRealName
+			,article_file_size AS articleFileSize
+			,article_file_ext AS articleFileExt
+		FROM article_file
+		WHERE article_id = #{articleId}
+	</select>
+
 </mapper>

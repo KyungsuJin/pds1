@@ -25,4 +25,10 @@ public class ArticleDao {
 		List<Article> list = sqlSession.selectList(NS+"selectArticleList");
 		return list;
 	}
+	
+	public Article getArticleContent(Article article) {
+		Article resultArticle = sqlSession.selectOne(NS+"selectArticleContent", article);
+
+		return resultArticle;
+	}
 }

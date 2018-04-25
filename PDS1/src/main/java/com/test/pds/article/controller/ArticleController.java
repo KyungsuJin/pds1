@@ -13,7 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds.SystemPath;
+import com.test.pds.article.service.Article;
 import com.test.pds.article.service.ArticleRequest;
 import com.test.pds.article.service.ArticleService;
 
@@ -35,11 +38,19 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(value="/addArticle", method=RequestMethod.POST)
-	public String addArticle(ArticleRequest articleRequest, HttpSession session) {
+	public String addArticle(ArticleRequest articleRequest, HttpSession session, Model model) {
 		logger.debug("ArticleController.addArticle POST 방식 호출");
+		for(MultipartFile multipartFile : articleRequest.getMultipartFile()) {
+			if(multipartFile.getContentType().equals("application/x-msdownload")) {
+				model.addAttribute("article", articleRequest);
+				model.addAttribute("exeFileName", multipartFile.getOriginalFilename());
+				return "addArticle";
+			}
+		}
 		String path = session.getServletContext().getRealPath("/upload");
 		logger.debug("ArticleController.addArticle.path : " + path);
 		articleService.addArticle(articleRequest, path);
+		
 		
 		return "redirect:/";
 	}
@@ -56,10 +67,10 @@ public class ArticleController {
 	////////////////////// 게시물 내용 출력 //////////////////////
 	
 	@RequestMapping(value="/getArticleContent", method=RequestMethod.GET)
-	public String getArticleContent(Model model) {
+	public String getArticleContent(Model model, Article article) {
 		logger.debug("ArticleController.getArticleContent GET 방식 호출");
-		model.addAttribute("list",articleService.getArticleList());
-		return "getArticleList";
+		model.addAttribute("article",articleService.getArticleContent(article));
+		model.addAttribute("downloadPath", SystemPath.DOWNLOAD_PATH);
+		return "getArticleContent";
 	}
-	
 }

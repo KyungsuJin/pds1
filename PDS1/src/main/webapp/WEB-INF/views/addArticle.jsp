@@ -4,19 +4,45 @@
 <html>
 <head>
 	<jsp:include page="header.jsp"></jsp:include>
-	<sciprt>
-	
-		$("#filenames").append("");
-	</sciprt>
+	<script>
+		$(document).ready(function(){
+			$("#fileChoose").change(function(e){
+				var plusFile = $("#fileChoose").closest("div").clone();
+				$("#fileChoose").val("");
+				$("#submitFile").before(plusFile);
+				$("p").hide();
+			});
+			
+			$("#articleBtn").click(function(){
+				if($('#articleTitle').val().length < 1) {
+	                alert('title을 입력하세요');
+	            } else if($('#articleContent').val().length < 1) {
+	                alert('content을 입력하세요');
+	            } else{
+	                 $('.fileChooseList').each(function(index, item){
+	                     if($(this).val().length <1) {
+	                         $(this).remove();
+	                     }
+	                 });
+	                 $("#articleForm").submit();
+	            }
+			});
+		});
+	</script>
 </head>
 <body>
 	<jsp:include page="body.jsp"></jsp:include>
-	<form action="${pageContext.request.contextPath}/addArticle" method="post" enctype="multipart/form-data">
-		<div>articleTitle : <input type="text" name="articleTitle"></div>
-		<div>articleContent : <input type="text" name="articleContent"></div>
-		<div>articleTitle : <input multiple="multiple" type="file" name="multipartFile"></div>
-		<div><textarea id="fileNames"></textarea></div>
-		<div><button type="submit">보내기</button></div>
+	<form id="articleForm" action="${pageContext.request.contextPath}/addArticle" method="post" enctype="multipart/form-data">
+		<div>articleTitle : <input id="articleTitle" type="text" name="articleTitle" value="${article.articleTitle}"></div>
+		<div>articleContent : <input id="articleContent" type="text" name="articleContent" value="${article.articleContent}"></div>
+		articleTitle
+		<c:if test="${!empty exeFileName}">
+			<p>경고! exe파일(${exeFileName})입니다.</p>
+		</c:if>
+		<br>
+		<div><input id="fileChoose"class="fileChooseList" type="file" name="multipartFile"></div>
+		
+		<div id="submitFile"><button id="articleBtn" type="button">보내기</button></div>
 	</form>
 </body>
 </html>

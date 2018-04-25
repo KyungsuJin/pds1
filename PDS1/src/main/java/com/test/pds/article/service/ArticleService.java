@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds.SystemPath;
 import com.test.pds.article.controller.ArticleController;
 
 @Service
@@ -46,7 +47,7 @@ public class ArticleService {
 			articleFile.setArticleFileExt(fileExt);
 			articleFile.setArticleFileType(multipartFile.getContentType());
 			articleFile.setArticleFileSize(multipartFile.getSize());
-			File file = new File("D:/upload/"+fileName+"."+fileExt);
+			File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
 			try {
 				multipartFile.transferTo(file);
 			} catch (IllegalStateException e) {
@@ -61,8 +62,11 @@ public class ArticleService {
 	public List<Article> getArticleList(){
 		logger.debug("ArticleService.getArticleList 호출");
 		List<Article> list = articleDao.getArticleList();
-		
-		
 		return list;
+	}
+	
+	public Article getArticleContent(Article article) {
+		Article resultArticle = articleDao.getArticleContent(article);
+		return resultArticle;
 	}
 }

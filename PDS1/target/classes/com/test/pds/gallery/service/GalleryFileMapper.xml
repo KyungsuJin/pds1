@@ -4,5 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.test.pds.gallery.service.GalleryFileMapper">
-
+	<insert id="addGalleryFile" parameterType="com.test.pds.gallery.service.GalleryFile">
+		INSERT INTO gallery_file(
+			gallery_file_id
+			,gallery_id
+			,gallery_file_name
+			,gallery_file_ext
+			,gallery_file_type
+			,gallery_file_size
+		)
+		VALUES(
+			#{galleryFileId}
+			,#{galleryId}
+			,#{galleryFileName}
+			,#{galleryFileExt}
+			,#{galleryFileType}
+			,#{galleryFileSize}
+		)
+	</insert>
 </mapper>

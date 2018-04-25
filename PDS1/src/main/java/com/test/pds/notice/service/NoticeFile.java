@@ -4,6 +4,7 @@ public class NoticeFile {
 	
 	private int noticeFileId;
 	private String noticeFileName;
+	private String noticeFileRealName;
 	private int noticeId;
 	private String noticeFileExt;
 	private String noticeFileType;
@@ -19,6 +20,12 @@ public class NoticeFile {
 	}
 	public void setNoticeFileName(String noticeFileName) {
 		this.noticeFileName = noticeFileName;
+	}
+	public String getNoticeFileRealName() {
+		return noticeFileRealName;
+	}
+	public void setNoticeFileRealName(String noticeFileRealName) {
+		this.noticeFileRealName = noticeFileRealName;
 	}
 	public int getNoticeId() {
 		return noticeId;
@@ -44,11 +51,4 @@ public class NoticeFile {
 	public void setNoticeFileSize(long noticeFileSize) {
 		this.noticeFileSize = noticeFileSize;
 	}
-	@Override
-	public String toString() {
-		return "NoticeFile [noticeFileId=" + noticeFileId + ", noticeFileName=" + noticeFileName + ", noticeId="
-				+ noticeId + ", noticeFileExt=" + noticeFileExt + ", noticeFileType=" + noticeFileType
-				+ ", noticeFileSize=" + noticeFileSize + "]";
-	}
-
 }

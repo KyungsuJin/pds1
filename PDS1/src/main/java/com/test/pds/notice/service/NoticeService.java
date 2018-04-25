@@ -1,5 +1,6 @@
-/*package com.test.pds.notice.service;
+package com.test.pds.notice.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -48,9 +49,7 @@ public class NoticeService {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			noticeFileDao.addNoticeFile(noticeFile);
 		}
-		noticeFileDao.addNoticeFile(noticeFile);
 	}
-		
 }
-*/

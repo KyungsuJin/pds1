@@ -1,4 +1,4 @@
-/*package com.test.pds.notice.controller;
+package com.test.pds.notice.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,7 +17,6 @@ import com.test.pds.notice.service.NoticeService;
 public class NoticeController {//controller 
 	
 	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);//loggerFactory로 미리 만들어둔것 사용가능
-	
 	@Autowired NoticeService noticeService;//noticeService사용가능하게 만듬.
 	
 	@RequestMapping(value="/addNotice",method=RequestMethod.GET)//get방식으로 값 불러와서 사용해준다. addNotice로 보낸다
@@ -34,4 +33,3 @@ public class NoticeController {//controller
 		
 	}
 }
-*/

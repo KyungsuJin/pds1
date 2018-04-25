@@ -32,10 +32,19 @@ public class GalleryController {
 		return "addGallery";
 	}
 	@RequestMapping(value="addGallery", method=RequestMethod.POST)
-	public String addGallery(GalleryRequest galleryRequest, HttpSession session) {
+	public String addGallery(Model model, GalleryRequest galleryRequest, HttpSession session) {
 		logger.debug("GalleryController_addGallery_POST");
 		String path = session.getServletContext().getRealPath("/upload");
-		galleryService.addGallery(galleryRequest, path);
-		return "redirect:/";
+		boolean flag = true;
+		if(galleryRequest.getMultipartFile().getContentType().equals("image/gif") 
+				|| galleryRequest.getMultipartFile().getContentType().equals("image/jpeg")
+				|| galleryRequest.getMultipartFile().getContentType().equals("image/png")) {
+			logger.debug("업로드가능한 파일입니다.");
+			galleryService.addGallery(galleryRequest, path);
+			return "redirect:/";
+		}
+			logger.debug("업로드가 불가능한 파일입니다.");
+			model.addAttribute("flag", flag=false);
+		return "addGallery";
 	}
 }

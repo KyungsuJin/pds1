@@ -54,6 +54,7 @@ public class GalleryService {
 		logger.debug("fileSize : "+fileSize);
 		galleryFile.setGalleryFileSize(fileSize);
 		
+		
 		gallery.setGalleryFile(galleryFile);
 		File file = new File("d:/upload/"+fileName+"."+fileExt);
 		logger.debug("file : "+file);

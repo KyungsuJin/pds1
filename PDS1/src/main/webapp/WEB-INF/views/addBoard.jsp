@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
 	$(document).ready(function(){
@@ -16,11 +17,25 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="${pageContext.request.contextPath}/addBoard" method="post" enctype="multipart/form-data">
-		<div>boardTitle :   <input type="text" name="boardTitle"></div>
-		<div>boardContent : <input type="text" name="boardContent"></div>
-		<div>fileUpload :<input type="file" name="multipartFile"></div>
-		<div><button type="submit">등록</button></div>
-	</form>
+	<div style="width:200px;" class="center-block clearfix">
+		<form action="${pageContext.request.contextPath}/addBoard" method="post" enctype="multipart/form-data">
+			<div class="form-group">
+				<label>boardTitle</label>
+				<input type="text" name="boardTitle" class="form-control">
+			</div>
+			<div class="form-group">
+				<label>boardContent</label>
+				<input type="text" name="boardContent" class="form-control">
+			</div>
+			
+			<div class="form-group">
+			<label>fileUpload</label>
+				<input type="file" name="multipartFile" class="btn btn-default">
+				<input type="file" name="multipartFile" class="btn btn-default">
+				<input type="file" name="multipartFile" class="btn btn-default">
+			</div>
+			<div><button type="submit" class="btn btn-default">등록</button></div>
+		</form>
+	</div>
 </body>
 </html>

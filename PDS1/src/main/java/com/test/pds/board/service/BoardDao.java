@@ -13,11 +13,13 @@ public class BoardDao {
 	private static final Logger logger= LoggerFactory.getLogger(BoardDao.class);
 	final String NS ="com.test.pds.board.service.BoardMapper.";
 	
-	public void addBoard(Board board) {
+	public int addBoard(Board board) {
 		logger.debug("BoardDao.addBoard");
 		sqlSession.insert(NS+"insertBoard",board);
+		int boardId =board.getBoardId();
 		logger.debug("boardId : "+board.getBoardId());
-		board.getBoardFile().setBoardId(board.getBoardId());
+		return boardId;
+		/*board.getBoardFile().setBoardId(board.getBoardId());*/
 		
 	}
 }

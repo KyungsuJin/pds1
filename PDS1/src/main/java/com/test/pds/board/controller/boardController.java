@@ -1,5 +1,7 @@
 package com.test.pds.board.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.test.pds.board.service.BoardRequest;
 import com.test.pds.board.service.BoardService;
@@ -32,16 +35,18 @@ public class boardController {
 		String path = session.getServletContext().getRealPath("/upload");//세션객체의 경로를 가져온다
 		String result="";
 		int flag=0;
-		if(boardRequest.getMultipartFile().getContentType().equals("application/x-msdownload")) {
-			logger.debug("실행파일은 패스");
-			flag=1;
-			model.addAttribute("flag",flag);
-			result="addBoard";
-		} else {
-			logger.debug("실행파일이 아니니 성공");
-			boardService.addBoard(boardRequest,path);
-			result="redirect:/";
+		for(MultipartFile multipartFile : boardRequest.getMultipartFile()) {
+			if(multipartFile.getContentType().equals("application/x-msdownload")) {
+				logger.debug("실행파일은 패스");
+				flag=1;
+				model.addAttribute("flag",flag);
+				return "addBoard";
+			}
 		}
+		logger.debug("실행파일이 아니니 성공");
+		boardService.addBoard(boardRequest,path);
+		result="redirect:/";
+		
 		return result;
 	}
 

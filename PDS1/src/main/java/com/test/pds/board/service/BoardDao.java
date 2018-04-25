@@ -19,7 +19,8 @@ public class BoardDao {
 		int boardId =board.getBoardId();
 		logger.debug("boardId : "+board.getBoardId());
 		return boardId;
-		/*board.getBoardFile().setBoardId(board.getBoardId());*/
-		
+	}
+	public void getBoardList() {
+		sqlSession.selectList(NS+"");
 	}
 }

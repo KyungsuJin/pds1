@@ -7,10 +7,22 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
 	$(document).ready(function(){
-	 	var i = ${flag};
-		if(i==1){
-			alert('실행파일은 올릴수 없습니다.');
-		}
+		
+			var i = ${flag+1};
+			if(i==2){
+				alert('실행파일은 올릴수 없습니다.');
+			}
+		$("#addInputFile").click(function(){
+			if($('.f').length < 5 ){
+				$("#InputDiv").append('<div><input  type="file" name="multipartFile" class="f" id="inputMultipartFile"></div>');
+			}else{
+				alert('5개 이상은 추가 할 수 없습니다.')
+			}
+		})
+		$("#removeInputFile").click(function(){
+			$("#InputDiv").children().last().remove();
+			
+		})
 	})
 	</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -30,11 +42,11 @@
 			
 			<div class="form-group">
 			<label>fileUpload</label>
-				<input type="file" name="multipartFile" class="btn btn-default">
-				<input type="file" name="multipartFile" class="btn btn-default">
-				<input type="file" name="multipartFile" class="btn btn-default">
+				<button type="button" class="glyphicon glyphicon-plus" id="addInputFile"></button>
+				<button type="button" class="glyphicon glyphicon-minus" id="removeInputFile"></button>
+				<div id="InputDiv"></div>
 			</div>
-			<div><button type="submit" class="btn btn-default">등록</button></div>
+			<div><button type="submit" class="btn btn-default" id="submitFile">등록</button></div>
 		</form>
 	</div>
 </body>

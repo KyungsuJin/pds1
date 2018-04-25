@@ -33,7 +33,6 @@ public class boardController {
 		logger.debug("Controller addBoard POST");
 		logger.debug("boardDTO:"+boardRequest.toString());
 		String path = session.getServletContext().getRealPath("/upload");//세션객체의 경로를 가져온다
-		String result="";
 		int flag=0;
 		for(MultipartFile multipartFile : boardRequest.getMultipartFile()) {
 			if(multipartFile.getContentType().equals("application/x-msdownload")) {
@@ -45,9 +44,13 @@ public class boardController {
 		}
 		logger.debug("실행파일이 아니니 성공");
 		boardService.addBoard(boardRequest,path);
-		result="redirect:/";
 		
-		return result;
+		return "redirect:/";
+	}
+	@RequestMapping(value="getBoardList",method=RequestMethod.GET)
+	public String getBoardList() {
+		boardService.getBoardList();
+		return "getBoardList";
 	}
 
 }

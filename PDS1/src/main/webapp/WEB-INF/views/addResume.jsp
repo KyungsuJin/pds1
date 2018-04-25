@@ -1,12 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>addResume.jsp</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>addResume.jsp</title>
+	<jsp:include page="header.jsp"></jsp:include>
 </head>
 <body>
+	<jsp:include page="body.jsp"></jsp:include>
 	<h4>addResume</h4>
 	<form action="${pageContext.request.contextPath}/addResume" method="post" enctype="multipart/form-data">
 		<div>

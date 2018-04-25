@@ -3,10 +3,12 @@
 <!DOCTYPE html PUBLIC>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>getResumeList.jsp</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>getResumeList.jsp</title>
+	<jsp:include page="header.jsp"></jsp:include>
 </head>
 <body>
+	<jsp:include page="body.jsp"></jsp:include>
 	<h1>이력서 리스트</h1>
 	<table>
 		<thead>

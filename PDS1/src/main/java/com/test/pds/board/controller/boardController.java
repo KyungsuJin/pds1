@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds.board.service.Board;
 import com.test.pds.board.service.BoardRequest;
 import com.test.pds.board.service.BoardService;
 
@@ -48,8 +49,10 @@ public class boardController {
 		return "redirect:/";
 	}
 	@RequestMapping(value="getBoardList",method=RequestMethod.GET)
-	public String getBoardList() {
-		boardService.getBoardList();
+	public String getBoardList(Model model) {
+		logger.debug("boardController.getBoardList");
+		List<Board> list=boardService.getBoardList();
+		model.addAttribute("list",list);
 		return "getBoardList";
 	}
 

@@ -17,4 +17,31 @@
   				,#{boardContent}
   			)
   	</insert>
+  	
+  	<resultMap type="com.test.pds.board.service.Board" id="board">
+  		<result column="board_id" property="boardId"/>
+  		<result column="board_title" property="boardTitle"/>
+  		<result column="board_content" property="boardContent"/>
+  	</resultMap>
+  	<resultMap type="com.test.pds.board.service.BoardFile" id="boardFile">
+  		<result column="board_file_name" property="boardFileName"/>
+  		<result column="board_file_ext" property="boardFileExt"/>
+  		<result column="board_file_type" property="boardFileType"/>
+  		<result column="board_file_size" property="boardFileSize"/>
+  		<result column="board_id" property="boardId"/>
+  	</resultMap>
+  	<select id="getBoardList"
+  			parameterType="com.test.pds.board.service.BoardFile"
+  			resultType="com.test.pds.board.service.BoardFile">
+  			
+  			SELECT 
+  				board.board_id 
+
+  			FROM
+  				board 
+  			INNER JOIN
+  				board_file 
+  			ON 
+  				board.boardId=board_file.boardId
+  	</select>
   </mapper>

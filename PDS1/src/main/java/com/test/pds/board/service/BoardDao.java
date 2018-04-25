@@ -1,5 +1,7 @@
 package com.test.pds.board.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +22,8 @@ public class BoardDao {
 		logger.debug("boardId : "+board.getBoardId());
 		return boardId;
 	}
-	public void getBoardList() {
-		sqlSession.selectList(NS+"");
+	public List<Board> getBoardList() {
+		logger.debug("BoardDao.getBoardList");
+		return sqlSession.selectList(NS+"getBoardList");
 	}
 }

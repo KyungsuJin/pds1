@@ -84,8 +84,9 @@ public class BoardService {
 		boardFileDao.addBoardFile(map);
 		
 	}
-	public void getBoardList() {
-		boardDao.getBoardList();
+	public List<Board> getBoardList() {
+		logger.debug("boardService.getBoardList");
+		return boardDao.getBoardList();
 	}
 
 }

@@ -11,14 +11,19 @@
 			<thead>
 				<tr>
 					<th>BoardId</th>
-					<th>BoardTitle</th>
+					<th>BoardContent</th>
+					<th>BoardFile</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${list}" var="board">
 					<tr>
-						<td>${board.boardId}</td>
-						<td><a href="${pageContext.request.contextPath}/getDetailBoardList?boardId=${board.boardId}">${board.boardTitle}</a></td>
+						<td>${board.boardFile.boardId}</td>
+						<td>${board.board.boardContent}</td>
+						<td>${board.boardFileExt}</td>
+						<td>${board.boardFileType}</td>
+						<td>${board.boardFileSize}</td>
+						<td><a href="">${board.originalFileName}</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

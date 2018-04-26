@@ -14,7 +14,7 @@ public class BoardDao {
 	SqlSessionTemplate sqlSession;
 	private static final Logger logger= LoggerFactory.getLogger(BoardDao.class);
 	final String NS ="com.test.pds.board.service.BoardMapper.";
-	
+	//파일 추가
 	public int addBoard(Board board) {
 		logger.debug("BoardDao.addBoard");
 		sqlSession.insert(NS+"insertBoard",board);
@@ -22,8 +22,13 @@ public class BoardDao {
 		logger.debug("boardId : "+board.getBoardId());
 		return boardId;
 	}
+	//파일 리스트
 	public List<Board> getBoardList() {
 		logger.debug("BoardDao.getBoardList");
 		return sqlSession.selectList(NS+"getBoardList");
+	}
+	public List<Board> getDetailList(int boardId){
+		logger.debug("BoardDao.getDetailList");
+		return sqlSession.selectList(NS+"getDetailList",boardId);
 	}
 }

@@ -22,26 +22,50 @@
   		<result column="board_id" property="boardId"/>
   		<result column="board_title" property="boardTitle"/>
   		<result column="board_content" property="boardContent"/>
+  		<collection property="boardFile" javaType="java.util.ArrayList" ofType="boardFile"></collection>
   	</resultMap>
   	<resultMap type="com.test.pds.board.service.BoardFile" id="boardFile">
+  		<result column="board_file_id" property="boardFileId"/>
   		<result column="board_file_name" property="boardFileName"/>
   		<result column="board_file_ext" property="boardFileExt"/>
   		<result column="board_file_type" property="boardFileType"/>
   		<result column="board_file_size" property="boardFileSize"/>
+  		<result column="board_file_real_name" property="originalFileName"></result>
   		<result column="board_id" property="boardId"/>
   	</resultMap>
+  	
   	<select id="getBoardList"
-  			parameterType="com.test.pds.board.service.BoardFile"
+  			parameterType="String"
+  			resultMap="board">
+  			
+  			SELECT 
+  				b1.board_id 
+  				,b1.board_title
+  			FROM
+  				board b1
+  			JOIN
+  				board_file b2
+  			ON 
+  				b1.board_id=b2.board_id
+  	</select>
+  	<select id="getDetailList"
+  			parameterType="int"
   			resultType="com.test.pds.board.service.BoardFile">
   			
   			SELECT 
-  				board.board_id 
-
+  				b2.board_id as boardFileId
+  				,b1.board_title boardTitle
+  				,b1.board_content as boardContent
+  				,b2.board_file_ext as boardFileExt
+  				,b2.board_file_type as boardFileType
+  				,b2.board_file_size as boardFileSize
+  				,b2.board_file_real_name as originalFileName
   			FROM
-  				board 
-  			INNER JOIN
-  				board_file 
+  				board b1
+  			JOIN
+  				board_file b2
   			ON 
-  				board.boardId=board_file.boardId
+  				b1.board_id=b2.board_id
+  			WHERE b2.board_id = #{boardId}
   	</select>
   </mapper>

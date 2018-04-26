@@ -6,19 +6,21 @@
   	<insert id="addBoardFile"
   			parameterType="java.util.Map">
   		INSERT INTO board_file(
-  			board_file_name
+  			board_file_real_name
+  			,board_file_name
   			,board_file_ext
   			,board_file_type
   			,board_file_size
   			,board_id
   		)VALUES
-  		<foreach collection="boardFileList" item="board" separator=",">
+  		<foreach collection="boardFileList" item="boardFile" separator=",">
   		(
-  			#{board.boardFileName}
-  			,#{board.boardFileExt}
-  			,#{board.boardFileType}
-  			,#{board.boardFileSize}
-  			,#{board.boardId}
+  			#{boardFile.originalFileName}
+  			,#{boardFile.boardFileName}
+  			,#{boardFile.boardFileExt}
+  			,#{boardFile.boardFileType}
+  			,#{boardFile.boardFileSize}
+  			,#{boardFile.boardId}
   		)
   		</foreach>
   	</insert>

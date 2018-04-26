@@ -1,6 +1,7 @@
 package com.test.pds.gallery.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -16,15 +17,21 @@ public class GalleryDao {
 	SqlSessionTemplate sqlSession;
 	final String NS = "com.test.pds.gallery.service.GalleryMapper.";
 	
+	//페이징을 위한 전체 게시글수를 구한다.
+	public int totalCount() {
+		logger.debug("GalleryDao_totalCount");		
+		return sqlSession.selectOne(NS+"totalCount");
+	}
 	//Gallery의 목록을 보여주기위한 메서드 리스트타입으로 리턴하여 목록을 보여준다.
-	public List<Gallery> getGalleryList() {
+	public List<Gallery> getGalleryList(Map<String, Object> map) {
 		logger.debug("GalleryDao_getGalleryList");
-		List<Gallery> list = sqlSession.selectList(NS+"selectGalleryList");
+		List<Gallery> list = sqlSession.selectList(NS+"selectGalleryList", map);
 		return list;
 	}
 	//Gallery를 추가하는 메서드 매개변수로 화면에서 입력받은 데이터를 받는 Gallery타입을 받는다.
 	public int addGallery(Gallery gallery) {
 		logger.debug("GalleryDao_addGallery");
-		return sqlSession.insert(NS+"insertGallery", gallery);
+		sqlSession.insert(NS+"insertGallery", gallery);
+		return gallery.getGalleryId();
 	}
 }

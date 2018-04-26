@@ -18,12 +18,18 @@
 			,#{galleryContent}
 		)
 	</insert>
-	<select id="selectGalleryList" resultType="com.test.pds.gallery.service.Gallery">
+	<select id="selectGalleryList" parameterType="java.util.Map" resultType="com.test.pds.gallery.service.Gallery">
 		SELECT
 			gallery_id as galleryId
 			,gallery_title as galleryTitle
 			,gallery_Content as galleryContent
 		FROM gallery
 		ORDER BY galleryId DESC
+		LIMIT #{beginRow}, #{pagePerRow}
+	</select>
+	<select id="totalCount" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM gallery
 	</select>
 </mapper>

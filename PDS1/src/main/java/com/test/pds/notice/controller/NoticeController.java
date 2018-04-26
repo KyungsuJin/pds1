@@ -1,35 +1,19 @@
 package com.test.pds.notice.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.test.pds.notice.service.NoticeRequest;
-import com.test.pds.notice.service.NoticeService;
-
 
 @Controller
-public class NoticeController {//controller 
+public class NoticeController {//controller 어노테이션 사용해서 컨트롤러 기능 사용하게 해준다.
 	
-	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);//loggerFactory로 미리 만들어둔것 사용가능
-	@Autowired NoticeService noticeService;//noticeService사용가능하게 만듬.
+	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);//private 로 class밖에서 사용 불가능하게 해준다. final 써서 수정불가능하게 해준다.
+	// logger 선언하고 loggerFactory 안에 logger 를 겟 해와서 NoticeController안의 클래스를  불러온다.
 	
-	@RequestMapping(value="/addNotice",method=RequestMethod.GET)//get방식으로 값 불러와서 사용해준다. addNotice로 보낸다
-	public String addNotice() {
-		return "addNotice";
+	public String addNotice() { // String 형 리턴값을 가지는 addNotice 메서드
+		logger.debug("NoticeController.addNotice 메서드 호출"); //debug 등급으로 보여줘서 개발자에게만 보여주게 한다. 나중에는 info 등급만 보이게 하면
+		// 유저등에게는 안보인다. 
+		return "addNotice"; // addNotice 로 포워딩 해준다.
 	}
-	@RequestMapping(value="/addNotice",method=RequestMethod.POST)//post방식으로 값을 받아와 사용한다.
-	public String addNotice(NoticeRequest noticeRequest, HttpSession session) { //NoticeRequest 사용가능하게, Session 사용가능하게
-		System.out.println(noticeRequest.toString());//noticeRequest 안의 toString 메서드를 들어왔는지 보여줌.
-		String path = session.getServletContext().getRealPath("/upload");//upload 폴더의 경로를 불러와줌.
-		noticeService.addNotice(noticeRequest, path);//noticeService 의  addNotice 메서드를 찾아간다.
-		
-		return"redirect:/"; // /으로 리다이렉트 시킨다.
-		
-	}
+	
 }

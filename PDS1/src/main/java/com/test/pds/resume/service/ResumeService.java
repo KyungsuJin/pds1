@@ -26,6 +26,11 @@ public class ResumeService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ResumeService.class);
 	
+	public int deleteResumeFile(int resumeId) {
+		logger.debug("ResumeService - deleteResumeFile 실행");
+		return resumeFileDao.deleteResumeFile(resumeId);
+	}
+	
 	public ResumeFile selectResumeFileOne(int resumeId) {
 		logger.debug("ResumeService - selectResumeFileOne 실행");
 		return resumeFileDao.selectResumeFile(resumeId);
@@ -80,7 +85,6 @@ public class ResumeService {
 			File file = new File(SystemPath.DOWNLOAD_PATH+filename+"."+fileExt);
 			
 			try {
-				
 				 multipartFile.transferTo(file);
 			} catch(IllegalStateException e) {
 				e.printStackTrace();

@@ -21,6 +21,13 @@ public class ResumeController {
 	@Autowired
 	private ResumeService resumeService;
 	private static final Logger logger = LoggerFactory.getLogger(ResumeController.class);
+		
+	@RequestMapping(value="/deleteResumeFile", method= {RequestMethod.POST,RequestMethod.GET})
+	public String deleteResumeFile(@RequestParam(value="resumeId") int resumeId) {
+		logger.debug("ResumeController - deleteResume 리다이렉트 실행.");
+		resumeService.deleteResumeFile(resumeId);
+		return "redirect:/getResumeList";
+	}
 	
 	@RequestMapping(value="/getResumeFileDetail", method=RequestMethod.GET)
 	public String getResumeFile(Model model, HttpSession session

@@ -13,7 +13,7 @@
 		resume_title as resumeTitle,
 		resume_content as resumeContent
 		FROM resume
-		
+
 	</select>
 	<insert id="addResume" parameterType="com.test.pds.resume.service.Resume">
 		<selectKey resultType="int" keyProperty="resumeId" order="AFTER">

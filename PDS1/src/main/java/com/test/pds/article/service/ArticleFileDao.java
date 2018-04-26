@@ -19,4 +19,12 @@ public class ArticleFileDao {
 		sqlSession.insert(NS + "insertArticleFile", articleFile);
 	}
 	
+	public int articleFileTotalCount(Article article) {
+		return sqlSession.selectOne(NS+"selectArticleFileCount", article);
+	}
+	
+	public void removeArticleFile(Article article) {
+		sqlSession.delete(NS+"deleteArticleFile", article);
+	}
+	
 }

@@ -1,6 +1,7 @@
 package com.test.pds.article.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -20,15 +21,23 @@ public class ArticleDao {
 		return article.getArticleId();
 	}
 	
-	public List<Article> getArticleList(){
+	public int articleTotalCount() {
+		return sqlSession.selectOne(NS+"selectArticleCount");
+	}
+	
+	public List<Article> getArticleList(Map map){
 		logger.debug("ArticleDao.getArticleList 메서드 호출");
-		List<Article> list = sqlSession.selectList(NS+"selectArticleList");
+		List<Article> list = sqlSession.selectList(NS+"selectArticleList", map);
 		return list;
 	}
 	
 	public Article getArticleContent(Article article) {
 		Article resultArticle = sqlSession.selectOne(NS+"selectArticleContent", article);
-
 		return resultArticle;
 	}
+	
+	public void removeArticle(Article article) {
+		sqlSession.delete(NS+"deleteArticle", article);
+	}
+
 }

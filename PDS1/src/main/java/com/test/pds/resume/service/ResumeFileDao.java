@@ -12,11 +12,15 @@ public class ResumeFileDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.test.pds.resume.service.ResumeFileMapper.";
+
+	public int deleteResumeFile(int resumeId) {
+		logger.debug("ResumeileDao - deleteResumeFile 실행");
+		return sqlSession.delete(NS+"deleteResume", resumeId);
+	}
 	
-	public int selectResumeFile() {
+	public ResumeFile selectResumeFile(int resumeId) {
 		logger.debug("ResumeFileDao - selectResumeFile 실행");
-		int row = sqlSession.selectOne(NS+"selectResumeFile");
-		return row;
+		return sqlSession.selectOne(NS+"selectResumeFile", resumeId);
 	}
 	
 	public void addResumeFile(ResumeFile resumeFile) {

@@ -2,12 +2,18 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.test.pds.resume.service.ResumeMapper"> 
-	<select id="selectResume" resultType="com.test.pds.resume.service.Resume">
+	<delete id="deleteResume"  parameterType="com.test.pds.resume.service.Resume">
+		DELETE FROM resume WHERE resume_id =#{resumeId}
+	</delete>
+	<select id="selectResume" 
+			parameterType="java.util.Map"
+			 resultType="com.test.pds.resume.service.Resume">
 		SELECT 
 		resume_id as resumeId,
 		resume_title as resumeTitle,
 		resume_content as resumeContent
 		FROM resume
+		
 	</select>
 	<insert id="addResume" parameterType="com.test.pds.resume.service.Resume">
 		<selectKey resultType="int" keyProperty="resumeId" order="AFTER">

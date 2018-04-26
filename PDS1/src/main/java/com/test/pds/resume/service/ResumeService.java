@@ -26,9 +26,9 @@ public class ResumeService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ResumeService.class);
 	
-	public String selectResumeFileOne() {
+	public ResumeFile selectResumeFileOne(int resumeId) {
 		logger.debug("ResumeService - selectResumeFileOne 실행");
-		return null;
+		return resumeFileDao.selectResumeFile(resumeId);
 	}
 	
 	public List<Resume> selectResumeList() {

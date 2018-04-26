@@ -22,11 +22,13 @@ public class ResumeController {
 	private ResumeService resumeService;
 	private static final Logger logger = LoggerFactory.getLogger(ResumeController.class);
 	
-	@RequestMapping(value="/getResumeFile", method=RequestMethod.GET)
-	public String getResumeFile(Model model
+	@RequestMapping(value="/getResumeFileDetail", method=RequestMethod.GET)
+	public String getResumeFile(Model model, HttpSession session
 							, @RequestParam(value="resumeId") int resumeId) {
-		logger.debug("ResumeController - getResumeFile 포워드 실행");		
-		return "/getResumeFile";
+		logger.debug("ResumeController - getResumeFile 포워드 실행");	
+		ResumeFile resumeFile = resumeService.selectResumeFileOne(resumeId);
+		model.addAttribute("resumeFile", resumeFile);
+		return "/getResumeFileDetail";
 	}
 	
 	@RequestMapping(value="/getResumeList", method=RequestMethod.GET)

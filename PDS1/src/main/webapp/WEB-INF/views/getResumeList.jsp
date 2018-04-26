@@ -22,7 +22,7 @@
 			<c:forEach var="resume" items="${list}">
 				<tr>
 					<th>${resume.resumeId }</th>
-					<th><a href="${pageContext.request.contextPath}/getResumeFile?resumeId=${resume.resumeId}">${resume.resumeTitle}</a></th>
+					<th><a href="${pageContext.request.contextPath}/getResumeFileDetail?resumeId=${resume.resumeId}">${resume.resumeTitle}</a></th>
 					<th>${resume.resumeContent }</th>
 				</tr>
 			</c:forEach>

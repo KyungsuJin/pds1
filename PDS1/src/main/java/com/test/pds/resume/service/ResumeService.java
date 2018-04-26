@@ -2,7 +2,9 @@ package com.test.pds.resume.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -26,9 +28,18 @@ public class ResumeService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ResumeService.class);
 	
-	public int deleteResumeFile(int resumeId) {
-		logger.debug("ResumeService - deleteResumeFile 실행");
-		return resumeFileDao.deleteResumeFile(resumeId);
+	public Map<String, Integer> deleteResume(int resumeId) {
+	int resumeFiledelete = 0;
+	resumeFiledelete = resumeFileDao.deleteResumeFile(resumeId);
+    int resumedelete = 0;
+    if(resumeFiledelete>0){
+    	resumedelete = resumeDao.deleteResume(resumeId);
+    }
+    Map<String,Integer> deleteMap = new HashMap<String,Integer>();
+    deleteMap.put("resumeFiledelete", resumeFiledelete);
+    deleteMap.put("resumedelete", resumedelete);
+    return deleteMap;
+		
 	}
 	
 	public ResumeFile selectResumeFileOne(int resumeId) {

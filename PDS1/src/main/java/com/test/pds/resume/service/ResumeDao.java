@@ -15,10 +15,11 @@ public class ResumeDao {
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.test.pds.resume.service.ResumeMapper.";
 	
+	
 	public int deleteResume(int resumeId) {
-		logger.debug("ResumeDao - deleteResume 실행");
-		return sqlSession.delete(NS+"deleteResume", resumeId);
-	}
+		return sqlSession.delete(NS+"deleteResume",resumeId);
+    }
+
 	
 	public List<Resume> selectResume() {
 		logger.debug("ResumeDao - selectResume 실행");

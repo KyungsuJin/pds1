@@ -1,5 +1,7 @@
 package com.test.pds.resume.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -24,8 +26,8 @@ public class ResumeController {
 		
 	@RequestMapping(value="/deleteResumeFile", method= {RequestMethod.POST,RequestMethod.GET})
 	public String deleteResumeFile(@RequestParam(value="resumeId") int resumeId) {
-		logger.debug("ResumeController - deleteResume 리다이렉트 실행.");
-		resumeService.deleteResumeFile(resumeId);
+		logger.debug("ResumeController - deleteResumeFile 리다이렉트 실행.");
+		Map<String,Integer> deleteMap = resumeService.deleteResume(resumeId);
 		return "redirect:/getResumeList";
 	}
 	

@@ -1,11 +1,7 @@
-/*package com.test.pds.board.service;
+package com.test.pds.notice.service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -15,79 +11,46 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-@Service
-@Transactional  //Transactional 은 트렌젝션 처리이고 쿼리가 하나만 실행되고 뒷부분에서 오류가 나는경우 처음에 실행한 쿼리도 다시 롤백시켜 주기 위해서 사용해 주는것이다.
-public class BoardService {
+@Service //서비스 라는 것을 명시해준다.
+@Transactional  // 트렌잭션처리 메서드 하나가 실행되고 다음것도 실행되야 하는데 하나만 실행되고 두번쨰 것이 실패 했을떄 전체를 취소해 주기 위해 쓰는 것이다.
+public class NoticeService {
 	@Autowired
-	BoardDao boardDao;
+	NoticeDao noticeDao;//noticeDao 에 있는 메서드 들을 끌어와서 사용하기 위해서 오토와이어드 해주었다.
 	@Autowired
-	BoardFileDao boardFileDao;
+	NoticeFileDao noticeFileDao;
 	
-	
-	private static final Logger logger= LoggerFactory.getLogger(BoardService.class);
-	
-	public void addBoard(BoardRequest boardRequest,String path) {
-		logger.debug("BoardService.addBoard");
-		List<MultipartFile> multipartFileList = boardRequest.getMultipartFile();//list 형식의 MultiparFile에  MultipartFile 의 값을 get한 주소를 요청해서 담는다. 
-		logger.debug("multipartFile : "+multipartFileList);
+	private static final Logger logger = LoggerFactory.getLogger(NoticeService.class);
+	//private 로 다른 메서드에서 사용 불가능하게 해준다. final로 수정불가능 걸어주고 logger 선언해주고 그안에 이미 설정파일에서 설정된 
+	//LoggerFactory안에 NoticeService의 클래스를 get해서 넣어준다.
+	public void addNotice(NoticeRequest noticeRequest, String path) { //NoticeRequest 를 사용하기 위해서 선언해주고,path는 나중에 더 알아봐야할듯.
+		logger.debug("NoticeService.addNotice");
+		List<MultipartFile> multipartFileList = noticeRequest.getMultipartFile();
+		logger.debug("multipartFile : "+multipartFileList );
 		logger.debug("path : "+path);
 		
-		Board board = new Board();
-		ArrayList<BoardFile> boardFileList = new ArrayList<BoardFile>();
-		board.setBoardTitle(boardRequest.getBoardTitle());
-		board.setBoardContent(boardRequest.getBoardContent());
-		int boardId=boardDao.addBoard(board);
+		Notice notice = new Notice(); //Notice 객체 생성해준다.
+		ArrayList<NoticeFile> noticeFilelist = new ArrayList<NoticeFile>();//ArrayList 형 NoticeFile 을 객체생성 해준다.
+		notice.setNoticeTitle(noticeRequest.getNoticetitle()); //notice안의 NoticeTitle 에 Noticetitle을 get 요청한다.
+		notice.setNoticeContent(noticeRequest.getNoticeContent()); //notice안의 NoticeContent에 NoticeContent를 get 요청한다.
+		int noticeId=noticeDao.addNotice(notice); //int 형 noticeId 안에 noticeDao 안의 addNotice 메서드의 notice값을 담는다.
 		for(MultipartFile multipartFile: multipartFileList) {
-			BoardFile boardFile = new BoardFile();
-			boardFile.setBoardId(boardId);
-			UUID uuid = UUID.randomUUID();
-			String fileName = uuid.toString().replaceAll("-", "");
-			logger.debug("boardFile.setBoardFileName : "+fileName);
-			boardFile.setBoardFileName(fileName);
+			NoticeFile noticeFile = new NoticeFile(); //객체생성
+			noticeFile.setNoticeFileId(noticeId);
+			UUID uuid = UUID.randomUUID(); // 랜덤한 id 값을 생성해서 uuid 에 담는다.
+			String fileName = uuid.toString().replaceAll("-", ""); // String 형 fileName에 uuid안의 toString 메서드의 -를 전부 공백으로 바꾼다.
+			logger.debug("noticeFile.setNoticeFileName:"+fileName);
+			noticeFile.setNoticeFileName(fileName); //noticefile 안에 NoticeFilename 의 filename을 담는다.
 			
-			String name =multipartFile.getOriginalFilename();
-			logger.debug("debug : "+name);
+			String name = multipartFile.getOriginalFilename();
+			logger.debug("debug:"+name);
 			
 			int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
-			logger.debug("dotIndex : "+dotIndex);
+			logger.debug("dotIndex : "+name);
 			
 			String fileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
-			logger.debug("boardFile.setBoardFileExt : "+fileExt);
-			boardFile.setBoardFileExt(fileExt);
+			logger.debug("noticeFile.setNoticeFileExt : "+fileExt);
+			/*noticeFile.setNoticeFileExt(FileExt);*/
 			
-			String fileType= multipartFile.getContentType();
-			logger.debug("boardFile.setBoardFileType : "+fileType);
-			boardFile.setBoardFileType(fileType);
-			
-			long fileSize = multipartFile.getSize();
-			logger.debug("boardFile.setBoardFileSize : "+fileSize);
-			boardFile.setBoardFileSize(fileSize);
-			
-			logger.debug(boardFile.toString());
-			logger.debug(board.toString());
-			boardFileList.add(boardFile);
-			
-			File file = new File("d:/upload/"+fileName+"."+fileExt);
-			logger.debug("file : "+file);
-		
-			try {
-				multipartFile.transferTo(file);
-			}catch(IOException e) {
-				e.printStackTrace();
-			}catch(IllegalStateException e) {
-				e.printStackTrace();
-			}
 		}
-		logger.debug(boardFileList.toString());
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("boardFileList", boardFileList);
-		boardFileDao.addBoardFile(map);
-		
 	}
-	public List<Board> getBoardList() {
-		logger.debug("boardService.getBoardList");
-		return boardDao.getBoardList();
-	}
-
 }
-*/

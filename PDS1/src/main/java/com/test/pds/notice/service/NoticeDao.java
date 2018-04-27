@@ -1,6 +1,4 @@
-/*package com.test.pds.board.service;
-
-import java.util.List;
+package com.test.pds.notice.service;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -9,22 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BoardDao {
+public class NoticeDao{
+
 	@Autowired
-	SqlSessionTemplate sqlSession;
-	private static final Logger logger= LoggerFactory.getLogger(BoardDao.class);
-	final String NS ="com.test.pds.board.service.BoardMapper.";
+	SqlSessionTemplate sqlSession; //Sqlsession 으로 줄여서 사용가능하게.
+	private static final Logger logger = LoggerFactory.getLogger(NoticeDao.class);
+	final String NS = "com.test.pds.notice.service.NoticeMapper.";
 	
-	public int addBoard(Board board) {
-		logger.debug("BoardDao.addBoard");
-		sqlSession.insert(NS+"insertBoard",board);
-		int boardId =board.getBoardId();
-		logger.debug("boardId : "+board.getBoardId());
-		return boardId;
-	}
-	public List<Board> getBoardList() {
-		logger.debug("BoardDao.getBoardList");
-		return sqlSession.selectList(NS+"getBoardList");
+	public int addNotice(Notice notice) {
+		logger.debug("NoticeDao.addNotice");
+		sqlSession.insert(NS+"intsertNotice",notice);
+		int noticeId = notice.getNoticeId(); // int 형 noticeId 안에 notice안의 NoticeId 를 담아준다.
+		logger.debug("noticeId : "+notice.getNoticeId());
+		return noticeId; //noticeId로 리턴시킨다.
 	}
 }
-*/
+
+

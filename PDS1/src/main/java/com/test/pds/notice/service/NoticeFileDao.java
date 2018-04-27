@@ -1,4 +1,4 @@
-/*package com.test.pds.board.service;
+package com.test.pds.notice.service;
 
 import java.util.Map;
 
@@ -9,16 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BoardFileDao {
+public class NoticeFileDao{
 	@Autowired
 	SqlSessionTemplate sqlSession;
-	private static Logger logger = LoggerFactory.getLogger(BoardFileDao.class);
-	final String NS = "com.test.pds.board.service.BoardMapper.";
+	private static final Logger logger = LoggerFactory.getLogger(NoticeFileDao.class); 
+	final String NS = "com.test.pds.notice.service.NoticeFileMapper."; //NS로 줄여서씀
 	
-	public void addBoardFile(Map<String,Object> map) {
-		logger.debug("BoardFileDao.addBoardFile");
-		sqlSession.insert(NS+"addBoardFile",map);
+	public void addNoticeFile(Map<String,Object>map) { //Map 을 사용 가능하게 해주고, key 값은 String 형 값은 Object(모든형식)형으로 되어있다.
+		logger.debug("NoticeFileDao.addNoticeFile");
+		sqlSession.insert(NS+"addNoticeFile",map);
 	}
-
 }
-*/

@@ -23,11 +23,12 @@
                 alert('content을 입력하세요');
             } else{
                  $('.fileChooseList').each(function(index, item){
+                	 console.log($(this));
                      if($(this).val().length <1) {
                          $(this).remove();
                      }
                  });
-                 $("#articleForm").submit();
+                 /* $("#articleForm").submit(); */
             }
 		});
 		
@@ -44,7 +45,6 @@
 		<form id="articleForm" action="${pageContext.request.contextPath}/addArticle" method="post" enctype="multipart/form-data">
 			<div>articleTitle : <input id="articleTitle" type="text" name="articleTitle" value="${article.articleTitle}"></div>
 			<div>articleContent : <input id="articleContent" type="text" name="articleContent" value="${article.articleContent}"></div>
-			articleTitle
 			<c:if test="${!empty exeFileName}">
 				<p>경고! exe파일(${exeFileName})입니다.</p>
 			</c:if>

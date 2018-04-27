@@ -47,11 +47,14 @@ public class ArticleController {
 	@RequestMapping(value="/addArticle", method=RequestMethod.POST)
 	public String addArticle(ArticleRequest articleRequest, HttpSession session, Model model) {
 		logger.debug("ArticleController.addArticle POST 방식 호출");
-		for(MultipartFile multipartFile : articleRequest.getMultipartFile()) {
-			if(multipartFile.getContentType().equals("application/x-msdownload")) {
-				model.addAttribute("article", articleRequest);
-				model.addAttribute("exeFileName", multipartFile.getOriginalFilename());
-				return "addArticle";
+		List<MultipartFile> multipartFileList = articleRequest.getMultipartFile();
+		if(multipartFileList != null) {
+			for(MultipartFile multipartFile : multipartFileList) {
+				if(multipartFile.getContentType().equals("application/x-msdownload")) {
+					model.addAttribute("article", articleRequest);
+					model.addAttribute("exeFileName", multipartFile.getOriginalFilename());
+					return "addArticle";
+				}
 			}
 		}
 		String path = session.getServletContext().getRealPath("/upload");
@@ -124,11 +127,22 @@ public class ArticleController {
 	}
 	
 	@RequestMapping(value="/modifyArticle", method=RequestMethod.POST)
-	public String modifyArticle(ArticleRequest articleRequest
+	public String modifyArticle(Model model
+									,ArticleRequest articleRequest
 									,@RequestParam(value="currentPage") int currentPage
 									,@RequestParam(value="pagePerRow", defaultValue="10" ) int pagePerRow) {
 		logger.debug("ArticleController.modifyArticle POST 방식 호출");
+		List<MultipartFile> multipartFileList = articleRequest.getMultipartFile();
+		if(multipartFileList != null) {
+			for(MultipartFile multipartFile : multipartFileList) {
+				if(multipartFile.getContentType().equals("application/x-msdownload")) {
+					model.addAttribute("article", articleRequest);
+					model.addAttribute("exeFileName", multipartFile.getOriginalFilename());
+					return "redirect:/modifyArticle?articleId=" + articleRequest.getArticleId() + "&currentPage=" + currentPage + "&pagePerRow=" + pagePerRow;
+				}
+			}
+		}
 		articleService.modifyArticle(articleRequest);
-		return "redirect:/getArticleList?articleId=" + articleRequest.getArticleId() + "&currentPage=" + currentPage + "&pagePerRow=" + pagePerRow;
+		return "redirect:/getArticleContent?articleId=" + articleRequest.getArticleId() + "&currentPage=" + currentPage + "&pagePerRow=" + pagePerRow;
 	}
 }

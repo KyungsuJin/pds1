@@ -53,7 +53,6 @@
 			<input type="hidden" name="pagePerRow" value="${pagePerRow}">
 			<div>articleTitle : <input id="articleTitle" type="text" name="articleTitle" value="${article.articleTitle}"></div>
 			<div>articleContent : <input id="articleContent" type="text" name="articleContent" value="${article.articleContent}"></div>
-			articleTitle
 			<c:if test="${!empty exeFileName}">
 				<p>경고! exe파일(${exeFileName})입니다.</p>
 			</c:if>

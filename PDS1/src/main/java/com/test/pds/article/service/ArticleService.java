@@ -36,28 +36,30 @@ public class ArticleService {
 		article.setArticleContent(articleRequest.getArticleContent());
 		int articleId = articleDao.addArticle(article);
 		logger.debug("ArticleService.addArticle.articleId : " + articleId);
-		for(MultipartFile multipartFile : multipartFileList) {
-			logger.debug("ArticleService.addArticle.multipartFile : " + multipartFile);
-			ArticleFile articleFile = new ArticleFile();
-			UUID uuid = UUID.randomUUID();
-			String fileName = uuid.toString().replaceAll("-", "");
-			logger.debug("ArticleService.addArticle.fileName : " + articleId);
-			articleFile.setArticleFileName(fileName);
-			articleFile.setArticleFileRealName(multipartFile.getOriginalFilename());
-			articleFile.setArticleId(articleId);
-			String fileExt = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
-			articleFile.setArticleFileExt(fileExt);
-			articleFile.setArticleFileType(multipartFile.getContentType());
-			articleFile.setArticleFileSize(multipartFile.getSize());
-			File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
-			try {
-				multipartFile.transferTo(file);
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+		if(multipartFileList != null) {
+			for(MultipartFile multipartFile : multipartFileList) {
+				logger.debug("ArticleService.addArticle.multipartFile : " + multipartFile);
+				ArticleFile articleFile = new ArticleFile();
+				UUID uuid = UUID.randomUUID();
+				String fileName = uuid.toString().replaceAll("-", "");
+				logger.debug("ArticleService.addArticle.fileName : " + articleId);
+				articleFile.setArticleFileName(fileName);
+				articleFile.setArticleFileRealName(multipartFile.getOriginalFilename());
+				articleFile.setArticleId(articleId);
+				String fileExt = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
+				articleFile.setArticleFileExt(fileExt);
+				articleFile.setArticleFileType(multipartFile.getContentType());
+				articleFile.setArticleFileSize(multipartFile.getSize());
+				File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
+				try {
+					multipartFile.transferTo(file);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				articleFileDao.addArticleFile(articleFile);
 			}
-			articleFileDao.addArticleFile(articleFile);
 		}
 	}
 	
@@ -120,32 +122,35 @@ public class ArticleService {
 	public void modifyArticle(ArticleRequest articleRequest) {
 		List<MultipartFile> multipartFileList = articleRequest.getMultipartFile();
 		articleDao.modifyArticle(articleRequest);
-		for(int articleId : articleRequest.getArticleDeleteList()) {
-			articleFileDao.removeArticleFile(articleId);
-		}
-		
-		for(MultipartFile multipartFile : multipartFileList) {
-			logger.debug("ArticleService.addArticle.multipartFile : " + multipartFile);
-			ArticleFile articleFile = new ArticleFile();
-			UUID uuid = UUID.randomUUID();
-			String fileName = uuid.toString().replaceAll("-", "");
-			logger.debug("ArticleService.addArticle.fileName : " + articleRequest.getArticleId());
-			articleFile.setArticleFileName(fileName);
-			articleFile.setArticleFileRealName(multipartFile.getOriginalFilename());
-			articleFile.setArticleId(articleRequest.getArticleId());
-			String fileExt = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
-			articleFile.setArticleFileExt(fileExt);
-			articleFile.setArticleFileType(multipartFile.getContentType());
-			articleFile.setArticleFileSize(multipartFile.getSize());
-			File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
-			try {
-				multipartFile.transferTo(file);
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+		if(articleRequest.getArticleDeleteList() != null) {
+			for(int articleId : articleRequest.getArticleDeleteList()) {
+				articleFileDao.removeArticleFile(articleId);
 			}
-			articleFileDao.addArticleFile(articleFile);
+		}
+		if(multipartFileList != null) {
+			for(MultipartFile multipartFile : multipartFileList) {
+				logger.debug("ArticleService.addArticle.multipartFile : " + multipartFile);
+				ArticleFile articleFile = new ArticleFile();
+				UUID uuid = UUID.randomUUID();
+				String fileName = uuid.toString().replaceAll("-", "");
+				logger.debug("ArticleService.addArticle.fileName : " + articleRequest.getArticleId());
+				articleFile.setArticleFileName(fileName);
+				articleFile.setArticleFileRealName(multipartFile.getOriginalFilename());
+				articleFile.setArticleId(articleRequest.getArticleId());
+				String fileExt = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
+				articleFile.setArticleFileExt(fileExt);
+				articleFile.setArticleFileType(multipartFile.getContentType());
+				articleFile.setArticleFileSize(multipartFile.getSize());
+				File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
+				try {
+					multipartFile.transferTo(file);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				articleFileDao.addArticleFile(articleFile);
+			}
 		}
 	}
 }

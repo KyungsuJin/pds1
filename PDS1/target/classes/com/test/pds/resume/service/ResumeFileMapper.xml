@@ -2,6 +2,16 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.test.pds.resume.service.ResumeFileMapper"> 
+	<update id="updateResumeFile">
+		UPDATE resume_file
+		SET resume_file_id = #{resumeFileId}
+			,resume_file_name = #{resumeFileName}
+			,resume_file_real_name = #{resumeFileRealName}
+			,resume_file_type = #{resumeFileType}
+			,resume_file_size = #{resumeFileSize}
+			,resume_file_ext = #{resumeFileExt}
+		WHERE resume_id = #{resumeId}
+	</update>	
 	<delete id="deleteResumeFile" parameterType="com.test.pds.resume.service.ResumeFile">
 		DELETE FROM resume_file WHERE resume_id = #{resumeId}
 	</delete>

@@ -1,6 +1,7 @@
 package com.test.pds.resume.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -19,11 +20,15 @@ public class ResumeDao {
 	public int deleteResume(int resumeId) {
 		return sqlSession.delete(NS+"deleteResume",resumeId);
     }
-
 	
-	public List<Resume> selectResume() {
+	public int resumeCount() {
+		logger.debug("ResumeDao - resumeCount 실행");
+		return sqlSession.selectOne(NS+"resumeCount");
+	}
+	
+	public List<Resume> selectResume(Map<String,Integer> map) {
 		logger.debug("ResumeDao - selectResume 실행");
-		 List<Resume> list =sqlSession.selectList(NS+"selectResume");
+		 List<Resume> list =sqlSession.selectList(NS+"selectResume",map);
 		return list;
 	}
 	

@@ -1,8 +1,5 @@
 package com.test.pds.resume.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +11,16 @@ public class ResumeFileDao {
 	private static final Logger logger = LoggerFactory.getLogger(ResumeFileDao.class);
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	private ResumeDao resumeDao;
 	final String NS = "com.test.pds.resume.service.ResumeFileMapper.";
-
+	
+	public int updateResumeFile(int resumeId) {
+		logger.debug("ResumeFileDao - updateResumeFile 실행");
+		int row = sqlSession.update(NS+"updateResumeFile",resumeId);
+		return row;
+	}
+	
 	public int deleteResumeFile(int resumeId) {
-		logger.debug("ResumeDao - deleteResume 실행");
+		logger.debug("ResumeFileDao - deleteResumeFile 실행");
 		return sqlSession.delete(NS+"deleteResumeFile",resumeId);
     }
 	

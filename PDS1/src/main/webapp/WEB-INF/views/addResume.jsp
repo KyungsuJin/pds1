@@ -24,8 +24,8 @@
 </head>
 <body>
 	<jsp:include page="body.jsp"></jsp:include>
+	<div class="container">
 	<h4>이미지 파일만 등록할 수 있습니다.</h4>
-	<div>
 		<form class="form-group" name="fileForm" enctype="multipart/form-data">
 			<div>
 				<label>resumeTitle :</label> 

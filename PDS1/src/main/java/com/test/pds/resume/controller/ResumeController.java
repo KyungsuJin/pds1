@@ -23,7 +23,13 @@ public class ResumeController {
 	@Autowired
 	private ResumeService resumeService;
 	private static final Logger logger = LoggerFactory.getLogger(ResumeController.class);
-		
+	
+	@RequestMapping(value="/updateResumeFile", method= {RequestMethod.POST,RequestMethod.GET})
+	public String updateResumeFile() {
+		logger.debug("ResumeController - updateResumeFile");
+		return "redirect:/getResumeFileDetail";
+	}
+	
 	@RequestMapping(value="/deleteResumeFile", method= {RequestMethod.POST,RequestMethod.GET})
 	public String deleteResumeFile(@RequestParam(value="resumeId") int resumeId) {
 		logger.debug("ResumeController - deleteResumeFile 리다이렉트 실행.");
@@ -41,9 +47,18 @@ public class ResumeController {
 	}
 	
 	@RequestMapping(value="/getResumeList", method=RequestMethod.GET)
-	public String getResumeList(Model model) {
+	public String getResumeList(Model model
+								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow
+								,@RequestParam(value="unitPage", defaultValue="10")int unitPage	) {
 		logger.debug("ResumeController - getResumeList 포워드 실행");
-		model.addAttribute("list", resumeService.selectResumeList());
+		Map<String,Object> map = resumeService.selectResumeList(currentPage, pagePerRow, unitPage);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
+		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
+
 		return "getResumeList";
 	}
 	

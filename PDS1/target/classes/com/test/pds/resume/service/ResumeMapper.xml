@@ -5,6 +5,11 @@
 	<delete id="deleteResume"  parameterType="com.test.pds.resume.service.Resume">
 		DELETE FROM resume WHERE resume_id =#{resumeId}
 	</delete>
+	<select id="resumeCount" resultType="int">
+		SELECT
+		count(*)
+		FROM resume
+	</select>
 	<select id="selectResume" 
 			parameterType="java.util.Map"
 			 resultType="com.test.pds.resume.service.Resume">
@@ -13,7 +18,7 @@
 		resume_title as resumeTitle,
 		resume_content as resumeContent
 		FROM resume
-
+		LIMIT #{beginRow},#{pagePerRow}
 	</select>
 	<insert id="addResume" parameterType="com.test.pds.resume.service.Resume">
 		<selectKey resultType="int" keyProperty="resumeId" order="AFTER">

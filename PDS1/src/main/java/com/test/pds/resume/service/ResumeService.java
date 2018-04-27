@@ -28,18 +28,66 @@ public class ResumeService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ResumeService.class);
 	
+	public void updateResumeFile(ResumeRequest resumeRequest,int resumeId, String path) {
+		int resumeFiledelete = 0;
+			resumeFiledelete = resumeFileDao.deleteResumeFile(resumeId);
+		if(resumeFiledelete>0) {
+			MultipartFile multipartFile = resumeRequest.getMultipartFile();
+			//multipartFile -> resumeFile
+			ResumeFile resumeFile = new ResumeFile();
+			UUID uuid = UUID.randomUUID();
+			String filename = uuid.toString().replaceAll("-", " ");
+			logger.debug("filename:"+filename);
+			resumeFile.setResumeFileName(filename);
+			String fileRealName = multipartFile.getOriginalFilename();
+			logger.debug("fileRealName:"+fileRealName);
+			resumeFile.setResumeFileRealName(fileRealName);
+			//2. 파일확장자
+			int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
+			String fileExt = multipartFile.getOriginalFilename().substring(dotIndex+1);
+			logger.debug("fileExt:"+fileExt);
+			resumeFile.setResumeFileExt(fileExt);
+			
+			//3. 파일 컨텐츠 타입
+			String fileType = multipartFile.getContentType();
+			logger.debug("fileType:" + fileType);
+			resumeFile.setResumeFileType(fileType);
+			
+			//4. 파일사이즈
+			long fileSize = multipartFile.getSize();
+			logger.debug("fileSize: "+fileSize);
+			resumeFile.setResumeFileSize(fileSize);
+			
+			resumeFile.setResumeId(resumeId);
+			
+			File file = new File(SystemPath.DOWNLOAD_PATH+filename+"."+fileExt);
+			
+			try {
+				 multipartFile.transferTo(file);
+			} catch(IllegalStateException e) {
+				e.printStackTrace();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}catch(NullPointerException e) {
+				e.printStackTrace();
+			}
+			
+			resumeFileDao.updateResumeFile(resumeId);
+		}
+		
+	}
+	
 	public Map<String, Integer> deleteResume(int resumeId) {
 	int resumeFiledelete = 0;
 	resumeFiledelete = resumeFileDao.deleteResumeFile(resumeId);
-    int resumedelete = 0;
-    if(resumeFiledelete>0){
-    	resumedelete = resumeDao.deleteResume(resumeId);
-    }
-    Map<String,Integer> deleteMap = new HashMap<String,Integer>();
-    deleteMap.put("resumeFiledelete", resumeFiledelete);
-    deleteMap.put("resumedelete", resumedelete);
-    return deleteMap;
-		
+	int resumedelete = 0;
+	if(resumeFiledelete>0){
+		resumedelete = resumeDao.deleteResume(resumeId);
+	}
+	Map<String,Integer> deleteMap = new HashMap<String,Integer>();
+	deleteMap.put("resumeFiledelete", resumeFiledelete);
+	deleteMap.put("resumedelete", resumedelete);
+	return deleteMap;
 	}
 	
 	public ResumeFile selectResumeFileOne(int resumeId) {
@@ -47,10 +95,52 @@ public class ResumeService {
 		return resumeFileDao.selectResumeFile(resumeId);
 	}
 	
-	public List<Resume> selectResumeList() {
+	public  Map<String, Object> selectResumeList(int currentPage, int pagePerRow, int unitPage) {
 		logger.debug("ResumeService - selectResume 실행");
-		List<Resume> list = resumeDao.selectResume();
-		return list;
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		List<Resume> list = resumeDao.selectResume(map);
+		int totalResumeCount = resumeDao.resumeCount();
+		int lastPage = totalResumeCount/pagePerRow;
+        if(totalResumeCount % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("======================page block=========================");
+
+        int block = 1;
+        int pagePerBlock = 10;
+        int totalBlock = totalResumeCount/pagePerBlock;//총 블록수
+        
+        if(currentPage%pagePerBlock==0) {
+        	block=currentPage/pagePerBlock;
+        	}else{
+        		block=currentPage/pagePerBlock+1;
+        			} 
+        	int firstBlockPage = (block-1)*pagePerBlock+1;
+        	int lastBlockPage = block*pagePerBlock;
+		if(lastPage > 0) {
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(block >= totalBlock) {
+			lastBlockPage = totalBlock;
+	    }
+
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		return returnMap;
 	}
 	
 	public void addResume(ResumeRequest resumeRequest, String path) {

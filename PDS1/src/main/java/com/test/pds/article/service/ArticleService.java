@@ -1,6 +1,8 @@
 package com.test.pds.article.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
@@ -59,14 +61,45 @@ public class ArticleService {
 		}
 	}
 	
-	public List<Article> getArticleList(){
+	public Map<String, Object> getArticleList(int currentPage, int pagePerRow){
 		logger.debug("ArticleService.getArticleList 호출");
-		List<Article> list = articleDao.getArticleList();
-		return list;
+		int totalRow = articleDao.articleTotalCount();
+		int firstPage = 1;
+		int lastPage = totalRow/pagePerRow;
+		if(totalRow%pagePerRow != 0) {
+			lastPage++;
+		}
+		int beforePage = ((currentPage-1)/10)*10;
+		int afterPage = ((currentPage-1)/10)*10 +11;
+		
+		Map pageMap = new HashMap<String, Integer>();
+		pageMap.put("beginRow", (currentPage-1)*10);
+		pageMap.put("pagePerRow", pagePerRow);
+		
+		Map map = new HashMap<String, Object>();
+		List<Article> list = articleDao.getArticleList(pageMap);
+		map.put("list", list);
+		map.put("firstPage", firstPage);
+		map.put("lastPage", lastPage);
+		map.put("beforePage", beforePage);
+		map.put("afterPage", afterPage);
+		logger.debug("ArticleService.getArticleList.list : " + list);
+		logger.debug("ArticleService.getArticleList.firstPage : " + firstPage);
+		logger.debug("ArticleService.getArticleList.lastPage : " + lastPage);
+		logger.debug("ArticleService.getArticleList.beforePage : " + beforePage);
+		logger.debug("ArticleService.getArticleList.afterPage : " + afterPage);
+		return map;
 	}
 	
 	public Article getArticleContent(Article article) {
 		Article resultArticle = articleDao.getArticleContent(article);
 		return resultArticle;
+	}
+	
+	public void removeArticle(Article article) {
+		if(articleFileDao.articleFileTotalCount(article) != 0) {
+			articleFileDao.removeArticleFile(article);
+		}
+		articleDao.removeArticle(article);
 	}
 }

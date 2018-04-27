@@ -21,13 +21,20 @@
         )      
    
 	</insert>  
+	
+	<select id="selectArticleCount" resultType="Integer">
+		SELECT 
+			count(*)
+		FROM article
+	</select>
 
-	<select id="selectArticleList" resultType="com.test.pds.article.service.Article">
+	<select id="selectArticleList" parameterType="java.util.Map" resultType="com.test.pds.article.service.Article">
 		SELECT 
 			article_id AS articleId
 			,article_title AS articleTitle
 		FROM article
 		ORDER BY article_id DESC
+		LIMIT ${beginRow}, ${pagePerRow}
 	</select>
 
 	<resultMap id="articleContentResult" type="com.test.pds.article.service.Article">
@@ -58,5 +65,11 @@
 		FROM article_file
 		WHERE article_id = #{articleId}
 	</select>
-
+	
+	<delete id="deleteArticle">
+		DELETE
+		FROM article
+		WHERE article_id = #{articleId}
+	</delete>
+	
 </mapper>

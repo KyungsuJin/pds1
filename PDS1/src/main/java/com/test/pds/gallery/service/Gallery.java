@@ -1,11 +1,21 @@
 package com.test.pds.gallery.service;
 
+import java.util.List;
+
 public class Gallery {
 	private int galleryId;
 	private String galleryTitle;
 	private String galleryContent;
 	private GalleryFile galleryFile;
+	private List<Gallery> galleryFileList;
 	
+	
+	public List<Gallery> getGalleryFileList() {
+		return galleryFileList;
+	}
+	public void setGalleryFileList(List<Gallery> galleryFileList) {
+		this.galleryFileList = galleryFileList;
+	}
 	public int getGalleryId() {
 		return galleryId;
 	}

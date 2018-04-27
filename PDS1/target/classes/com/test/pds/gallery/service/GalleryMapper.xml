@@ -5,15 +5,34 @@
   
 <mapper namespace="com.test.pds.gallery.service.GalleryMapper">
 	
-	<select id="selectGalleryDetail" parameterType="com.test.pds.gallery.service.Gallery" resultType="com.test.pds.gallery.service.Gallery">
-		SELECT
-			gallery_id as galleryId
-			,gallery_title as galleryTitle
-			,gallery_content as galleryContent
-		FROM gallery
-		WHERE gallery_id=1
+	<resultMap id="gallery" type="com.test.pds.gallery.service.Gallery" >
+		<result column="gallery_id" property="galleryId"/>
+		<result column="gallery_title" property="galleryTitle"/>
+		<result column="gallery_content" property="galleryContent"/>
+		<collection property="galleryFileList" javaType="java.util.List" resultMap="galleryFile"/>
+	</resultMap>
+	<resultMap id="galleryFile" type="com.test.pds.gallery.service.GalleryFile">
+		<result column="gallery_file_name" property="galleryFileName"/>
+		<result column="gallery_file_real_name" property="galleryFileRealName"/>
+		<result column="gallery_file_ext" property="galleryFileExt"/>
+		<result column="ROUND(b.gallery_File_Size/1024)" property="galleryFileSize"/>
+	</resultMap>
+	<select id="selectGalleryDetail" parameterType="com.test.pds.gallery.service.Gallery" resultMap="gallery">
+		SELECT 
+			a.gallery_Id
+			,a.gallery_Title
+			,a.gallery_Content
+			,b.gallery_File_Name
+			,b.gallery_File_Real_Name
+			,b.gallery_File_Ext
+			,ROUND(b.gallery_File_Size/1024)
+		FROM
+			gallery a LEFT JoIN gallery_file b
+		ON
+			a.gallery_id = b.gallery_id
+		WHERE
+			a.gallery_id = #{galleryId}
 	</select>
-	
 	<insert id="insertGallery" parameterType="com.test.pds.gallery.service.Gallery">
 		<selectKey resultType="int" keyProperty="galleryId" order="AFTER">
 			SELECT LAST_INSERT_ID()
@@ -42,4 +61,5 @@
 			COUNT(*)
 		FROM gallery
 	</select>
+	
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.test.pds.gallery.service.Gallery;
 import com.test.pds.gallery.service.GalleryRequest;
 import com.test.pds.gallery.service.GalleryService;
 
@@ -27,9 +28,8 @@ public class GalleryController {
 	public String selectGalleryDetail(Model model
 										,@RequestParam(value="galleryId") int galleryId) {
 		logger.debug("GalleryController_galleryDetail");
-		Map<String, Object> map = galleryService.selectGalleryDetail(galleryId);
-		model.addAttribute("gallery", map.get("gallery"));
-		model.addAttribute("list", map.get("list"));
+		Gallery gallery = galleryService.selectGalleryDetail(galleryId);
+		model.addAttribute("gallery", gallery);
 		return "galleryDetail";
 	}
 	
@@ -55,7 +55,7 @@ public class GalleryController {
 	@RequestMapping(value="addGallery", method=RequestMethod.POST)
 	public String addGallery(Model model, GalleryRequest galleryRequest, HttpSession session) {
 		logger.debug("GalleryController_addGallery_POST");
-		String path = session.getServletContext().getRealPath("/upload");
+		String path = session.getServletContext().getRealPath("resources/upload/");
 		logger.debug(galleryRequest.getMultipartFile().size()+"사이즈몇이냐");
 		///유효성검사
 		boolean flag = true;

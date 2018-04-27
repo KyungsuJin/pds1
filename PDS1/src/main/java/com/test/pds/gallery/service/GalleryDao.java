@@ -19,6 +19,7 @@ public class GalleryDao {
 	
 	public Gallery selectGalleryDetail(int galleryId) {
 		logger.debug("GalleryDao_selectGalleryDetail");
+		logger.debug("galleryId : "+galleryId);
 		return sqlSession.selectOne(NS+"selectGalleryDetail", galleryId);
 	}
 	//페이징을 위한 전체 게시글수를 구한다.

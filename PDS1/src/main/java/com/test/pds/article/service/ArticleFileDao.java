@@ -23,8 +23,11 @@ public class ArticleFileDao {
 		return sqlSession.selectOne(NS+"selectArticleFileCount", article);
 	}
 	
-	public void removeArticleFile(Article article) {
-		sqlSession.delete(NS+"deleteArticleFile", article);
+	public void removeAllArticleFile(int articleId) {
+		sqlSession.delete(NS+"deleteAllArticleFile", articleId);
 	}
 	
+	public void removeArticleFile(int articleFileId) {
+		sqlSession.delete(NS+"deleteArticleFile", articleFileId);
+	}
 }

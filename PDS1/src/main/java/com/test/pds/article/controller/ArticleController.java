@@ -2,6 +2,7 @@ package com.test.pds.article.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -87,10 +88,13 @@ public class ArticleController {
 										,@RequestParam(value="currentPage") int currentPage
 										,@RequestParam(value="pagePerRow", defaultValue="10" ) int pagePerRow) {
 		logger.debug("ArticleController.getArticleContent GET 방식 호출");
-		model.addAttribute("article",articleService.getArticleContent(article));
+		Map map = articleService.getArticleContent(article);
+		model.addAttribute("article", map.get("article"));
 		model.addAttribute("downloadPath", SystemPath.DOWNLOAD_PATH);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pagePerRow", pagePerRow);
+		model.addAttribute("upArticleId", ((Article) map.get("upArticle")).getArticleId());
+		model.addAttribute("downArticleId", ((Article) map.get("downArticle")).getArticleId());
 		return "getArticleContent";
 	}
 	
@@ -103,5 +107,28 @@ public class ArticleController {
 		logger.debug("ArticleController.removeArticle GET 방식 호출");
 		articleService.removeArticle(article);
 		return "redirect:/getArticleList?currentPage=" + currentPage + "&pagePerRow=" + pagePerRow;
+	}
+
+	////////////////////// 게시물 수정 //////////////////////
+	
+	@RequestMapping(value="/modifyArticle", method=RequestMethod.GET)
+	public String modifyArticle(Model model
+									,Article article
+									,@RequestParam(value="currentPage") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10" ) int pagePerRow) {
+		logger.debug("ArticleController.modifyArticle GET 방식 호출");
+		model.addAttribute("article",articleService.getArticleContent(article).get("article"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("pagePerRow", pagePerRow);
+		return "modifyArticle";
+	}
+	
+	@RequestMapping(value="/modifyArticle", method=RequestMethod.POST)
+	public String modifyArticle(ArticleRequest articleRequest
+									,@RequestParam(value="currentPage") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10" ) int pagePerRow) {
+		logger.debug("ArticleController.modifyArticle POST 방식 호출");
+		articleService.modifyArticle(articleRequest);
+		return "redirect:/getArticleList?articleId=" + articleRequest.getArticleId() + "&currentPage=" + currentPage + "&pagePerRow=" + pagePerRow;
 	}
 }

@@ -30,10 +30,15 @@
 		WHERE article_id = #{articleId}
 	</select>
 	
-	<delete id="deleteArticleFile">
+	<delete id="deleteAllArticleFile" parameterType="Integer">
 		DELETE
 		FROM article_file
 		WHERE article_id = #{articleId}
 	</delete>
 	
+	<delete id="deleteArticleFile" parameterType="Integer">
+		DELETE
+		FROM article_file
+		WHERE article_file_id = #{articleFileId}
+	</delete>
 </mapper>

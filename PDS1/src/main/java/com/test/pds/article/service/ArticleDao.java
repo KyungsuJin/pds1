@@ -1,5 +1,6 @@
 package com.test.pds.article.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,15 @@ public class ArticleDao {
 	}
 	
 	public void removeArticle(Article article) {
-		sqlSession.delete(NS+"deleteArticle", article);
+		sqlSession.delete(NS+"deleteArticle", article.getArticleId());
+	}
+	
+	public void modifyArticle(ArticleRequest articleRequest) {
+		sqlSession.update(NS+"updateArticle",articleRequest);
+	}
+	
+	public List<Article> getArticleClosest(Article article) {
+		return sqlSession.selectList(NS+"selectArticleClosest", article);
 	}
 
 }

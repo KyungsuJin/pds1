@@ -66,10 +66,34 @@
 		WHERE article_id = #{articleId}
 	</select>
 	
-	<delete id="deleteArticle">
+	<delete id="deleteArticle" parameterType="Integer">
 		DELETE
 		FROM article
 		WHERE article_id = #{articleId}
 	</delete>
+	
+	<update id="updateArticle" parameterType="com.test.pds.article.service.ArticleRequest">
+		UPDATE
+			article
+		SET
+			article_title = #{articleTitle}
+			,article_content = #{articleContent}
+		WHERE article_id = #{articleId}
+	</update>
+	
+	<select id="selectArticleClosest" parameterType="com.test.pds.article.service.Article" resultType="com.test.pds.article.service.Article">
+		(SELECT 
+			article_id AS ArticleId 
+		FROM article 
+		WHERE article_id &gt; #{articleId} 
+		LIMIT 1)
+		UNION ALL
+		(SELECT 
+			article_id AS ArticleId 
+		FROM article 
+		WHERE article_id &lt; #{articleId}
+		ORDER BY article_id DESC 
+		LIMIT 1)
+	</select>
 	
 </mapper>

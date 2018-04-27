@@ -6,6 +6,7 @@
 <jsp:include page="header.jsp"></jsp:include>
 <style>
 	#removeArticleBtn{ float: right; }
+	#modifyArticleBtn{ float: right; }
 	#containerArticle{ width: 1000px; margin: auto; }
 	#containerArticle div{border: 1px solid #bcbcbc; text-align: left;}
 	#articleContent{ height: 500px; }
@@ -19,6 +20,10 @@
 		$("#removeArticleBtn").click(function(){
 			$(location).attr('href', "${pageContext.request.contextPath}/removeArticle?articleId=${article.articleId}&currentPage=${currentPage}&pagePerRow=${pagePerRow}");
 		});
+		
+		$("#modifyArticleBtn").click(function(){
+			$(location).attr('href', "${pageContext.request.contextPath}/modifyArticle?articleId=${article.articleId}&currentPage=${currentPage}&pagePerRow=${pagePerRow}");
+		});
 	});
 </script>
 </head>
@@ -26,13 +31,21 @@
 	<jsp:include page="body.jsp"></jsp:include>
 	<div id="containerArticle" align="center">
 		<h1>ArticleContent</h1>
-		<input id="removeArticleBtn" type="button" value="삭제"><br><br>
+		<input id="removeArticleBtn" type="button" value="삭제">
+		<input id="modifyArticleBtn" type="button" value="수정">
+		<br><br>
 		<div>${article.articleId}</div>
 		<div>${article.articleTitle}</div>
 		<div id="articleContent">${article.articleContent}</div>
+		<c:if test="${upArticleId ne 0}">
+			<div><a href="${pageContext.request.contextPath}/getArticleContent?articleId=${upArticleId}&currentPage=${currentPage}&pagePerRow=${pagePerRow}">윗글</a></div>
+		</c:if>
+		<c:if test="${downArticleId ne 0}">
+			<div><a href="${pageContext.request.contextPath}/getArticleContent?articleId=${downArticleId}&currentPage=${currentPage}&pagePerRow=${pagePerRow}">아랫글</a></div>
+		</c:if>
 		<c:forEach var = "articleFile" items = "${article.articleFile}">
 			<div>
-				<a href="${pageContext.request.contextPath}/resources/upload/${articleFile.articleFileName}.${articleFile.articleFileExt}" download="${articleFile.articleFileRealName}.${articleFile.articleFileExt}">${articleFile.articleFileRealName}(${articleFile.articleFileSize}byte)</a>
+				<a href="${pageContext.request.contextPath}/resources/upload/${articleFile.articleFileName}.${articleFile.articleFileExt}" download="${articleFile.articleFileRealName}">${articleFile.articleFileRealName}(${articleFile.articleFileSize}byte)</a>
 			</div>
 		</c:forEach>
 		<input id="articleListBtn" type="button" value="목록">

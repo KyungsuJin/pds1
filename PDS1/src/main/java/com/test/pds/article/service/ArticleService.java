@@ -91,15 +91,61 @@ public class ArticleService {
 		return map;
 	}
 	
-	public Article getArticleContent(Article article) {
-		Article resultArticle = articleDao.getArticleContent(article);
-		return resultArticle;
+	public Map<String, Article> getArticleContent(Article article) {
+		Map map = new HashMap<String, Object>();
+		map.put("article", articleDao.getArticleContent(article));
+		List<Article> list = articleDao.getArticleClosest(article);
+		if(list.size() < 2) {
+			if(list.get(0).getArticleId() < article.getArticleId()) {
+				map.put("upArticle", new Article());
+				map.put("downArticle", list.get(0));
+			} else {
+				map.put("upArticle", list.get(0));
+				map.put("downArticle", new Article());
+			}
+		} else {
+			map.put("upArticle", list.get(0));
+			map.put("downArticle", list.get(1));	
+		}
+		return map;
 	}
 	
 	public void removeArticle(Article article) {
 		if(articleFileDao.articleFileTotalCount(article) != 0) {
-			articleFileDao.removeArticleFile(article);
+			articleFileDao.removeAllArticleFile(article.getArticleId());
 		}
 		articleDao.removeArticle(article);
+	}
+	
+	public void modifyArticle(ArticleRequest articleRequest) {
+		List<MultipartFile> multipartFileList = articleRequest.getMultipartFile();
+		articleDao.modifyArticle(articleRequest);
+		for(int articleId : articleRequest.getArticleDeleteList()) {
+			articleFileDao.removeArticleFile(articleId);
+		}
+		
+		for(MultipartFile multipartFile : multipartFileList) {
+			logger.debug("ArticleService.addArticle.multipartFile : " + multipartFile);
+			ArticleFile articleFile = new ArticleFile();
+			UUID uuid = UUID.randomUUID();
+			String fileName = uuid.toString().replaceAll("-", "");
+			logger.debug("ArticleService.addArticle.fileName : " + articleRequest.getArticleId());
+			articleFile.setArticleFileName(fileName);
+			articleFile.setArticleFileRealName(multipartFile.getOriginalFilename());
+			articleFile.setArticleId(articleRequest.getArticleId());
+			String fileExt = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
+			articleFile.setArticleFileExt(fileExt);
+			articleFile.setArticleFileType(multipartFile.getContentType());
+			articleFile.setArticleFileSize(multipartFile.getSize());
+			File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
+			try {
+				multipartFile.transferTo(file);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			articleFileDao.addArticleFile(articleFile);
+		}
 	}
 }

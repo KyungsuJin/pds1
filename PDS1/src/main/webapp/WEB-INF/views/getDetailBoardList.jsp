@@ -19,7 +19,7 @@
 				<c:forEach items="${list}" var="board">
 					<tr>
 						<td>${board.boardFile.boardId}</td>
-						<td>${board.board.boardContent}</td>
+						<%-- <td>${board.board.boardContent}</td> --%>
 						<td>${board.boardFileExt}</td>
 						<td>${board.boardFileType}</td>
 						<td>${board.boardFileSize}</td>

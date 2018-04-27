@@ -22,7 +22,7 @@
   		<result column="board_id" property="boardId"/>
   		<result column="board_title" property="boardTitle"/>
   		<result column="board_content" property="boardContent"/>
-  		<collection property="boardFile" javaType="java.util.ArrayList" ofType="boardFile"></collection>
+  		<collection property="boardFile"  resultMap="boardFile"></collection>
   	</resultMap>
   	<resultMap type="com.test.pds.board.service.BoardFile" id="boardFile">
   		<result column="board_file_id" property="boardFileId"/>
@@ -50,7 +50,7 @@
   	</select>
   	<select id="getDetailList"
   			parameterType="int"
-  			resultType="com.test.pds.board.service.BoardFile">
+  			resultMap="board">
   			
   			SELECT 
   				b2.board_id as boardFileId

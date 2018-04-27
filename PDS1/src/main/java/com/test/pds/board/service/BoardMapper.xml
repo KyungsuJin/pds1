@@ -4,6 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.test.pds.board.service.BoardMapper">
+
+  	<resultMap type="com.test.pds.board.service.Board" id="board">
+  		<result column="board_id" property="boardId"/>
+  		<result column="board_title" property="boardTitle"/>
+  		<result column="board_content" property="boardContent"/>
+  		<collection property="boardFile"   ofType="com.test.pds.board.service.BoardFile">
+	  		<id column="board_file_id" property="boardFileId"/>
+	  		<result column="board_id" property="boardId"/>
+	  		<result column="board_file_name" property="boardFileName"/>
+	  		<result column="board_file_ext" property="boardFileExt"/>
+	  		<result column="board_file_type" property="boardFileType"/>
+	  		<result column="board_file_size" property="boardFileSize"/>
+	  		<result column="board_file_real_name" property="originalFileName"/>
+  		</collection>
+  	</resultMap>
+  	
   	<insert id="insertBoard"
   			parameterType="com.test.pds.board.service.Board">
   			<selectKey resultType="int" keyProperty="boardId" order="AFTER">
@@ -18,48 +34,31 @@
   			)
   	</insert>
   	
-  	<resultMap type="com.test.pds.board.service.Board" id="board">
-  		<result column="board_id" property="boardId"/>
-  		<result column="board_title" property="boardTitle"/>
-  		<result column="board_content" property="boardContent"/>
-  		<collection property="boardFile"  resultMap="boardFile"></collection>
-  	</resultMap>
-  	<resultMap type="com.test.pds.board.service.BoardFile" id="boardFile">
-  		<result column="board_file_id" property="boardFileId"/>
-  		<result column="board_file_name" property="boardFileName"/>
-  		<result column="board_file_ext" property="boardFileExt"/>
-  		<result column="board_file_type" property="boardFileType"/>
-  		<result column="board_file_size" property="boardFileSize"/>
-  		<result column="board_file_real_name" property="originalFileName"></result>
-  		<result column="board_id" property="boardId"/>
-  	</resultMap>
-  	
   	<select id="getBoardList"
-  			parameterType="String"
+  			parameterType="java.util.Map"
   			resultMap="board">
   			
   			SELECT 
-  				b1.board_id 
-  				,b1.board_title
+  				board_id 
+  				,board_title
   			FROM
-  				board b1
-  			JOIN
-  				board_file b2
-  			ON 
-  				b1.board_id=b2.board_id
+  				board 
+  			LIMIT #{beginRow},#{pagePerRow}
+  			
   	</select>
   	<select id="getDetailList"
   			parameterType="int"
   			resultMap="board">
   			
-  			SELECT 
-  				b2.board_id as boardFileId
-  				,b1.board_title boardTitle
-  				,b1.board_content as boardContent
-  				,b2.board_file_ext as boardFileExt
-  				,b2.board_file_type as boardFileType
-  				,b2.board_file_size as boardFileSize
-  				,b2.board_file_real_name as originalFileName
+  			SELECT
+  				b1.board_content 
+  				,b1.board_title
+  				,b2.board_id 
+  				,b2.board_file_ext
+  				,b2.board_file_type
+  				,b2.board_file_size
+  				,b2.board_file_real_name
+  				,b2.board_file_name
   			FROM
   				board b1
   			JOIN
@@ -67,5 +66,9 @@
   			ON 
   				b1.board_id=b2.board_id
   			WHERE b2.board_id = #{boardId}
+  	</select>
+  	<select id="totalCountList"
+  			resultType="int">
+  		SELECT count(*) FROM board
   	</select>
   </mapper>

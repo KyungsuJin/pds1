@@ -12,7 +12,9 @@ public class BoardFile {
 	private int boardId; ////board_id
 	
 	
-	
+	public BoardFile() {
+		  super();
+		 }
 
 	public String getOriginalFileName() {
 		return originalFileName;

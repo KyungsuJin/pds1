@@ -1,4 +1,7 @@
 package com.test.pds.board.service;
+
+import java.util.List;
+
 /*
  * board
  */
@@ -6,8 +9,14 @@ public class Board {
 	private int boardId;
 	private String boardTitle; //board_title
 	private String boardContent; //board_content
-	private BoardFile boardFile;
+	private List<BoardFile> boardFile;
 	
+	public List<BoardFile> getBoardFile() {
+		return boardFile;
+	}
+	public void setBoardFile(List<BoardFile> boardFile) {
+		this.boardFile = boardFile;
+	}
 	public int getBoardId() {
 		return boardId;
 	}
@@ -26,14 +35,8 @@ public class Board {
 	public void setBoardContent(String boardContent) {
 		this.boardContent = boardContent;
 	}
-	public BoardFile getBoardFile() {
-		return boardFile;
-	}
-	public void setBoardFile(BoardFile boardFile) {
-		this.boardFile = boardFile;
-	}
 	
-	@Override
+
 	public String toString() {
 		return "Board [boardTitle=" + boardTitle + ", boardContent=" + boardContent + ", boardFile=" + boardFile + "]";
 	}

@@ -1,6 +1,7 @@
 package com.test.pds.board.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpSession;
@@ -52,20 +53,26 @@ public class boardController {
 		return "redirect:/";
 	}
 	@RequestMapping(value="getBoardList",method=RequestMethod.GET)
-	public String getBoardList(Model model) {
+	public String getBoardList(Model model
+							,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+							,@RequestParam(value="pagePerRow",defaultValue="10")int pagePerRow) {
 		logger.debug("boardController.getBoardList");
-		List<Board> list=boardService.getBoardList();
-		model.addAttribute("list",list);
+		Map<String,Object> map =boardService.getBoardList(currentPage,pagePerRow);
+		model.addAttribute("list",map.get("list"));
+		model.addAttribute("startPage",map.get("startPage"));
+		model.addAttribute("endPage",map.get("endPage"));
+		model.addAttribute("lastPage",map.get("lastPage"));
+		model.addAttribute("currentPage",currentPage);
 		return "getBoardList";
 	}
-	@RequestMapping(value="getDetailBoardList",method=RequestMethod.GET)
+	@RequestMapping(value="getBoardContent",method=RequestMethod.GET)
 	public String getDetailList(Model model
 								,@RequestParam(value="boardId")int boardId) {
 		logger.debug("boardController.getDetailList : "+boardId);
 		List<Board> list =boardService.getDetailList(boardId);
 		
 		model.addAttribute("list",list);
-		return "getDetailBoardList";
+		return "getBoardContent";
 	}
 
 }

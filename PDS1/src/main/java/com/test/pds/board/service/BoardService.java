@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds.SystemPath;
+
 @Service
 @Transactional
 public class BoardService {
@@ -77,7 +79,7 @@ public class BoardService {
 				//리스트에 boardFile을 저장한다.
 				boardFileList.add(boardFile);
 				//파일을 옮길 경로
-				File file = new File("d:/upload/"+fileName+"."+fileExt);
+				File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
 				logger.debug("file : "+file);
 			
 				try {
@@ -95,14 +97,35 @@ public class BoardService {
 			map.put("boardFileList", boardFileList);
 			boardFileDao.addBoardFile(map);
 		}
-	public List<Board> getBoardList() {
+	public Map<String,Object> getBoardList(int currentPage,int pagePerRow) {
 		logger.debug("boardService.getBoardList");
-		return boardDao.getBoardList();
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		int beginRow = (currentPage-1)*10+1;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		List<Board> list=boardDao.getBoardList(map);
+		int totalCountList =boardDao.totalCountList();
+		logger.debug("boardDao.totalCountList");
+		
+		int lastPage=totalCountList/pagePerRow;
+		if(totalCountList%pagePerRow>0) {
+			lastPage++;
+		}
+		int startPage=((currentPage-1)/10)*10+1;
+		int endPage = startPage*10-1;
+		if(endPage>lastPage) {
+			endPage=lastPage;
+		}
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("startPage", startPage);
+		returnMap.put("endPage", endPage);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("list", list);
+		return returnMap;
 	}
 	public List<Board> getDetailList(int boardId){
 		logger.debug("boardService.getDetailList");
 		return boardDao.getDetailList(boardId);
-		 
 	}
 
 }

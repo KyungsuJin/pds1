@@ -1,6 +1,7 @@
 package com.test.pds.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -23,12 +24,15 @@ public class BoardDao {
 		return boardId;
 	}
 	//파일 리스트
-	public List<Board> getBoardList() {
+	public List<Board> getBoardList(Map<String,Integer> map) {
 		logger.debug("BoardDao.getBoardList");
-		return sqlSession.selectList(NS+"getBoardList");
+		return sqlSession.selectList(NS+"getBoardList",map);
 	}
 	public List<Board> getDetailList(int boardId){
 		logger.debug("BoardDao.getDetailList");
 		return sqlSession.selectList(NS+"getDetailList",boardId);
+	}
+	public int totalCountList() {
+		return sqlSession.selectOne(NS+"totalCountList");
 	}
 }

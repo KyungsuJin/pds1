@@ -1,6 +1,5 @@
 package com.test.pds.gallery.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +22,16 @@ public class GalleryController {
 	@Autowired
 	GalleryService galleryService;
 	private static final Logger logger = LoggerFactory.getLogger(GalleryController.class);
+	
+	@RequestMapping(value="galleryDetail", method=RequestMethod.GET)
+	public String selectGalleryDetail(Model model
+										,@RequestParam(value="galleryId") int galleryId) {
+		logger.debug("GalleryController_galleryDetail");
+		Map<String, Object> map = galleryService.selectGalleryDetail(galleryId);
+		model.addAttribute("gallery", map.get("gallery"));
+		model.addAttribute("list", map.get("list"));
+		return "galleryDetail";
+	}
 	
 	@RequestMapping(value="getGalleryList", method=RequestMethod.GET)
 	public String getGalleryList(Model model

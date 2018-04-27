@@ -3,9 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Insert title here</title>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
+	<jsp:include page="header.jsp"></jsp:include>
 </head>
 <body>
 	<form action="${pageContext.request.contextPath}/addGallery" method="POST" enctype="multipart/form-data">

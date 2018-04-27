@@ -9,6 +9,7 @@
 			gallery_file_id
 			,gallery_id
 			,gallery_file_name
+			,gallery_file_real_name
 			,gallery_file_ext
 			,gallery_file_type
 			,gallery_file_size
@@ -17,9 +18,20 @@
 			#{galleryFileId}
 			,#{galleryId}
 			,#{galleryFileName}
+			,#{galleryFileRealName}
 			,#{galleryFileExt}
 			,#{galleryFileType}
 			,#{galleryFileSize}
 		)
 	</insert>
+	<select id="selectFileList" parameterType="com.test.pds.gallery.service.Gallery" resultType="hashmap">
+				SELECT
+			gallery_file_id as galleryFileId
+			,gallery_file_name as galleryFileName
+			,ROUND(gallery_file_size/1024, 1) as galleryFileSize
+		FROM
+			gallery_file
+		WHERE
+			gallery_id=#{galleryId}
+	</select>
 </mapper>

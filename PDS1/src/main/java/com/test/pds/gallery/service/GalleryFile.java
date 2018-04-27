@@ -4,6 +4,7 @@ public class GalleryFile {
 	private int galleryFileId;
 	private int galleryId;
 	private String galleryFileName;
+	private String galleryFileRealName;
 	private String galleryFileExt;
 	private String galleryFileType;
 	private long galleryFileSize;
@@ -45,11 +46,19 @@ public class GalleryFile {
 		this.galleryFileSize = galleryFileSize;
 	}
 	
+	public String getGalleryFileRealName() {
+		return galleryFileRealName;
+	}
+	public void setGalleryFileRealName(String galleryFileRealName) {
+		this.galleryFileRealName = galleryFileRealName;
+	}
+	
 	@Override
 	public String toString() {
 		return "GalleryFile [galleryFileId=" + galleryFileId + ", galleryId=" + galleryId + ", galleryFileName="
-				+ galleryFileName + ", galleryFileExt=" + galleryFileExt + ", galleryFileType=" + galleryFileType
-				+ ", galleryFileSize=" + galleryFileSize + "]";
+				+ galleryFileName + ", galleryFileRealName=" + galleryFileRealName + ", galleryFileExt="
+				+ galleryFileExt + ", galleryFileType=" + galleryFileType + ", galleryFileSize=" + galleryFileSize
+				+ "]";
 	}
 
 	

@@ -17,6 +17,10 @@ public class GalleryDao {
 	SqlSessionTemplate sqlSession;
 	final String NS = "com.test.pds.gallery.service.GalleryMapper.";
 	
+	public Gallery selectGalleryDetail(int galleryId) {
+		logger.debug("GalleryDao_selectGalleryDetail");
+		return sqlSession.selectOne(NS+"selectGalleryDetail", galleryId);
+	}
 	//페이징을 위한 전체 게시글수를 구한다.
 	public int totalCount() {
 		logger.debug("GalleryDao_totalCount");		

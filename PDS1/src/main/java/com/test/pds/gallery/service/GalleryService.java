@@ -22,6 +22,14 @@ public class GalleryService {
 	GalleryFileDao galleryFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(GalleryService.class);
 	
+	public Map<String, Object> selectGalleryDetail(int galleryId) {
+		logger.debug("GalleryService_selectGalleryDetail");
+		logger.debug("111111111111111111111111111galleryId : "+galleryId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("gallery", galleryDao.selectGalleryDetail(galleryId));
+		map.put("list", galleryFileDao.selectFileList(galleryId));
+		return map;
+	}
 	public Map<String, Object> getGalleryList(int currentPage, int pagePerRow) {
 		logger.debug("GalleryService_getGalleryList");
 		logger.debug("currentPage : "+currentPage);
@@ -89,6 +97,10 @@ public class GalleryService {
 			String fileName = uuid.toString().replaceAll("-", "");
 			logger.debug("fileName : "+fileName);
 			galleryFile.setGalleryFileName(fileName);
+			
+			String fileRealName = multipartFile.getOriginalFilename();
+			logger.debug("fileRealName : "+fileRealName);
+			galleryFile.setGalleryFileRealName(fileRealName);
 			
 			int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
 			logger.debug("dotIndex : "+dotIndex);	

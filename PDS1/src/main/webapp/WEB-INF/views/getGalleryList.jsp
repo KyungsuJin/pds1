@@ -9,7 +9,7 @@
 <body>
 	<jsp:include page="body.jsp"></jsp:include>
 	<div align="center">
-		<h1>ArticleList</h1>
+		<h1>GalleryList</h1>
 		<table border="1" class="table">
 			<thead>
 				<tr>
@@ -21,14 +21,14 @@
 				<c:forEach var = "gallery" items = "${list}">
 					<tr>
 						<td>${gallery.galleryId}</td>
-						<td>${gallery.galleryTitle}</td>
+						<td><a href="${pageContext.request.contextPath}/galleryDetail?galleryId=${gallery.galleryId}">${gallery.galleryTitle}</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		lastPage = ${lastPage} 
 		flag = ${flag} 
-		endPage = &{endPage}
+		endPage = ${endPage}
 		<div class="box-footer">
 			<div class="text-center">
 				<ul class="pagination">

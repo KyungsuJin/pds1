@@ -95,7 +95,7 @@ public class ResumeService {
 		return resumeFileDao.selectResumeFile(resumeId);
 	}
 	
-	public  Map<String, Object> selectResumeList(int currentPage, int pagePerRow, int unitPage) {
+	public  Map<String, Object> selectResumeList(int currentPage, int pagePerRow) {
 		logger.debug("ResumeService - selectResume 실행");
 		Map<String,Integer> map = new HashMap<String,Integer>();
 		int beginRow = (currentPage-1)*pagePerRow;
@@ -113,33 +113,36 @@ public class ResumeService {
         logger.debug("beginRow:"+beginRow);
         logger.debug("pagePerRow:"+pagePerRow);
         logger.debug("======================page block=========================");
-
-        int block = 1;
-        int pagePerBlock = 10;
+       
+        int pagePerBlock = 10; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
         int totalBlock = totalResumeCount/pagePerBlock;//총 블록수
         
-        if(currentPage%pagePerBlock==0) {
-        	block=currentPage/pagePerBlock;
-        	}else{
-        		block=currentPage/pagePerBlock+1;
-        			} 
-        	int firstBlockPage = (block-1)*pagePerBlock+1;
-        	int lastBlockPage = block*pagePerBlock;
-		if(lastPage > 0) {
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
 			if(lastPage % pagePerBlock != 0) {
 				totalBlock++;
 			}
 		}
-		if(block >= totalBlock) {
+		if(lastBlockPage >= totalBlock) {
 			lastBlockPage = totalBlock;
-	    }
-
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("======================page block=========================");
 		Map<String,Object> returnMap = new HashMap<String,Object>();
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);
-
 		returnMap.put("firstBlockPage", firstBlockPage);
 		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
 		return returnMap;
 	}
 	
@@ -183,7 +186,7 @@ public class ResumeService {
 			
 			resumeFile.setResumeId(resumeId);
 			
-			File file = new File(SystemPath.DOWNLOAD_PATH+filename+"."+fileExt);
+			File file = new File("d:\\upload\\"+filename+"."+fileExt);
 			
 			try {
 				 multipartFile.transferTo(file);

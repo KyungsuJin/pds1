@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.test.pds.SystemPath;
+
 @Service
 public class GalleryService {
 	
@@ -22,13 +24,13 @@ public class GalleryService {
 	GalleryFileDao galleryFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(GalleryService.class);
 	
-	public Map<String, Object> selectGalleryDetail(int galleryId) {
+	public Gallery selectGalleryDetail(int galleryId) {
 		logger.debug("GalleryService_selectGalleryDetail");
-		logger.debug("111111111111111111111111111galleryId : "+galleryId);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("gallery", galleryDao.selectGalleryDetail(galleryId));
-		map.put("list", galleryFileDao.selectFileList(galleryId));
-		return map;
+		
+		
+		return galleryDao.selectGalleryDetail(galleryId);
 	}
 	public Map<String, Object> getGalleryList(int currentPage, int pagePerRow) {
 		logger.debug("GalleryService_getGalleryList");
@@ -92,6 +94,9 @@ public class GalleryService {
 		gallery.setGalleryTitle(galleryRequest.getGalleryTitle());
 		gallery.setGalleryContent(galleryRequest.getGalleryContent());
 		
+		int galleryId = galleryDao.addGallery(gallery);
+		galleryFile.setGalleryId(galleryId);
+		
 		for(MultipartFile multipartFile:list) {
 			UUID uuid = UUID.randomUUID();
 			String fileName = uuid.toString().replaceAll("-", "");
@@ -118,10 +123,9 @@ public class GalleryService {
 			
 			
 			gallery.setGalleryFile(galleryFile);
-			File file = new File("d:/upload/"+fileName+"."+fileExt);
+			File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
 			logger.debug("file : "+file);
-			int galleryId = galleryDao.addGallery(gallery);
-			galleryFile.setGalleryId(galleryId);
+			
 			
 			try {
 				multipartFile.transferTo(file);

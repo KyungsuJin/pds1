@@ -4,6 +4,13 @@
 <html>
 <head>
 <jsp:include page="header.jsp"></jsp:include>
+<script>
+	$(document).ready(function() {
+		$("#galleryAddBtn").click(function() {
+			location.href='addGallery';
+		}) 
+	})
+</script>
 </head>
 <body>
 <body>
@@ -26,9 +33,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		lastPage = ${lastPage} 
-		flag = ${flag} 
-		endPage = ${endPage}
+		<div><input type="button" id="galleryAddBtn" value="사진등록"></div>
 		<div class="box-footer">
 			<div class="text-center">
 				<ul class="pagination">
@@ -54,13 +59,8 @@
 					</c:choose>					
 				</ul>
 			</div>
-		
-		</div>
-		
-		
-		
+		</div>	
 	</div>
-
 </body>
 </body>
 </html>

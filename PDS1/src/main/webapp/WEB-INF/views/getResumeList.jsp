@@ -7,22 +7,25 @@
 	<title>getResumeList.jsp</title>
 	<jsp:include page="header.jsp"></jsp:include>
 	<style>
-	th, td{
-	text-align: center;
+	h4, th, td{
+		text-align: center;
 	}
+	#form{
+		padding-top: 50px;
+	}
+
 	</style>
 </head>
 <body>
 	<jsp:include page="body.jsp"></jsp:include>
-	<h1>이력서 리스트</h1>
-	<div class="container">
-	<div><a class="btn btn-default btn-block" href="${pageContext.request.contextPath}/addResume">이력서등록하기</a></div>
-		<table class="table table-striped form-group">
+	<div id="form" class="container text-center">
+		<div id="form-table">
+		<table class="table form-group">
+		<h4>이력서 리스트</h4><br><br>
 			<thead>
 				<tr>
-					<th>ResumeId</th>
-					<th>ResumeTitle</th>
-					<th>ResumeContent</th>
+					<th>번호</th>
+					<th>제목</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -30,32 +33,41 @@
 					<tr>
 						<td>${resume.resumeId }</td>
 						<td><a href="${pageContext.request.contextPath}/getResumeFileDetail?resumeId=${resume.resumeId}">${resume.resumeTitle}</a></td>
-						<td>${resume.resumeContent }</td>
 					</tr>
 				</c:forEach>
 			</tbody>	
 		</table>
+		<div><a id="addResume" class="btn pull-right btn-default" href="${pageContext.request.contextPath}/addResume">이력서등록하기</a></div>
 		<nav>
 			<ul class="pagination pagination-sm">
-				<c:if test="${currentPage > 1}">
+				<c:if test="${currentPage > 10}">
 					<li>
-						<a aria-label="first" href="${pageContext.request.contextPath }/getResumeList?currentPage=1">처음으로</a>
+						<a aria-label="first" href="${pageContext.request.contextPath }/getResumeList?currentPage=1">&laquo;</a>
 					</li>
 				</c:if>
-
+				<c:if test="${firstBlockPage > 2}">
+					<li>
+						<a aria-label="first" href="${pageContext.request.contextPath }/getResumeList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
+					</li>
+				</c:if>
 					<li>
 					<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
 						<a href="${pageContext.request.contextPath}/getResumeList?currentPage=${i}">${i}</a>				
 					</c:forEach>		
 					</li>
-
+				<c:if test="${lastBlockPage < totalBlock}">
+					<li>
+						<a aria-label="last" href="${pageContext.request.contextPath}/getResumeList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
+					</li>
+				</c:if>
 				<c:if test="${currentPage < lastPage}">
 					<li>
-						<a aria-label="last" href="${pageContext.request.contextPath}/getResumeList?currentPage=${lastPage}">마지막</a>
+						<a aria-label="last" href="${pageContext.request.contextPath}/getResumeList?currentPage=${lastPage}">&raquo;</a>
 					</li>
 				</c:if>
 			</ul>
 		</nav>
+	</div>
 	</div>
 </body>
 </html>

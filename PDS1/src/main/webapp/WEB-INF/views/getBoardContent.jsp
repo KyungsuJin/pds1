@@ -16,6 +16,7 @@
 					<th>BoardTitle</th>
 					<th>BoardContent</th>
 					<th>BoardFile</th>
+					<th>수정</th>
 				</tr>
 			</thead>
 			
@@ -32,6 +33,7 @@
 							</li>
 						</c:forEach>
 						</td>
+						<td><a href="${pageContext.request.contextPath}/modifyBoard?boardId=${board.boardId}">수정</a></td>
 					</tr>
 				</c:forEach>
 				

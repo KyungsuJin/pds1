@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.test.pds.board.service.Board;
+import com.test.pds.board.service.BoardFile;
 import com.test.pds.board.service.BoardRequest;
 import com.test.pds.board.service.BoardService;
 
@@ -36,7 +37,7 @@ public class boardController {
 	public String addBoard(Model model,BoardRequest boardRequest,HttpSession session) {
 		logger.debug("Controller addBoard POST");
 		logger.debug("boardDTO:"+boardRequest.toString());
-		String path = session.getServletContext().getRealPath("/upload");//세션객체의 경로를 가져온다
+		String path = session.getServletContext().getRealPath("resources/upload");//세션객체의 경로를 가져온다
 		int flag=0;
 		//for 문을 이용해 controller 넘어온 파일들을 if 문을 사용해 검사한다
 		for(MultipartFile multipartFile : boardRequest.getMultipartFile()) {
@@ -73,6 +74,20 @@ public class boardController {
 		
 		model.addAttribute("list",list);
 		return "getBoardContent";
+	}
+	@RequestMapping(value="modifyBoard",method=RequestMethod.GET)
+	public String modifyBoard(Model model
+							,@RequestParam(value="boardId")int boardId) {
+		List<Board> list =boardService.getDetailList(boardId);
+		
+		model.addAttribute("list",list);
+		return "modifyBoard";
+	}
+	@RequestMapping(value="modifyBoard",method=RequestMethod.POST)
+	public String modifyBoard(Model model
+							,BoardRequest boardRequest) {
+		logger.debug("디버그 : "+boardRequest.getBoardDeleteList().size());
+		return "modifyBoard";
 	}
 
 }

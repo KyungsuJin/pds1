@@ -53,6 +53,7 @@
   			SELECT
   				b1.board_content 
   				,b1.board_title
+  				,b2.board_file_id
   				,b2.board_id 
   				,b2.board_file_ext
   				,b2.board_file_type

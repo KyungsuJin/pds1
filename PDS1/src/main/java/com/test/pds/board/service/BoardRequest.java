@@ -7,9 +7,17 @@ import org.springframework.web.multipart.MultipartFile;
 public class BoardRequest {
 	private String boardTitle;
 	private String boardContent;
+	private List<Integer> boardDeleteList;
 	private List<MultipartFile> multipartFile;
 	
 	
+	
+	public List<Integer> getBoardDeleteList() {
+		return boardDeleteList;
+	}
+	public void setBoardDeleteList(List<Integer> boardDeleteList) {
+		this.boardDeleteList = boardDeleteList;
+	}
 	public List<MultipartFile> getMultipartFile() {
 		return multipartFile;
 	}

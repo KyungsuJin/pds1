@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC>
 <html>
 <head>
@@ -17,7 +17,7 @@
 	            $('#fileForm2').hide();          
 	        }
 	    });
-        $("#multipartFile1").on('change', function(event) {
+        $("#multipartFile").on('change', function(event) {
             var file = event.target.files[0];
             if(file.size>=2*1024*1024) {
             	alert("이미지 파일사이즈는 2MB까지 가능합니다.");
@@ -41,6 +41,12 @@
 				document.getElementById('demo').innerHTML = filetype;
 			}
         });
+	    $("#buttonlist").click(function() {  
+	    	location.href="${pageContext.request.contextPath}/getResumeList";
+	    });
+	    $("#buttondelete").click(function() {  
+	    	location.href="${pageContext.request.contextPath}/deleteResumeFile?resumeId=${resumeFile.resumeId}";
+	    });
     });
 		function check() {
 			var file = event.target.files[0];
@@ -67,7 +73,6 @@
 </style>
 </head>
 <body>
-
 	<jsp:include page="body.jsp"></jsp:include>
 	<h1>getResumeFile.jsp</h1>
 
@@ -97,9 +102,9 @@
 			<p>${resumeFile.resumeFileExt}</p>
 		</div>
 	</div>
-
+	<div class="container">
 		<div id="fileForm">
-			<a class="btn btn-default btn-block">수정</a>
+			<input class="btn btn-default btn-sm btn-block" type="button" value="수정">
 		</div>
 		<div id="fileForm2">
 			<form class="form-group" name="fileForm3" onsubmit="return check()" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/updateResumeFile?resumeId=${resume.resumeId}">
@@ -107,19 +112,23 @@
 					<input type="hidden" name="resumeId" value="${resumeFile.resumeId}">
 				</div>
 				<div>
-					<input class="btn btn-default" type="file" accept="image/jpeg"  id="multipartFile1" name="multipartFile">
+					<input class="btn btn-default btn-sm" type="file" accept="image/jpeg"  id="multipartFile" name="multipartFile">
 				</div>
 				<div>
 					<p id="demo"></p>
 					<img id="fileimagereader" src="#"/>
 				</div>
 				<div>
-					<input class="btn btn-default" type="submit" value="파일 수정하기">
+					<input class="btn btn-default btn-sm btn-block" type="submit" value="파일 수정하기">
 				</div>
 			</form>
 		</div>
-	    <div><a class="btn btn-default btn-block" href="${pageContext.request.contextPath}/deleteResumeFile?resumeId=${resumeFile.resumeId}">삭제</a></div>
-	     <div><a class="btn btn-default btn-block" href="${pageContext.request.contextPath}/getResumeList">글목록</a></div>
-
+	    <div>
+	   		<input class="btn btn-default btn-sm btn-block pull-right" type="button" id="buttondelete" value="삭제">
+	   	</div>
+	    <div>
+			<input class="btn btn-default btn-sm btn-block pull-right" type="button" id="buttonlist" value="글목목으로 돌아가기">
+		</div>
+	</div>
 </body>
 </html>

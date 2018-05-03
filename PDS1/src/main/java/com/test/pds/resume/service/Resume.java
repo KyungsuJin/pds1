@@ -4,7 +4,14 @@ public class Resume {
 	private int resumeId;
 	private String resumeTitle;
 	private String resumeContent;
+	private String resumeDate;
 	
+	public String getResumeDate() {
+		return resumeDate;
+	}
+	public void setResumeDate(String resumeDate) {
+		this.resumeDate = resumeDate;
+	}
 	public int getResumeId() {
 		return resumeId;
 	}
@@ -26,6 +33,7 @@ public class Resume {
 	@Override
 	public String toString() {
 		return "Resume [resumeId=" + resumeId + ", resumeTitle=" + resumeTitle + ", resumeContent=" + resumeContent
-				+ "]";
+				+ ", resumeDate=" + resumeDate + "]";
 	}
+
 }

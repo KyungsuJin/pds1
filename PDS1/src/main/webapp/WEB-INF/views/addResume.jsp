@@ -32,11 +32,14 @@
 			}
         });
         
-    	    $("#btnReset").click(function() {  
+    	    $("#buttonReset").click(function() {  
     	         $("form").each(function() {  
     	            this.reset();  
     	         });  
     	    }); 
+    	    $("#buttonlist").click(function() {  
+    	    	location.href="${pageContext.request.contextPath}/getResumeList";
+    	    });
         });
     function check() {
     	if(fileForm.resumeTitle.value == "") {
@@ -79,7 +82,7 @@
 			</div>
 			<div>
 				<lable>이미지만 등록가능합니다.</lable>
-				<input class="btn btn-default" type="file" accept="image/jpeg" id="multipartFile" name="multipartFile">
+				<input class="btn btn-default btn-sm" type="file" accept="image/jpeg" id="multipartFile" name="multipartFile">
 			</div>
 			<div>
 				<lable>이미지미리보기</lable>
@@ -87,10 +90,13 @@
 				<img id="fileimagereader" src="#"/>
 			</div>
 			<div id="file-div2">
-				<input class="btn pull-right btn-default" type="submit" value="등록하기">
+				<input class="btn btn-default btn-sm pull-right" type="submit" value="등록하기">
 			</div>
 			<div>
-				<input class="btn pull-right btn-default" type="button" id="btnReset" value="다시작성하기">
+				<input class="btn btn-default btn-sm pull-right" type="button" id="buttonReset" value="다시작성하기">
+			</div>
+			<div>
+				<input class="btn btn-default btn-sm pull-right" type="button" id="buttonlist" value="글목록로 돌아가기">
 			</div>
 		</form>
 	</div>

@@ -15,7 +15,8 @@
 		SELECT 
 		resume_id as resumeId,
 		resume_title as resumeTitle,
-		resume_content as resumeContent
+		resume_content as resumeContent,
+		resume_date as resumeDate
 		FROM resume
 		LIMIT #{beginRow},#{pagePerRow}
 	</select>
@@ -24,10 +25,10 @@
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	 	INSERT INTO resume (
-			resume_title, resume_content
+			resume_title, resume_content, resume_date
 			)
 			VALUES (
-			#{resumeTitle}, #{resumeContent}
+			#{resumeTitle}, #{resumeContent}, now()
 			)
 	</insert>
 </mapper>

@@ -169,8 +169,10 @@ public class ResumeService {
 			String resumeContent = resumeRequest.getResumeContent(); 
 			resume.setResumeTitle(resumeTitle);
 			resume.setResumeContent(resumeContent);
+			
 			logger.debug("resumeTitle: "+resumeTitle);
 			logger.debug("resumeContent: "+resumeContent);
+
 			int resumeId = resumeDao.addResume(resume);		
 			
 			//multipartFile -> resumeFile

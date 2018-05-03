@@ -18,11 +18,11 @@
 			}else{
 				alert('5개 이상은 추가 할 수 없습니다.')
 			}
-		});
+		})
 		$("#removeInputFile").click(function(){
 			$("#InputDiv").children().last().remove();
 			
-		});
+		})
 		$("#SubmitFile").click(function(){
 			if($("#boardTitle").val().length<1){
 				alert('title을 입력하세요');
@@ -35,15 +35,15 @@
 						$(this).remove();
 						flag = true;
 					}
-				});
+				})
 				if(flag){
 					alert('파일을 선택하지 않은곳이 있습니다.파일선택을 모두완료해주세요');
 				}else{
 					$("#addBoardForm").submit();
 				}
 			}
-		});
-	});
+		})
+	})
 	</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>

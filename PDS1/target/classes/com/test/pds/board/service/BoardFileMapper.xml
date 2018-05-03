@@ -24,4 +24,10 @@
   		)
   		</foreach>
   	</insert>
+  	<delete id="modifyBoardFile"
+  			parameterType="Integer">
+  		DELETE 
+  		FROM board_file
+  		WHERE board_file_id=#{boardFileId}
+  	</delete>
   </mapper>

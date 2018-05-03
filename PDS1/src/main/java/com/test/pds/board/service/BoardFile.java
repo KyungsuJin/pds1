@@ -58,12 +58,15 @@ public class BoardFile {
 	public void setBoardId(int boardId) {
 		this.boardId = boardId;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "BoardFile [boardFileName=" + boardFileName + ", boardFileExt=" + boardFileExt + ", boardFileType="
-				+ boardFileType + ", boardFileSize=" + boardFileSize + ", boardId=" + boardId + "]";
+		return "BoardFile [originalFileName=" + originalFileName + ", boardFileId=" + boardFileId + ", boardFileName="
+				+ boardFileName + ", boardFileExt=" + boardFileExt + ", boardFileType=" + boardFileType
+				+ ", boardFileSize=" + boardFileSize + ", boardId=" + boardId + "]";
 	}
+	
+	
 	
 	
 

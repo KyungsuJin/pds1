@@ -127,5 +127,52 @@ public class BoardService {
 		logger.debug("boardService.getDetailList");
 		return boardDao.getDetailList(boardId);
 	}
+	public void modifyBoard(BoardRequest boardRequest) {
+		logger.debug("BoardService.modifyBoard");
+		Board board= new Board();
+		List<MultipartFile> multipartFileList =boardRequest.getMultipartFile();
+		ArrayList<BoardFile> boardFileList = new ArrayList<BoardFile>();
+		logger.debug("board"+boardRequest.getBoardId());
+		board.setBoardId(boardRequest.getBoardId());
+		board.setBoardTitle(boardRequest.getBoardTitle());
+		board.setBoardContent(boardRequest.getBoardContent());
+		boardDao.modifyBoard(board);
+		if(boardRequest.getBoardDeleteList()!=null) {
+			for(int boardFileId : boardRequest.getBoardDeleteList()) {
+				logger.debug("for : modifyBoardFile");
+				boardFileDao.modifyBoardFile(boardFileId);
+			}
+		}
+		if(multipartFileList!=null) {
+			for(MultipartFile multipartFile: multipartFileList) {
+				BoardFile boardFile = new BoardFile();
+				UUID uuid =  UUID.randomUUID();
+				String fileName =uuid.toString().replaceAll("-", "");
+				boardFile.setBoardFileName(fileName);
+				String fileExt = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+				boardFile.setBoardFileExt(fileExt);
+				boardFile.setBoardFileType(multipartFile.getContentType());
+				boardFile.setBoardFileSize(multipartFile.getSize());
+				boardFile.setOriginalFileName(multipartFile.getOriginalFilename());
+				boardFile.setBoardId(boardRequest.getBoardId());
+				logger.debug(boardFile.toString());
+				boardFileList.add(boardFile);
+				File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
+				logger.debug("file : "+file);
+			
+				try {
+					multipartFile.transferTo(file);
+				}catch(IOException e) {
+					e.printStackTrace();
+				}catch(IllegalStateException e) {
+					e.printStackTrace();
+				}
+			}
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("boardFileList", boardFileList);
+			boardFileDao.addBoardFile(map);
+			
+			}
+		}
 
 }

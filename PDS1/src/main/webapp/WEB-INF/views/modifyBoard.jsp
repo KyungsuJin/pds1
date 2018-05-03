@@ -5,6 +5,17 @@
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style>
+		.multipartFile{
+			border:0;
+			padding: 0px 0px;
+			padding-top: 5px;
+		}
+		#removeInputFile{
+			top:0px;
+		}
+	
+	</style>
 	<script>
 		$(document).ready(function(){
 			$("#removeInputFile").click(function(){
@@ -14,13 +25,36 @@
 						$(this).closest("div").remove();//체크된 부분의 바로앞 요소를찾는 함수 closest() 사용하여 div를 제거해준다.
 					})
 			})
-			$("#addInputFile").click(function(){
-				if($(".divchk").length<5){
-					$("#checkboxDiv").append('<div class="divchk" id="checkboxDiv"><input  type="file" name="multipartFile" class="multipartFile" id="inputMultipartFile"></div>');
+			$("#addInputFile").click(function(){//addInputFile 을 클릭하면
+				if($(".childDiv").length<5){//childDiv 클래스의 length 가 5보다작으면 실행
+					//parentDiv 안쪽에 append 함수를 사용해 해당내용을 넣어준다.
+					$("#parentDiv").append('<div class="form-inline form-group childDiv"><input  type="file" name="multipartFile" class="form-control multipartFile" id="inputMultipartFile"><button type="button" class="form-control btn btn-default glyphicon glyphicon-remove" id="removeAddFile"></button></div>');
 				}else{
 					alert('5개 이상은 추가 할 수 없습니다.')
 				}
-				
+			})
+			$("#submitFile").click(function(){
+				if($("#boardTitle").val().length<1){
+					alert('title을 입력하세요');
+				}else if($(".childDiv").length==0){
+					alert('파일을 한개이상은 올려야 합니다.');
+				}else{
+					var flag = false;
+					$(".multipartFile").each(function(index,item){
+						if($(this).val()==0){
+							$(this).closest("div").remove();
+							flag=true;
+						}
+					})
+					if(flag){
+						alert('파일을 선택하지 않은곳이 있습니다.파일선택을 모두완료해주세요');
+					}else{
+						$("#modifyBoard").submit();
+					}
+				}
+			})
+			$(document).on("click","#removeAddFile",function(){
+				$("#removeAddFile").closest("div").remove();
 			})
 		})
 	</script>
@@ -28,7 +62,7 @@
 <body>
 
 	<jsp:include page="body.jsp"></jsp:include>
-	<form action="${pageContext.request.contextPath}/modifyBoard" method="post" enctype="multipart/form-data">	
+	<form  id="modifyBoard" action="${pageContext.request.contextPath}/modifyBoard" method="post" enctype="multipart/form-data">	
 		<table id="tableForDelete" border="1" class="table">
 			<thead>
 				<tr>
@@ -43,21 +77,26 @@
 			<tbody>
 				
 				<c:forEach items="${list}" var="board">
+					<input type="hidden" name="boardId" value="${board.boardId}">
 					<tr>
-						<td><input type="text" name="boardTitle" value="${board.boardTitle}"></td>
-						<td><input type="text" name="boardContent" value="${board.boardContent}"></td>
+						<td><input type="text" name="boardTitle" id="boardTitle" value="${board.boardTitle}"></td>
+						<td><input type="text" name="boardContent" id="boardContent" value="${board.boardContent}"></td>
 						<td>
-						<c:forEach items="${board.boardFile}" var ="boardFile">
-							<div><div class="divchk"id="checkboxDiv"><input type="checkbox" id="inputCheck"name="boardFileId" value="${boardFile.boardFileId}">${boardFile.originalFileName}</div></div>
-						</c:forEach>
+							<div id="parentDiv">
+								<c:forEach items="${board.boardFile}" var ="boardFile">
+									<div class="childDiv"><input type="checkbox" id="inputChk" value="${boardFile.boardFileId}">${boardFile.originalFileName}</div>
+								</c:forEach>
+							</div>
 						</td>
 						<td><a href="${pageContext.request.contextPath}/modifyBoard?boardId=${board.boardId}">수정</a></td>
 					</tr>
 				</c:forEach>
-				<input type="submit" value="수정완료">
 			</tbody>
 		</table>
+		<div>
 		
+			<button type="button" class="btn btn-default"  id="submitFile">적용</button>
+		</div>
 	</form>
 </body>
 </html>

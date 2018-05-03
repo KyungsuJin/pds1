@@ -1,5 +1,6 @@
 package com.test.pds.board.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -19,5 +20,11 @@ public class BoardFileDao {
 		logger.debug("BoardFileDao.addBoardFile");
 		sqlSession.insert(NS+"addBoardFile",map);
 	}
+	public void modifyBoardFile(int boardFileId) {
+		logger.debug("BoardFileDao.modifyBoardFile //delete");
+
+		sqlSession.delete(NS+"modifyBoardFile",boardFileId);
+	}
+
 
 }

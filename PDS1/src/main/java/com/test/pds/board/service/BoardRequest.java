@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class BoardRequest {
+	private int boardId;
 	private String boardTitle;
 	private String boardContent;
 	private List<Integer> boardDeleteList;
@@ -12,6 +13,12 @@ public class BoardRequest {
 	
 	
 	
+	public int getBoardId() {
+		return boardId;
+	}
+	public void setBoardId(int boardId) {
+		this.boardId = boardId;
+	}
 	public List<Integer> getBoardDeleteList() {
 		return boardDeleteList;
 	}

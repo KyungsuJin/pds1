@@ -86,7 +86,7 @@ public class boardController {
 	@RequestMapping(value="modifyBoard",method=RequestMethod.POST)
 	public String modifyBoard(Model model
 							,BoardRequest boardRequest) {
-		logger.debug("디버그 : "+boardRequest.getBoardDeleteList().size());
+		boardService.modifyBoard(boardRequest);
 		return "modifyBoard";
 	}
 

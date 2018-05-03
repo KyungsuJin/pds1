@@ -33,6 +33,11 @@ public class BoardDao {
 		return sqlSession.selectList(NS+"getDetailList",boardId);
 	}
 	public int totalCountList() {
+		logger.debug("BoardDao.totalCountList");
 		return sqlSession.selectOne(NS+"totalCountList");
+	}
+	public void modifyBoard(Board board) {
+		logger.debug("BoardDao.modifyBoard");
+		sqlSession.update(NS+"modifyBoard",board);
 	}
 }

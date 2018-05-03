@@ -3,7 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="header.jsp"></jsp:include>
+	<script>
+		$(document).ready(function() {
+			$("#deleteBtn").click(function() {
+				console.log("삭제왜안되냐");
+				location.href="${pageContext.request.contextPath}/removeGallery?galleryId=${gallery.galleryId}";
+			})
+		})
+	</script>
 </head>
 <body>
 	<h1>게시글상세</h1>
@@ -17,7 +25,10 @@
 				<div>첨부파일 : <a href="${pageContext.request.contextPath}/resources/upload/${list.galleryFileName}.${list.galleryFileExt}" download="${list.galleryFileRealName}">${list.galleryFileRealName}.${list.galleryFileExt} / (${list.galleryFileSize}kb)</a></div>
 			</c:forEach>
 		</div>
-		<div></div>
+		<div>
+			<button type="button" id="updateBtn">수정</button>
+			<button type="button" id="deleteBtn">삭제</button>
+		</div>
 	</div>
 </body>
 </html>

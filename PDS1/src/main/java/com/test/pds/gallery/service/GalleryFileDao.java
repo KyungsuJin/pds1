@@ -13,7 +13,16 @@ public class GalleryFileDao {
 	@Autowired
 	SqlSessionTemplate sqlSession;
 	final String NS = "com.test.pds.gallery.service.GalleryFileMapper.";
-
+	
+	public int selectGalleryFileTotal(int galleryId) {
+		logger.debug("GalleryFileDao_selectGalleryFileTotal");
+		return sqlSession.selectOne(NS+"selectGalleryFileTotal", galleryId);
+	}
+	public int removeGallery(int galleryId) {
+		logger.debug("GalleryFileDao_removeGallery");
+		return sqlSession.delete(NS+"removeGalleryFile",galleryId);
+		
+	}
 	public int addGalleryFile(GalleryFile galleryFile) {
 		logger.debug("GalleryFileDao_addGalleryFile");
 		return sqlSession.insert(NS+"addGalleryFile", galleryFile);

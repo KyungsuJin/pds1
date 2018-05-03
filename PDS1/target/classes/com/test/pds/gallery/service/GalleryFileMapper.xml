@@ -24,4 +24,19 @@
 			,#{galleryFileSize}
 		)
 	</insert>
+	<select id="selectGalleryFileTotal" parameterType="com.test.pds.gallery.service.Gallery" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			gallery_file
+		WHERE
+			gallery_id=#{galleryId}
+	</select>
+	<delete id="removeGalleryFile" parameterType="Integer">
+		DELETE
+		FROM
+			gallery_file
+		WHERE
+			gallery_id=#{galleryId}
+	</delete>
 </mapper>

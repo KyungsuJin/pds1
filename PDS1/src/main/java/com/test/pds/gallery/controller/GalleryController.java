@@ -24,6 +24,11 @@ public class GalleryController {
 	GalleryService galleryService;
 	private static final Logger logger = LoggerFactory.getLogger(GalleryController.class);
 	
+	@RequestMapping(value="removeGallery", method=RequestMethod.GET)
+	public String removeGallery(int galleryId) {
+		galleryService.removeGallery(galleryId);
+		return "redirect:getGalleryList";
+	}
 	@RequestMapping(value="galleryDetail", method=RequestMethod.GET)
 	public String selectGalleryDetail(Model model
 										,@RequestParam(value="galleryId") int galleryId) {
@@ -73,9 +78,6 @@ public class GalleryController {
 			}
 		}		
 		galleryService.addGallery(galleryRequest, path);
-		return "redirect:/";
-			
-			
-		
+		return "redirect:/";								
 	}
 }

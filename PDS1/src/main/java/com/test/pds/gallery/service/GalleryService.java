@@ -24,10 +24,17 @@ public class GalleryService {
 	GalleryFileDao galleryFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(GalleryService.class);
 	
+	public void removeGallery(int galleryId) {
+		logger.debug("GalleryService_removeGallery");
+		logger.debug(galleryId+"<---galleryId");
+		int total = galleryFileDao.selectGalleryFileTotal(galleryId);
+		if(total != 0) {
+			galleryFileDao.removeGallery(galleryId);
+		}
+		galleryDao.removeGallery(galleryId);
+	}
 	public Gallery selectGalleryDetail(int galleryId) {
 		logger.debug("GalleryService_selectGalleryDetail");
-		
-		Map<String, Object> map = new HashMap<String, Object>();
 		
 		
 		return galleryDao.selectGalleryDetail(galleryId);
@@ -101,10 +108,14 @@ public class GalleryService {
 			UUID uuid = UUID.randomUUID();
 			String fileName = uuid.toString().replaceAll("-", "");
 			logger.debug("fileName : "+fileName);
+			logger.debug("fileName");
+			logger.debug(fileName);
 			galleryFile.setGalleryFileName(fileName);
 			
 			String fileRealName = multipartFile.getOriginalFilename();
 			logger.debug("fileRealName : "+fileRealName);
+			logger.debug("fileRealName");
+			logger.debug(fileRealName);
 			galleryFile.setGalleryFileRealName(fileRealName);
 			
 			int dotIndex = multipartFile.getOriginalFilename().lastIndexOf(".");

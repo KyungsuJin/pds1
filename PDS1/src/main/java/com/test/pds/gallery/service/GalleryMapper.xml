@@ -52,14 +52,23 @@
 			gallery_id as galleryId
 			,gallery_title as galleryTitle
 			,gallery_Content as galleryContent
-		FROM gallery
+		FROM 
+			gallery
 		ORDER BY galleryId DESC
 		LIMIT #{beginRow}, #{pagePerRow}
 	</select>
 	<select id="totalCount" resultType="Integer">
 		SELECT
 			COUNT(*)
-		FROM gallery
+		FROM 
+			gallery
 	</select>
+	<delete id="removeGallery">
+		DELETE
+		FROM
+			gallery
+		WHERE
+			gallery_id=#{galleryId}
+	</delete>
 	
 </mapper>

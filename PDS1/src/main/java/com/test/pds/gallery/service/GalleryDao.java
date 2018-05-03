@@ -17,6 +17,10 @@ public class GalleryDao {
 	SqlSessionTemplate sqlSession;
 	final String NS = "com.test.pds.gallery.service.GalleryMapper.";
 	
+	public int removeGallery(int galleryId) {
+		logger.debug("GalleryDao_removeGallery");
+		return sqlSession.delete(NS+"removeGallery",galleryId);
+	}
 	public Gallery selectGalleryDetail(int galleryId) {
 		logger.debug("GalleryDao_selectGalleryDetail");
 		logger.debug("galleryId : "+galleryId);

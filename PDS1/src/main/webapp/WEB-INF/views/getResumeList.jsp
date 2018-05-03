@@ -25,6 +25,7 @@
 				<tr>
 					<th>번호</th>
 					<th>제목</th>
+					<th>등록일<th>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,6 +33,7 @@
 					<tr>
 						<td>${resume.resumeId }</td>
 						<td><a href="${pageContext.request.contextPath}/getResumeFileDetail?resumeId=${resume.resumeId}">${resume.resumeTitle}</a></td>
+						<td>${resume.resumeDate }</td>
 					</tr>
 				</c:forEach>
 			</tbody>	

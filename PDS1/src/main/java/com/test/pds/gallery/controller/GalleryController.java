@@ -24,6 +24,18 @@ public class GalleryController {
 	GalleryService galleryService;
 	private static final Logger logger = LoggerFactory.getLogger(GalleryController.class);
 	
+	@RequestMapping(value="modifyGallery", method=RequestMethod.GET)
+	public String modifyGallery(Model model,@RequestParam(value="galleryId") int galleryId) {
+		logger.debug("GalleryController_modifyGallery");
+		Gallery gallery = galleryService.selectGalleryDetail(galleryId);
+		model.addAttribute("gallery", gallery);
+		return "modifyGallery";
+	}
+	@RequestMapping(value="modifyGallery", method=RequestMethod.POST)
+	public String modifyGallery() {
+		//galleryService.modifyGalleryPro(gallery);
+		return "galleryDetail";
+	}
 	@RequestMapping(value="removeGallery", method=RequestMethod.GET)
 	public String removeGallery(int galleryId) {
 		galleryService.removeGallery(galleryId);

@@ -24,6 +24,14 @@ public class GalleryService {
 	GalleryFileDao galleryFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(GalleryService.class);
 	
+	public int modifyGalleryPro(Gallery gallery) {
+		
+		return 0;
+	}
+	public Gallery modifyGallery(int galleryId) {
+		logger.debug("GalleryService_modifyGallery");		
+		return galleryDao.modifyGallery(galleryId);
+	}
 	public void removeGallery(int galleryId) {
 		logger.debug("GalleryService_removeGallery");
 		logger.debug(galleryId+"<---galleryId");
@@ -35,8 +43,7 @@ public class GalleryService {
 	}
 	public Gallery selectGalleryDetail(int galleryId) {
 		logger.debug("GalleryService_selectGalleryDetail");
-		
-		
+	
 		return galleryDao.selectGalleryDetail(galleryId);
 	}
 	public Map<String, Object> getGalleryList(int currentPage, int pagePerRow) {

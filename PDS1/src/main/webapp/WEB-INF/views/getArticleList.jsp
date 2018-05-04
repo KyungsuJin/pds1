@@ -21,7 +21,7 @@
 	<div id="containerArticle" align="center">
 		<h1>ArticleList</h1>
 		
-		<input id="writeArticleBtn" type="button" value="글쓰기">
+		<input id="writeArticleBtn" class="btn btn-default" type="button" value="글쓰기">
 		<table border="1" class="table">
 			<thead>
 				<tr>

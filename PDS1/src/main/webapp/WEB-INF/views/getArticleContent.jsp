@@ -31,8 +31,8 @@
 	<jsp:include page="body.jsp"></jsp:include>
 	<div id="containerArticle" align="center">
 		<h1>ArticleContent</h1>
-		<input id="removeArticleBtn" type="button" value="삭제">
-		<input id="modifyArticleBtn" type="button" value="수정">
+		<input id="removeArticleBtn" class="btn btn-default" type="button" value="삭제">
+		<input id="modifyArticleBtn" class="btn btn-default" type="button" value="수정">
 		<br><br>
 		<div>${article.articleId}</div>
 		<div>${article.articleTitle}</div>
@@ -48,7 +48,7 @@
 				<a href="${pageContext.request.contextPath}/resources/upload/${articleFile.articleFileName}.${articleFile.articleFileExt}" download="${articleFile.articleFileRealName}">${articleFile.articleFileRealName}(${articleFile.articleFileSize}byte)</a>
 			</div>
 		</c:forEach>
-		<input id="articleListBtn" type="button" value="목록">
+		<input id="articleListBtn" class="btn btn-default" type="button" value="목록">
 	</div>
 </body>
 </html>

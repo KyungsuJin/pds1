@@ -28,8 +28,6 @@
                title="GalleryList">GalleryList</a></li>
             <li><a href="${pageContext.request.contextPath}/getResumeList" data-toggle="tooltip" data-placement="bottom"
                title="ResumeList">ResumeList</a></li>
-            <li><a href="${pageContext.request.contextPath}/getMemberList" data-toggle="tooltip" data-placement="bottom"
-               title="MemberList">MemberList</a></li>
          </ul>
          <ul class="nav navbar-nav navbar-right">
             <c:choose>
@@ -39,6 +37,7 @@
                </c:when>
                
                <c:when test="${sessionMemberId ne 'admin'}">
+                  <li><a href="${pageContext.request.contextPath}/modifyMember?memberId=${sessionMemberId}">회원정보 수정</a></li>
                   <li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
                </c:when>
                
@@ -49,7 +48,7 @@
                         <li><a href="#">기능1</a></li>
                         <li><a href="#">기능2</a></li>
                         <li class="divider"></li>
-                        <li><a href="#">Member 정보 수정</a></li>
+                        <li><a href="${pageContext.request.contextPath}/getMemberList">Member 관리</a></li>
                      </ul>
                   </li>
                   <li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>   

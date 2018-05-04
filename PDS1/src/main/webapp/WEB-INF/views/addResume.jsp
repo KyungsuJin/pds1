@@ -31,11 +31,12 @@
 				document.getElementById('demo').innerHTML = filetype;
 			}
         });
-        
     	    $("#buttonReset").click(function() {  
     	         $("form").each(function() {  
     	            this.reset();  
-    	         });  
+				$('#fileimagereader').attr('src', ""); 
+				document.getElementById('demo').innerHTML = "";
+				});
     	    }); 
     	    $("#buttonlist").click(function() {  
     	    	location.href="${pageContext.request.contextPath}/getResumeList";

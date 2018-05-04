@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.test.pds.resume.service.ResumeMapper"> 
+<mapper namespace="com.test.pds.resume.service.ResumeMapper">
+	
+	<update id="updateResumeOne" parameterType="com.test.pds.resume.service.Resume">
+		UPDATE resume
+		SET
+			resume_title= #{resumeTitle},
+			resume_content= #{resumeContent}
+		WHERE resume_id = #{resumeId}
+	</update> 
+	<select id="selectResumeOne"
+			 parameterType="Integer"
+			resultType="com.test.pds.resume.service.Resume">
+		SELECT
+		resume_id as resumeId,
+		resume_title as resumeTitle,
+		resume_content as resumeContent,
+		resume_date as resumeDate
+		FROM resume
+		WHERE resume_id = #{resumeId}
+	</select>
 	<delete id="deleteResume"  parameterType="com.test.pds.resume.service.Resume">
-		DELETE FROM resume WHERE resume_id =#{resumeId}
+		DELETE FROM resume WHERE resume_id = #{resumeId}
 	</delete>
 	<select id="resumeCount" resultType="int">
 		SELECT
@@ -17,8 +36,10 @@
 		resume_title as resumeTitle,
 		resume_content as resumeContent,
 		resume_date as resumeDate
-		FROM resume
+		FROM resume		
+		ORDER BY resume_id DESC
 		LIMIT #{beginRow},#{pagePerRow}
+
 	</select>
 	<insert id="addResume" parameterType="com.test.pds.resume.service.Resume">
 		<selectKey resultType="int" keyProperty="resumeId" order="AFTER">

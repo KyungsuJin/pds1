@@ -5,6 +5,7 @@ public class Resume {
 	private String resumeTitle;
 	private String resumeContent;
 	private String resumeDate;
+	private int resumeCount;
 	
 	public String getResumeDate() {
 		return resumeDate;
@@ -30,10 +31,15 @@ public class Resume {
 	public void setResumeContent(String resumeContent) {
 		this.resumeContent = resumeContent;
 	}
+	public int getResumeCount() {
+		return resumeCount;
+	}
+	public void setResumeCount(int resumeCount) {
+		this.resumeCount = resumeCount;
+	}
 	@Override
 	public String toString() {
 		return "Resume [resumeId=" + resumeId + ", resumeTitle=" + resumeTitle + ", resumeContent=" + resumeContent
-				+ ", resumeDate=" + resumeDate + "]";
+				+ ", resumeDate=" + resumeDate + ", resumeCount=" + resumeCount + "]";
 	}
-
 }

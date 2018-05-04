@@ -6,8 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
- 
-
 import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
@@ -24,8 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
- 
-
+import com.test.pds.resume.service.Resume;
 import com.test.pds.resume.service.ResumeFile;
 
 import com.test.pds.resume.service.ResumeRequest;
@@ -37,13 +34,16 @@ public class ResumeController {
 	@Autowired
 	private ResumeService resumeService;
 	private static final Logger logger = LoggerFactory.getLogger(ResumeController.class);
+	
 	@RequestMapping(value="/updateResumeFile", method= {RequestMethod.POST,RequestMethod.GET})
 	public String updateResumeFile(ResumeRequest resumeRequest
+									,Model model
 									,HttpSession session
 									,@RequestParam(value="resumeId", required=true) int resumeId) {
 		logger.debug("ResumeController - updateResumeFile");
 		String path = session.getServletContext().getRealPath("resources\\upload");
-		resumeService.updateResumeFile(resumeRequest, resumeId, path);
+		Map<String,Object> returnMap = resumeService.updateResumeFile(resumeRequest, resumeId, path);
+		model.addAttribute("resumeupdate",returnMap.get("resumeupdate"));
 		return "redirect:/getResumeList";
 	}
 	
@@ -58,9 +58,10 @@ public class ResumeController {
 	public String getResumeFile(Model model
 								,HttpSession session
 							, @RequestParam(value="resumeId") int resumeId) {
-		logger.debug("ResumeController - getResumeFile 포워드 실행");	
-		ResumeFile resumeFile = resumeService.selectResumeFileOne(resumeId);
-		model.addAttribute("resumeFile", resumeFile);
+		logger.debug("ResumeController - getResumeFile 포워드 실행");
+		Map<String,Object> map = resumeService.selectOneResume(resumeId);
+		model.addAttribute("resumeFile", map.get("resumeFile"));
+		model.addAttribute("resume", map.get("resume"));
 		return "/getResumeFileDetail";
 	}
 	

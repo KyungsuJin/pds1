@@ -9,6 +9,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){ 
 		 $('#fileForm2').hide();
+		 $('#filedetail').hide();
 	    $('#fileForm').click(function(){ 
 	        var state = $('#fileForm2').css('display');
 	        if(state == 'none'){
@@ -47,70 +48,91 @@
 	    $("#buttondelete").click(function() {  
 	    	location.href="${pageContext.request.contextPath}/deleteResumeFile?resumeId=${resumeFile.resumeId}";
 	    });
+
+	    $("#buttonfile").click(function() {  
+	    	 var state = $('#filedetail').css('display');
+		        if(state == 'none'){
+		            $('#filedetail').show();
+		        }else{ 
+		            $('#filedetail').hide();          
+		        }
+	    });
     });
-		function check() {
-			var file = event.target.files[0];
-			if(fileForm3.multipartFile.value == "") {
-				alert("파일을 등록해주세요");
-				fileForm3.multipartFile.focus();
-				return false;
-			}
-			return true;
+    function check() {
+    	if(fileForm3.resumeTitle.value == "") {
+			alert("제목을 입력해주세요.");
+			fileForm3.resumeTitle.focus();
+			return false;
+    	  }
+		else if(fileForm3.resumeContent.value == "") {
+			alert("내용을 입력해주세요.");
+			fileForm3.resumeContent.focus();
+			return false;
+		}else if(fileForm3.multipartFile.value == "") {
+			alert("파일을 등록해주세요");
+			fileForm3.multipartFile.focus();
+			return false;
 		}
+		return true;
+	}	
 </script>
 <style type="text/css">
-	h1{
+	#detailBoard {
 	text-align: center;
 	}
-	#a {
-    height: 400px;
-    width: 50%;
-    background-color: #D3D3D3;
+	h4{
 	text-align: center;
-	border-left-style: solid;
-	border-right-style: solid;
 	}
 </style>
 </head>
 <body>
 	<jsp:include page="body.jsp"></jsp:include>
-	<h1>getResumeFile.jsp</h1>
+	<div id="form-div" class="container">
+		<h4>게시글 상세보기</h4><br><br>
+		<table class="table" id="detailBoard">
+			<tr>
+				<td>작성일</td>
+				<td>${resume.resumeDate }</td>
+			</tr>
+			<tr>
+				<td>아이디</td>
+				<td>${resume.resumeId }</td>
+			</tr>
+			<tr>
+				<td>제목</td>
+				<td>${resume.resumeTitle }</td>
+			</tr>
+			<tr>
+				<td>내용</td>
+				<td>${resume.resumeContent }</td>
+			</tr>
+			<tr>
+				<td>첨부파일</td>
+				<td><a type="button" id="buttonfile">${resumeFile.resumeFileRealName}</a></td>
 
-	<div id="a" class="container">
-		<div class="form-group">
-			<label>resumeId</label>
-			<p>${resumeFile.resumeId}</p>
-		</div>
-		<div class="form-group">
-			<label>resumeFileId</label>
-			<p>${resumeFile.resumeFileId}</p>
-		</div>
-		<div class="form-group">
-			<label>resumeFileRealName</label>
-			<p>${resumeFile.resumeFileRealName}</p>
-		</div>
-		<div class="form-group">
-			<label>resumeFileType</label>
-			<p>${resumeFile.resumeFileType}</p>
-		</div>
-		<div class="form-group">
-			<label>resumeFileSize</label>
-			<p>${resumeFile.resumeFileSize}</p>
-		</div>
-		<div class="form-group">
-			<label>resumeFileExt</label>
-			<p>${resumeFile.resumeFileExt}</p>
-		</div>
+			</tr>
+		</table>
+			<div id="filedetail">
+				<div>${resumeFile.resumeFileId}</div>
+				<div>${resumeFile.resumeFileSize}</div>
+				<div>${resumeFile.resumeFileExt}</div>
+			</div>
 	</div>
 	<div class="container">
 		<div id="fileForm">
-			<input class="btn btn-default btn-sm btn-block" type="button" value="수정">
+			<input class="btn btn-default btn-sm" type="button" value="수정">
 		</div>
 		<div id="fileForm2">
 			<form class="form-group" name="fileForm3" onsubmit="return check()" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/updateResumeFile?resumeId=${resume.resumeId}">
 				<div>
 					<input type="hidden" name="resumeId" value="${resumeFile.resumeId}">
 				</div>
+			<div class="form-group">
+				<input type="text" class="form-control" name="resumeTitle"  placeholder="${resume.resumeTitle}">
+			</div>
+			<div class="form-group">
+				<textarea name="resumeContent" class="form-control" style="resize: none;" cols="40" rows="8"  placeholder="${resume.resumeContent }"></textarea>
+			</div>
 				<div>
 					<input class="btn btn-default btn-sm" type="file" accept="image/jpeg"  id="multipartFile" name="multipartFile">
 				</div>
@@ -119,15 +141,25 @@
 					<img id="fileimagereader" src="#"/>
 				</div>
 				<div>
-					<input class="btn btn-default btn-sm btn-block" type="submit" value="파일 수정하기">
+					<input class="btn btn-default btn-sm " type="submit" value="파일 수정하기">
 				</div>
 			</form>
 		</div>
+	</div>
+	<div class="container">
 	    <div>
-	   		<input class="btn btn-default btn-sm btn-block pull-right" type="button" id="buttondelete" value="삭제">
+	   		<input class="btn btn-default btn-sm pull-right" type="button" id="buttondelete" value="삭제">
 	   	</div>
 	    <div>
-			<input class="btn btn-default btn-sm btn-block pull-right" type="button" id="buttonlist" value="글목목으로 돌아가기">
+			<input class="btn btn-default btn-sm pull-right" type="button" id="buttonlist" value="글목목으로 돌아가기">
+		</div>
+		<div id="next-prev">
+			<c:if test="${nextArticle != null }">
+			<p>다음글 : <a href="javascript:goView('${nextResume.resumeNo }')">${nextArticle.title }</a></p>
+			</c:if>
+			<c:if test="${prevArticle != null }">
+			<p>이전글 : <a href="javascript:goView('${prevArticle.articleNo }')">${prevArticle.title }</a></p>
+			</c:if>
 		</div>
 	</div>
 </body>

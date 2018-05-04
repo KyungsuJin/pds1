@@ -23,7 +23,18 @@ public class ResumeDao {
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.test.pds.resume.service.ResumeMapper.";
 	
+	public int updateResume(Resume resume) {
+		logger.debug("ResumeDao - updateResume 조회수 실행");
+		return sqlSession.update(NS+"updateResumeOne",resume);
+	}
+
+	public Resume selectOneResume(int resumeId) {
+		logger.debug("ResumeDao - selectOneresume resume 1개 선택 실행");
+		return sqlSession.selectOne(NS+"selectResumeOne",resumeId);
+	}
+	
 	public int deleteResume(int resumeId) {
+		logger.debug("ResumeDao - deleteResume 실행");
 		return sqlSession.delete(NS+"deleteResume",resumeId);
     }
 	

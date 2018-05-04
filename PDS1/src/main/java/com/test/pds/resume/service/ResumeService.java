@@ -39,11 +39,17 @@ public class ResumeService {
 	@Autowired
 	private ResumeFileDao resumeFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(ResumeService.class);
-
+	
+	
 	public Map<String, Object> updateResumeFile(ResumeRequest resumeRequest,int resumeId, String path) {
+		logger.debug("ResumeService - updateResumeFile 실행 ");
+		Resume resume = new Resume();
+		
 		int resumeFiledelete = 0;
 			resumeFiledelete = resumeFileDao.deleteResumeFile(resumeId);
+			
 		if(resumeFiledelete > 0) {
+
 			MultipartFile multipartFile = resumeRequest.getMultipartFile();
 			
 			//multipartFile -> resumeFile
@@ -86,9 +92,11 @@ public class ResumeService {
 				e.printStackTrace();
 			}
 			resumeFileDao.addResumeFile(resumeFile);
+			
 		}
 		Map<String,Object> returnMap = new HashMap<String,Object>();
 		returnMap.put("delete", resumeFiledelete);
+		returnMap.put("resumeupdate", resumeDao.updateResume(resume));
 		return returnMap;
 	}
 	
@@ -105,9 +113,16 @@ public class ResumeService {
 	return deleteMap;
 	}
 
-	public ResumeFile selectResumeFileOne(int resumeId) {
+	public Map<String, Object> selectOneResume(int resumeId) {
 		logger.debug("ResumeService - selectResumeFileOne 실행");
-		return resumeFileDao.selectResumeFile(resumeId);
+		Resume resume = resumeDao.selectOneResume(resumeId);
+		ResumeFile resumeFile = resumeFileDao.selectResumeFile(resumeId);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("resumeFile", resumeFile);
+		map.put("resume", resume);
+        logger.debug("resumeFile:"+resumeFile);
+        logger.debug("resume:"+resume);
+		 return map;
 	}
 	
 	public  Map<String, Object> selectResumeList(int currentPage, int pagePerRow) {

@@ -97,22 +97,23 @@ public class BoardService {
 			map.put("boardFileList", boardFileList);
 			boardFileDao.addBoardFile(map);
 		}
+	//페이징 메서드
 	public Map<String,Object> getBoardList(int currentPage,int pagePerRow) {
 		logger.debug("boardService.getBoardList");
 		Map<String,Integer> map = new HashMap<String,Integer>();
-		int beginRow = (currentPage-1)*10+1;
+		int beginRow = (currentPage-1)*10+1;//LIMIT 의 앞부분을 구한다
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		List<Board> list=boardDao.getBoardList(map);
-		int totalCountList =boardDao.totalCountList();
+		int totalCountList =boardDao.totalCountList();//게시물의 총개수
 		logger.debug("boardDao.totalCountList");
 		
-		int lastPage=totalCountList/pagePerRow;
-		if(totalCountList%pagePerRow>0) {
+		int lastPage=totalCountList/pagePerRow;//마지막 페이지를 구한다
+		if(totalCountList%pagePerRow>0) {//한페이지에 10개씩 보여주고 총게시물이 101개라면 페이지는 11페이지가 되어야하는데 10페이지되므로 사용해준다.
 			lastPage++;
 		}
-		int startPage=((currentPage-1)/10)*10+1;
-		int endPage = startPage*10-1;
+		int startPage=((currentPage-1)/10)*10+1;//숫자 페이징작업 밑부분 보여질 시작 범위
+		int endPage = startPage*10-1;//숫자 페이징 작업 밑부분 보여줄 마지막 범위
 		if(endPage>lastPage) {
 			endPage=lastPage;
 		}
@@ -123,33 +124,40 @@ public class BoardService {
 		returnMap.put("list", list);
 		return returnMap;
 	}
+	//게시물의 내용을 보여주는 메서드
 	public List<Board> getDetailList(int boardId){
 		logger.debug("boardService.getDetailList");
 		return boardDao.getDetailList(boardId);
 	}
+	//수정 메서드
 	public void modifyBoard(BoardRequest boardRequest) {
 		logger.debug("BoardService.modifyBoard");
 		Board board= new Board();
-		List<MultipartFile> multipartFileList =boardRequest.getMultipartFile();
-		ArrayList<BoardFile> boardFileList = new ArrayList<BoardFile>();
+		List<MultipartFile> multipartFileList =boardRequest.getMultipartFile();//파일 리스트
+		ArrayList<BoardFile> boardFileList = new ArrayList<BoardFile>();//BoardFile DTO 리스트
 		logger.debug("board"+boardRequest.getBoardId());
-		board.setBoardId(boardRequest.getBoardId());
+		board.setBoardId(boardRequest.getBoardId());//contorller 에서받아온 BoardRequest 의 boardId를 board에 저장
 		board.setBoardTitle(boardRequest.getBoardTitle());
 		board.setBoardContent(boardRequest.getBoardContent());
-		boardDao.modifyBoard(board);
-		if(boardRequest.getBoardDeleteList()!=null) {
-			for(int boardFileId : boardRequest.getBoardDeleteList()) {
+		boardDao.modifyBoard(board);//board 수정부분
+		if(boardRequest.getBoardDeleteList()!=null) {//삭제를 요청한 파일 아이디의 번호가 있으면 해당 IF 문 실행
+			for(int boardFileId : boardRequest.getBoardDeleteList()) {//파일 ID 는 리스트 이므로 값을 for 문을 이용해 꺼내준다.
 				logger.debug("for : modifyBoardFile");
-				boardFileDao.modifyBoardFile(boardFileId);
+				BoardFile boardFile=boardFileDao.deleteServerFileList(boardFileId);//DB 에 저장된 파일의 정보를 가져온다.
+				logger.debug(boardFile.getBoardFileName());
+				logger.debug(boardFile.getBoardFileExt());
+				File file = new File(SystemPath.DOWNLOAD_PATH+boardFile.getBoardFileName()+"."+boardFile.getBoardFileExt());//서버 파일을 삭제
+				file.delete();
+				boardFileDao.modifyBoardFile(boardFileId);//파일 ID 를 통해 DB 파일 정보를 삭제한다.
 			}
 		}
-		if(multipartFileList!=null) {
+		if(multipartFileList!=null) {//파일리스트가 있다면 실행
 			for(MultipartFile multipartFile: multipartFileList) {
 				BoardFile boardFile = new BoardFile();
 				UUID uuid =  UUID.randomUUID();
 				String fileName =uuid.toString().replaceAll("-", "");
 				boardFile.setBoardFileName(fileName);
-				String fileExt = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+				String fileExt = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
 				boardFile.setBoardFileExt(fileExt);
 				boardFile.setBoardFileType(multipartFile.getContentType());
 				boardFile.setBoardFileSize(multipartFile.getSize());
@@ -159,7 +167,6 @@ public class BoardService {
 				boardFileList.add(boardFile);
 				File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
 				logger.debug("file : "+file);
-			
 				try {
 					multipartFile.transferTo(file);
 				}catch(IOException e) {
@@ -173,6 +180,19 @@ public class BoardService {
 			boardFileDao.addBoardFile(map);
 			
 			}
+		
 		}
+	public void deleteBoard(int boardId) {
+		logger.debug("BoardService.deleteBoard");
+		List<BoardFile> list =boardFileDao.deleteBoardList(boardId);
+		if(list!=null) {
+			boardFileDao.deleteBoard(boardId);
+			for(BoardFile boardFile : list){
+				File file = new File(SystemPath.DOWNLOAD_PATH+boardFile.getBoardFileName()+"."+boardFile.getBoardFileExt());//서버 파일을 삭제
+				file.delete();
+			}
+		}
+		boardDao.deleteBoard(boardId);
+	}
 
 }

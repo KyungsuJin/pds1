@@ -30,4 +30,29 @@
   		FROM board_file
   		WHERE board_file_id=#{boardFileId}
   	</delete>
+  	<select id="deleteServerFileList"
+  			parameterType="Integer"
+  			resultType="com.test.pds.board.service.BoardFile">
+  		SELECT 
+  			board_file_name AS boardFileName
+  			,board_file_ext AS boardFileExt
+  		FROM board_file
+  		WHERE board_file_id =#{boardFileId}
+  	</select>
+  	<select id="deleteBoardList"
+  			parameterType="Integer"
+  			resultType="com.test.pds.board.service.BoardFile">
+  			SELECT 
+  			board_file_name AS boardFileName
+  			,board_file_ext AS boardFileExt
+  		FROM board_file
+  		WHERE board_id =#{boardId}
+  	</select>
+  	<delete id="deleteBoardFile"
+  			parameterType="Integer">
+  			DELETE 
+  			FROM board_file
+  			WHERE board_id=#{boardId}
+  			
+  	</delete>
   </mapper>

@@ -19,6 +19,14 @@
 	  		<result column="board_file_real_name" property="originalFileName"/>
   		</collection>
   	</resultMap>
+  	<update id="modifyBoard"
+  			parameterType="com.test.pds.board.service.Board">
+		UPDATE board 
+		SET
+			board_title=#{boardTitle}
+			,board_content=#{boardContent}
+		WHERE board_id=#{boardId}
+  	</update>
   	
   	<insert id="insertBoard"
   			parameterType="com.test.pds.board.service.Board">
@@ -72,4 +80,9 @@
   			resultType="int">
   		SELECT count(*) FROM board
   	</select>
+  	<delete id="deleteBoard1"
+  			parameterType="Integer">
+  			DELETE FROM board
+  			WHERE board_id=#{boardId}
+  	</delete>
   </mapper>

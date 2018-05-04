@@ -28,16 +28,24 @@ public class BoardDao {
 		logger.debug("BoardDao.getBoardList");
 		return sqlSession.selectList(NS+"getBoardList",map);
 	}
+	//파일 클릭시 하나의 리스트
 	public List<Board> getDetailList(int boardId){
 		logger.debug("BoardDao.getDetailList");
 		return sqlSession.selectList(NS+"getDetailList",boardId);
 	}
+	//총 개시물의 수
 	public int totalCountList() {
 		logger.debug("BoardDao.totalCountList");
 		return sqlSession.selectOne(NS+"totalCountList");
 	}
+	//DB의 board 정보 수정
 	public void modifyBoard(Board board) {
 		logger.debug("BoardDao.modifyBoard");
 		sqlSession.update(NS+"modifyBoard",board);
+	}
+	public void deleteBoard(int boardId) {
+		logger.debug("BoardDao.deleteBoard");
+		sqlSession.delete(NS+"deleteBoard1",boardId);
+		
 	}
 }

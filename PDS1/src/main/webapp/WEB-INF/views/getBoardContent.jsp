@@ -17,6 +17,7 @@
 					<th>BoardContent</th>
 					<th>BoardFile</th>
 					<th>수정</th>
+					<th>삭제</th>
 				</tr>
 			</thead>
 			
@@ -34,6 +35,7 @@
 						</c:forEach>
 						</td>
 						<td><a href="${pageContext.request.contextPath}/modifyBoard?boardId=${board.boardId}">수정</a></td>
+						<td><a href="${pageContext.request.contextPath}/deleteBoard?boardId=${board.boardId}">삭제</a></td>
 					</tr>
 				</c:forEach>
 				

@@ -33,18 +33,23 @@
 					alert('5개 이상은 추가 할 수 없습니다.')
 				}
 			})
-			$("#submitFile").click(function(){
+			$("#submitFile").click(function(){//버튼을 클릭하면
 				if($("#boardTitle").val().length<1){
 					alert('title을 입력하세요');
-				}else if($(".childDiv").length==0){
+				}else if($(".childDiv").length==0){// file input 이 div 로 감싸져있기때문에 length로 존재 여부를 확인 할 수 있다. 
 					alert('파일을 한개이상은 올려야 합니다.');
 				}else{
 					var flag = false;
-					$(".multipartFile").each(function(index,item){
-						if($(this).val()==0){
-							$(this).closest("div").remove();
+					$(".multipartFile").each(function(index,item){//file input 을 each 문으로 돌면서
+						if($(this).val()==0){//만약 file input 의 val 이 0이면
+							$(this).closest("div").remove();//file input 의 부모 div 를 삭제한다. input이 div 에 감싸져있기때문에
 							flag=true;
 						}
+						var file = this.files[0];//input file 에 파일이 올라오면 정보들을 알수있다.
+						if(file.type == "application/x-msdownload"){//만약 해당 파일의 타입이 exe 파일이라면
+							alert('exe파일이 포함되어있습니다.exe파일은 올릴수 없습니다.')
+						}
+						
 					})
 					if(flag){
 						alert('파일을 선택하지 않은곳이 있습니다.파일선택을 모두완료해주세요');
@@ -53,7 +58,7 @@
 					}
 				}
 			})
-			$(document).on("click","#removeAddFile",function(){
+			$(document).on("click","#removeAddFile",function(){//동적으로 생성된 input 에는  click 이벤트로는 동작하지않기때문에 on 을사용
 				$("#removeAddFile").closest("div").remove();
 			})
 		})
@@ -89,12 +94,12 @@
 							</div>
 						</td>
 						<td><a href="${pageContext.request.contextPath}/modifyBoard?boardId=${board.boardId}">수정</a></td>
+
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		<div>
-		
 			<button type="button" class="btn btn-default"  id="submitFile">적용</button>
 		</div>
 	</form>

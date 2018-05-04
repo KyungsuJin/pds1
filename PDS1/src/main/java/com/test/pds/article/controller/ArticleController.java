@@ -57,9 +57,9 @@ public class ArticleController {
 				}
 			}
 		}
-		String path = session.getServletContext().getRealPath("/upload");
+		String path = session.getServletContext().getRealPath("/resources/upload");
 		logger.debug("ArticleController.addArticle.path : " + path);
-		articleService.addArticle(articleRequest, path);
+		articleService.addArticle(articleRequest, path+"/");
 		
 		
 		return "redirect:/getArticleList";
@@ -87,17 +87,22 @@ public class ArticleController {
 	
 	@RequestMapping(value="/getArticleContent", method=RequestMethod.GET)
 	public String getArticleContent(Model model
+										,HttpSession session
 										,Article article
 										,@RequestParam(value="currentPage") int currentPage
 										,@RequestParam(value="pagePerRow", defaultValue="10" ) int pagePerRow) {
 		logger.debug("ArticleController.getArticleContent GET 방식 호출");
 		Map map = articleService.getArticleContent(article);
 		model.addAttribute("article", map.get("article"));
-		model.addAttribute("downloadPath", SystemPath.DOWNLOAD_PATH);
+		model.addAttribute("downloadPath", session.getServletContext().getRealPath("/resources/upload")+"/");
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pagePerRow", pagePerRow);
-		model.addAttribute("upArticleId", ((Article) map.get("upArticle")).getArticleId());
-		model.addAttribute("downArticleId", ((Article) map.get("downArticle")).getArticleId());
+		if(map.get("upArticle") != null) {
+			model.addAttribute("upArticleId", ((Article) map.get("upArticle")).getArticleId());
+		}
+		if(map.get("downArticle") != null) {
+			model.addAttribute("downArticleId", ((Article) map.get("downArticle")).getArticleId());
+		}
 		return "getArticleContent";
 	}
 	
@@ -128,6 +133,7 @@ public class ArticleController {
 	
 	@RequestMapping(value="/modifyArticle", method=RequestMethod.POST)
 	public String modifyArticle(Model model
+									,HttpSession session
 									,ArticleRequest articleRequest
 									,@RequestParam(value="currentPage") int currentPage
 									,@RequestParam(value="pagePerRow", defaultValue="10" ) int pagePerRow) {
@@ -142,7 +148,7 @@ public class ArticleController {
 				}
 			}
 		}
-		articleService.modifyArticle(articleRequest);
+		articleService.modifyArticle(articleRequest, session.getServletContext().getRealPath("/resources/upload")+"/");
 		return "redirect:/getArticleContent?articleId=" + articleRequest.getArticleId() + "&currentPage=" + currentPage + "&pagePerRow=" + pagePerRow;
 	}
 }

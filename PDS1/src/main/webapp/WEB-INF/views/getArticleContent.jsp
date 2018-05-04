@@ -37,10 +37,10 @@
 		<div>${article.articleId}</div>
 		<div>${article.articleTitle}</div>
 		<div id="articleContent">${article.articleContent}</div>
-		<c:if test="${upArticleId ne 0}">
+		<c:if test="${!empty upArticleId}">
 			<div><a href="${pageContext.request.contextPath}/getArticleContent?articleId=${upArticleId}&currentPage=${currentPage}&pagePerRow=${pagePerRow}">윗글</a></div>
 		</c:if>
-		<c:if test="${downArticleId ne 0}">
+		<c:if test="${!empty downArticleId}">
 			<div><a href="${pageContext.request.contextPath}/getArticleContent?articleId=${downArticleId}&currentPage=${currentPage}&pagePerRow=${pagePerRow}">아랫글</a></div>
 		</c:if>
 		<c:forEach var = "articleFile" items = "${article.articleFile}">

@@ -50,7 +50,7 @@ public class ArticleService {
 				articleFile.setArticleFileExt(fileExt);
 				articleFile.setArticleFileType(multipartFile.getContentType());
 				articleFile.setArticleFileSize(multipartFile.getSize());
-				File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
+				File file = new File(path+fileName+"."+fileExt);
 				try {
 					multipartFile.transferTo(file);
 				} catch (IllegalStateException e) {
@@ -97,13 +97,15 @@ public class ArticleService {
 		Map map = new HashMap<String, Object>();
 		map.put("article", articleDao.getArticleContent(article));
 		List<Article> list = articleDao.getArticleClosest(article);
-		if(list.size() < 2) {
+		if(list.size() == 0) {
+			
+		} else if(list.size() < 2) {
 			if(list.get(0).getArticleId() < article.getArticleId()) {
-				map.put("upArticle", new Article());
+				map.put("upArticle", null);
 				map.put("downArticle", list.get(0));
 			} else {
 				map.put("upArticle", list.get(0));
-				map.put("downArticle", new Article());
+				map.put("downArticle", null);
 			}
 		} else {
 			map.put("upArticle", list.get(0));
@@ -119,7 +121,7 @@ public class ArticleService {
 		articleDao.removeArticle(article);
 	}
 	
-	public void modifyArticle(ArticleRequest articleRequest) {
+	public void modifyArticle(ArticleRequest articleRequest, String path) {
 		List<MultipartFile> multipartFileList = articleRequest.getMultipartFile();
 		articleDao.modifyArticle(articleRequest);
 		if(articleRequest.getArticleDeleteList() != null) {
@@ -141,7 +143,7 @@ public class ArticleService {
 				articleFile.setArticleFileExt(fileExt);
 				articleFile.setArticleFileType(multipartFile.getContentType());
 				articleFile.setArticleFileSize(multipartFile.getSize());
-				File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
+				File file = new File(path+fileName+"."+fileExt);
 				try {
 					multipartFile.transferTo(file);
 				} catch (IllegalStateException e) {

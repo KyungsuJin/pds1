@@ -49,6 +49,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="body.jsp"></jsp:include>
 	<div style="width:200px;" class="center-block clearfix">
 		<form id="addBoardForm"action="${pageContext.request.contextPath}/addBoard" method="post" enctype="multipart/form-data">
 			<div class="form-group">

@@ -36,7 +36,7 @@ public class BoardController {
 	public String addBoard(Model model,BoardRequest boardRequest,HttpSession session) {
 		logger.debug("Controller addBoard POST");
 		logger.debug("boardDTO:"+boardRequest.toString());
-		String path = session.getServletContext().getRealPath("temp");//세션객체의 경로를 가져온다
+		String path = session.getServletContext().getRealPath("resources/upload");//세션객체의 경로를 가져온다
 		int flag=0;
 		//for 문을 이용해 controller 넘어온 파일들을 if 문을 사용해 검사한다
 		for(MultipartFile multipartFile : boardRequest.getMultipartFile()) {
@@ -86,13 +86,7 @@ public class BoardController {
 	public String modifyBoard(Model model
 							,BoardRequest boardRequest) {
 		boardService.modifyBoard(boardRequest);
-		return "modifyBoard";
-	}
-	//
-	@RequestMapping(value="deleteBoard",method=RequestMethod.GET)
-	public String deleteBoard(@RequestParam(value="boardId")int boardId) {
-		boardService.deleteBoard(boardId);
 		return "redirect:/getBoardList";
 	}
-	
+
 }

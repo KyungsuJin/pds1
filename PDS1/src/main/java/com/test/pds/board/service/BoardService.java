@@ -79,7 +79,7 @@ public class BoardService {
 				//리스트에 boardFile을 저장한다.
 				boardFileList.add(boardFile);
 				//파일을 옮길 경로
-				File file = new File(SystemPath.DOWNLOAD_PATH+fileName+"."+fileExt);
+				File file = new File(path+fileName+"."+fileExt);
 				logger.debug("file : "+file);
 			
 				try {
@@ -101,7 +101,7 @@ public class BoardService {
 	public Map<String,Object> getBoardList(int currentPage,int pagePerRow) {
 		logger.debug("boardService.getBoardList");
 		Map<String,Integer> map = new HashMap<String,Integer>();
-		int beginRow = (currentPage-1)*10+1;//LIMIT 의 앞부분을 구한다
+		int beginRow = (currentPage-1)*10;//LIMIT 의 앞부분을 구한다
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		List<Board> list=boardDao.getBoardList(map);
@@ -113,7 +113,7 @@ public class BoardService {
 			lastPage++;
 		}
 		int startPage=((currentPage-1)/10)*10+1;//숫자 페이징작업 밑부분 보여질 시작 범위
-		int endPage = startPage*10-1;//숫자 페이징 작업 밑부분 보여줄 마지막 범위
+		int endPage = startPage*10;//숫자 페이징 작업 밑부분 보여줄 마지막 범위
 		if(endPage>lastPage) {
 			endPage=lastPage;
 		}

@@ -14,7 +14,6 @@
 		#removeInputFile{
 			top:0px;
 		}
-	
 	</style>
 	<script>
 		$(document).ready(function(){
@@ -42,17 +41,18 @@
 					var flag = false;
 					$(".multipartFile").each(function(index,item){//file input 을 each 문으로 돌면서
 						if($(this).val()==0){//만약 file input 의 val 이 0이면
+							alert('파일을 등록하지 않은곳이 있습니다.');
 							$(this).closest("div").remove();//file input 의 부모 div 를 삭제한다. input이 div 에 감싸져있기때문에
 							flag=true;
 						}
 						var file = this.files[0];//input file 에 파일이 올라오면 정보들을 알수있다.
 						if(file.type == "application/x-msdownload"){//만약 해당 파일의 타입이 exe 파일이라면
-							alert('exe파일이 포함되어있습니다.exe파일은 올릴수 없습니다.')
+							flag = true;
 						}
 						
 					})
 					if(flag){
-						alert('파일을 선택하지 않은곳이 있습니다.파일선택을 모두완료해주세요');
+						alert('exe파일이 포함되어 있거나 파일을 선택하지 않은곳이 있습니다.파일선택을 모두완료해주세요');
 					}else{
 						$("#modifyBoard").submit();
 					}
@@ -76,7 +76,6 @@
 					<th>BoardFile 
 						<button type="button" class="glyphicon glyphicon-plus" id="addInputFile"></button>
 						<button type="button" class="glyphicon glyphicon-minus" id="removeInputFile" ></button></th>
-					<th>수정</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -93,14 +92,12 @@
 								</c:forEach>
 							</div>
 						</td>
-						<td><a href="${pageContext.request.contextPath}/modifyBoard?boardId=${board.boardId}">수정</a></td>
-
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		<div>
-			<button type="button" class="btn btn-default"  id="submitFile">적용</button>
+			<button type="button" class="btn btn-default"  id="submitFile">수정완료</button>
 		</div>
 	</form>
 </body>

@@ -8,6 +8,9 @@
 		h1{
 			text-align:center;
 		}
+		#pageDiv{
+			text-align:center;
+		}
 	</style>
 </head>
 <body>
@@ -29,18 +32,31 @@
 						</tr>
 					</c:forEach>
 				</tbody>
+				<div><a id="addResume" class="btn btn-default btn-sm pull-right" href="${pageContext.request.contextPath}/addBoard">파일등록</a></div>
 			</table>
-			<c:if test="${currentPage>1}">
-				<a href="${pageContext.request.contextPath}/getBoardList?currentPage=1">처음으로</a>
-				<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${currentPage-1}">이전</a>
-			</c:if>
-			<c:forEach begin="${startPage}" end="${endPage}" step="1" var="i">
-				<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${i}">${i}</a>
-			</c:forEach>
-			<c:if test="${lastPage>currentPage}">
-				<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${currentPage+1}">다음</a>
-				<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${lastPage}">마지막으로</a>
-			</c:if>
+			<nav>
+				<div id="pageDiv">
+	  				<ul class="pagination pagination-sm">
+	  					<li>
+							<c:if test="${currentPage>1}">
+								<a href="${pageContext.request.contextPath}/getBoardList?currentPage=1" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${currentPage-1}">이전</a>
+							</c:if>
+						</li>
+						<c:forEach begin="${startPage}" end="${endPage}" step="1" var="i">
+							
+								<li <c:out value="${currentPage eq i ? 'class=active': ''}"/>><a class="" href="${pageContext.request.contextPath}/getBoardList?currentPage=${i}">${i}</a></li>
+							
+						</c:forEach>
+						<li>
+							<c:if test="${lastPage>currentPage}">
+								<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${currentPage+1}">다음</a>
+								<a href="${pageContext.request.contextPath}/getBoardList?currentPage=${lastPage}"><span aria-hidden="true">&raquo;</span></a>
+							</c:if>
+						</li>
+					</ul>
+				</div>
+			</nav>
 	</div>
 </body>
 </html>
